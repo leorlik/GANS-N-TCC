@@ -1,5 +1,5 @@
-\chapter{Alguns exemplos}
-\label{cap:exemplos}
+\chapter{Fundamentação teórica}
+\label{cap:fundamentos}
 
 % figuras estão no subdiretório "figuras/" dentro deste capítulo
 \graphicspath{\currfiledir/figuras/}
@@ -8,36 +8,97 @@
 
 \section{Guias de \LaTeX}
 
-Este modelo contém exemplos para os padrões de inserção de figuras, tabelas, listas de itens, bibliografia, etc. Em caso de dúvidas ou discordância, Pode-se entrar em contato com a direção ou secretaria do programa. Obviamente, críticas (construtivas) e sugestões são muito bem-vindas.
-
-Para aprender a usar \LaTeX, um bom guia introdutório disponível na Internet é \cite{oetiker07}, que também tem uma versão em português. Para tópicos mais avançados consulte \cite{goossens93}.
+Este capítulo revisita os tópicos fundamentais deste trabalho, incluindo os princípios de redes neurais adversariais, evolução de variável latente e algoritmos genéticos para exploração do espaço latente com o exemplo do CMA-ES; explora a literatura no tópico de geração de conteúdo procedural utilizando aprendizado de máquina; e apresenta o principal artigo que guiou este trabalho, que utiliza uma DCGAN para gerar níveis do jogo Super Mario Bros.(1985). 
 
 %=====================================================
 
-\section{Estrutura do texto}
+\section{Redes Neurais Adversariais Generativas}
 
-Para melhorar a legibilidade do texto, deve ser evitado o uso de subdivisões mais profundas que a subseção (por exemplo, subsubseções). Se elas forem absolutamente necessarias, não devem ser numeradas. Deve-se analisar a possibilidade de uso de uma lista de itens em seu lugar. O número de níveis de texto do documento não deve exceder três: capítulo, seção e subseção. O uso de mais que três níveis dificulta a leitura e prejudica muito a estética do texto.
+O paradigma do Aprendizado Adversarial e As Redes Neurais Adversariais Generativas (GANs) foram introduzidos por Godfellow et al. em 2014 como solução para o problema de estimação de máxima verossimilhança, dilema no qual o custo computacional e a complexidade são extremamente altos, podendo chegar a ser computacionalmente inviável a depender do contexto. Enquanto a gama mais popular de modelos profundos na época de publicação do artigo consistiam de apenas uma rede neural de alta profundidade usada em classificação e, em certos casos, regressão, o aprendizado adversarial proposto pelo artigo usufrui de duas MLPs.
 
-%=====================================================
+Um desses modelos é apelidado de gerador, abreviado como \textit{G}, enquanto o outro modelo é chamado de discriminador e abreviado como \textit{D}. O modelo gerador representa uma função diferenciável responsável por aproximar a distribuição de seus dados de treinamento. Para gerar novos dados, a rede \textit{G} projeta entradas ruidosas no espaço dos dados conhecidos, na intenção de aproximar o conteúdo gerado da distribuição dos conjuntos conhecidos.
 
-\section{Estilo de redação}
-
-Ao elaborar o texto da dissertação ou da tese, o mais indicado é o uso do verbo na forma impessoal. Exemplos:
-
-\begin{itemize}
-\item ... utilizaram-se os seguintes dados ...
-\item ... elaborou-se de forma precisa ...
-\item ... trata-se os algoritmos ...
-\item ... foram obtidos resultados significativos ...
-\end{itemize}
-
-Além disso, deve-se a todo custo evitar a ``linguagem de revista'', com expressões como ``sensacional'', ``impressionante'', ``monstruoso'', etc (por exemplo: ``Os resultados obtidos são sensacionais, sobretudo considerando a monstruosa margem de erro.'').
+Por sua vez, a MLP \textit{D} tem como objetivo traçar um plano que separe as distribuições do conteúdo original das distribuições das projeções de \textit{G}. A saída da rede discriminadora, no artigo, é descrita como um único escalar que representa a probabilidade de uma entrada não ser gerada. Essencialmente, \textit{G} e \textit{D} tornam-se antagônicas a partir do momento que suas respectivas funções de perda colocam como objetivo penalizar a outra. Para que isso seja possível, \textit{G} é treinada para minimizar $\log_ (1-D(G(z)))$ enquanto \textit{D} é treinada para maximizar a probabilidade de acertar se uma entrada é sintética ou real. Este treinamento antagônico leva essas duas redes a disputarem um jogo MinMax de dois jogadores. Alternando a otimização de \textit{D} e \textit{G}, a rede discriminadora fica mais perto da solução ótima, enquanto a MLP geradora muda aos poucos para sua distribuição aproximar cada vez mais da original e, por consequência, tornar a solução que o discriminador busca mais complexa de se aproximar. 
 
 %=====================================================
 
-\section{Alguns exemplos}
+\section{CMA-ES}
 
-Esta seção traz algus exemplos de elementos típicos de um texto científico, como figuras, tabelas e fórmulas matemáticas.
+CMA-ES, a \emph{Covariance Matrix Adaptation Evolution Strategy}, foi instanciada primeiro em \cite{cma-es}. É uma estratégia evolucionária que se comporta bem com vetores de números reais, que neste casos são as entradas do gerador, e sua principal característica é o uso de uma matriz de covariância estimada iterativamente por diferenças finitas.
+
+Como está no seu nome, o algoritmo faz parte de um grupo de algoritmos evolucionários chamados \emph{evolutionary strategies}, que é um grupo de algoritmos caixa preta caracterizados também pelo uso da ordenação por ranking. A CMA-ES tem se mostrado eficiente para otimizar problemas não-convexos e não-lineares em domínios contínuos.
+
+O que este algoritmo faz é calcular uma gaussiana com base na matriz de covariância estimada. Esta gaussiana é traduzida numa elipse que se desloca de forma a contemplar as melhores soluções. Quanto mais distantes as melhores soluções estão do domínio dessa elipse, maior o \emph{step size} dela, ou seja, seu raio. De certa forma, no começo, o \emph{step size} costuma ser mais alto pois as melhores soluções conhecidas estão esparsas e a partir deste ponto de partida há a exploração global. Conforme a elipse fica melhor posicionada no domínio, as melhores soluções ficarão menos esparsas, fazendo com que o \emph{step size} diminua proporcionalmente com a concentração da população.
+
+Segue um pseudo-código do que seria o CMA-ES:
+
+\begin{algorithm}
+\caption{CMA-ES}
+\begin{algorithmic}[1]
+
+\State Inicialize a população: $\lambda$
+\State Inicialize o \texit{step size}: $\sigma$
+\State Defina o tamanho da população: $m$
+
+\State defina o número de melhores candidados $\mu$
+
+\State Defina os pesos: $W_1, W_2, \ldots, W_m$
+
+\State \textbf{repeat}
+\ForAll{$x \in \lambda$}
+  \State Calcula a gaussiana para $x$
+\EndFor
+
+\State Ordena $\lambda$ pelo fitness
+
+\State $c \gets calcula_covariancia(\lambda)$
+
+\State $m \gets \sum_{i=1}^{\mu} W_i \cdot X_i$
+
+\State $\sigma \gets$ atualiza($\sigma$)
+
+\State \textbf{until} número de iterações $>$ $max\_iter$
+
+\end{algorithmic}
+\end{algorithm}
+
+A atualização do \emph{step size} pode ser encontrada nas páginas 20, 29 e 31 do tutorial feito pelo autor original do CMA-ES \cite{manual_cma-es}.
+
+%=====================================================
+
+\section{Evolução de Variavel Latente (LVE)}
+
+LVE - \emph{Latent Variable Evolution} - surgiu primeiro para buscar digitais específicas num certo espaço mapeado por uma GAN em \cite{fingerprints}. Como dito anteriormente, a rede neural geradora de uma GAN mapeia entradas ruidosas para um espaço. Estas entradas ruidosas também são chamadas de variáveis latentes, ou seja, variáveis que são difíceis ou impossível de controlar e interpretar antes de um resultado concreto.
+
+A partir disso, a técnica de LVE tem como ideia manipular as entradas ruidosas de um modelo para que sua saída se encaixe dentro de certas especificações, ou seja, adiciona ao conteúdo gerado restrições que até o momento atual não são controláveis a nível de treinamento, pois uma rede geradora tem como única função reproduzir a distribuição de seus dados de teste. Em \cite{fingerprints}, a técnica de LVE é utilizada para a quebra de identificação de digitais. A técnica consiste de duas etapas: primeiro, treinar uma rede neural para gerar o conteúdo alvo e, após isso, usar um algoritmo para buscar no espaço latente uma entrada que gere uma saída dentro das condições especificadas.
+
+O algoritmo utilizado por \cite{fingerprints} para busca no espaço latente é o já explicado anteriormente CMA-ES. A justificativa do uso do CMA-ES pelo autores é que a função objetivo é não contínua e, pela natureza de redes convolucionais, também não é linearmente separável.
+
+%\cite{marioGAN} diz que GANs são "compactos e robustos mapeamentos genótipos-fenótipos". Nesta interpretação, em que genótipos são as entradas e os fenótipos as saidas correspondentes, é possível manipular os fenótipos para que os genótipos se encaixem dentro de algo desejado, ou seja, manipular as entradas para que a GAN produza a saída desejada. Para isso, o método explorado pelo paper da MarioGAN é o CMA-ES.
+
+%Ao elaborar o texto da dissertação ou da tese, o mais indicado é o uso do verbo na forma impessoal. Exemplos:
+
+%\begin{itemize}
+%\item ... utilizaram-se os seguintes dados ...
+%\item ... elaborou-se de forma precisa ...
+%\item ... trata-se os algoritmos ...
+%\item ... foram obtidos resultados significativos ...
+%\end{itemize}
+
+%Além disso, deve-se a todo custo evitar a ``linguagem de revista'', com expressões como ``sensacional'', ``impressionante'', ``monstruoso'', etc (por exemplo: ``Os resultados obtidos são sensacionais, sobretudo considerando a monstruosa margem de erro.'').
+
+%=====================================================
+
+\section{Geração de Conteúdo Procedural Usando Aprendizado de Máquina (PCGML) }
+
+A survey de Summerville e colegas \cite{survey2018} define \emph{Procedural Content Generation Via Machine Learning} como "geração de conteudo de jogos usando modelos de \emph{machine learning} em conteúdos existentes". Na área, busca-se aumentar o valor de replay, salvar memória, reduzir o custo e o esforço de produção, diversificar estética e reduzir a presença humana na geração de conteúdo de jogos. Na área acadêmica, além disso, pode-se dizer que se explora novas maneiras de experenciar os jogos, além de ser um desafio que estimula a criatividade computacional e o entendimento de \emph{game design} pela construção de modelos.
+
+Alguns exemplos de PCGML são o \emph{Bardo Composer}\cite{bardo} que gera musicas para RPGs de Mesa, geração de personagens em jogos no estilo pixel-art em \cite{sprites}, ou até mesmo aplicações mais práticas, como a desenvolvedora \emph{CD Projekt RED}, que fez uma parceria com a empresa canadense \emph{Jali Research} para, através de técnicas híbridas de inteligência artificial clássica e aprendizado de máquina, fazer com que a boca dos personagens se adapte a dublagem correspondente do diálogo, e o recente anúncio da desenvolvedora francesa \emph{Ubisoft} do desenvolvimento de uma ferramenta para ajuda de construção de narrativas de jogos, a \emph{Ubisoft Ghostwritter}.
+
+Porém, a geração de conteúdo procedural data ao jogo de 1984 \textit{Elite}, onde os desenvolvedores usavam uma sequencia definida de sementes aleatórias para gerar composições de planetas na intenção de economizar memória armazenando apenas um gerador ao invés dos planetas inteiros. 
+
+Como observado em \cite{survey2020}, a grande parte dos conteúdos ainda é focado em geração procedural de níveis, e este tópico é ainda dominado pelo uso de GANs.
+
 
 %=====================================================
 
