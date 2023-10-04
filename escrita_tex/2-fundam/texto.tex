@@ -106,7 +106,7 @@ Como observado em \cite{survey2020}, a grande parte dos conteúdos ainda é foca
 
 Em maio de 2018 publicou-se o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo Super Mario Bros. Aqui, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas a disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009\cite{marioai} de autoria de Robin Baumgarten.
 
-Para representar as fases, os autores utilizaram a representação do jogo Super Mario Bros. disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplificam a representação do jogo ao ignorar níveis submersos, onde a física do jogo diverge do comum, e ao representar todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. O gerador utilizado no artigo é treinado apenas com o primeiro nível do jogo, na intenção de mostrar como a LVE e a GAN que treinaram poderiam gerar níveis diferentes e jogáveis. Outra escolha interessante do artigo da MarioGAN \cite{marioGAN} é que, para gerar múltiplas amostras com apenas uma fase, a representação foi separadas com bases em janelas deslizantes de altura 14 e largura 28, com um único bloco de passo. 
+Para representar as fases, os autores utilizaram a representação do jogo Super Mario Bros. disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplificam a representação do jogo ao ignorar níveis submersos, onde a física do jogo diverge do comum, e ao representar todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. O gerador utilizado no artigo é treinado apenas com o primeiro nível do jogo, na intenção de mostrar como a LVE e a GAN que treinaram poderiam gerar níveis diferentes e jogáveis. Outra escolha interessante do artigo da MarioGAN \cite{marioGAN} é que, para gerar múltiplas amostras com apenas uma fase, a representação foi separada com base em uma janela deslizante com dimensões de 14 de altura e 28 de largura 28, com passo de um bloco.
 
 %\subsection{Exemplo de figura}
 
@@ -179,17 +179,17 @@ Para representar as fases, os autores utilizaram a representação do jogo Super
 %Códigos-fonte podem ser produzidos de forma simples através do ambiente \texttt{verbatim}, como mostra este exemplo:
 
 %\begin{footnotesize}
-\begin{verbatim}
-#include <stdio.h>
+%\begin{verbatim}
+%#include <stdio.h>
 
-int main (int argc, char *argv[])
-{
-   int i ;                           // uma variavel local
-
-   for (i=0; i< 100; i++)            // um laço for
-      printf ("i vale %d\n", i) ;    // uma saída na tela
-}
-\end{verbatim}
+%int main (int argc, char *argv[])
+%{
+%   int i ;                           // uma variavel local
+%
+%   for (i=0; i< 100; i++)            // um laço for
+%      printf ("i vale %d\n", i) ;    // uma saída na tela
+%}
+%\end{verbatim}
 %\end{footnotesize}
 
 %No entanto, é preferível usar pacotes especializados para a edição ou inclusão de códigos-fonte, como o pacote \texttt{listings}. Eis um exemplo de código-fonte escrito com esse pacote:
