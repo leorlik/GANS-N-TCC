@@ -6,7 +6,7 @@
 
 %=====================================================
 
-\section{Guias de \LaTeX}
+%\section{}
 
 Este capítulo revisita os tópicos fundamentais deste trabalho, incluindo os princípios de redes neurais adversariais, evolução de variável latente e algoritmos genéticos para exploração do espaço latente com o exemplo do CMA-ES; explora a literatura no tópico de geração de conteúdo procedural utilizando aprendizado de máquina; e apresenta o principal artigo que guiou este trabalho, que utiliza uma DCGAN para gerar níveis do jogo Super Mario Bros.(1985). 
 
@@ -62,7 +62,7 @@ Segue um pseudo-código do que seria o CMA-ES:
 \end{algorithmic}
 \end{algorithm}
 
-A atualização do \emph{step size} pode ser encontrada nas páginas 20, 29 e 31 do tutorial feito pelo autor original do CMA-ES \cite{manual_cma-es}.
+%A atualização do \emph{step size} pode ser encontrada nas páginas 20, 29 e 31 do tutorial feito pelo autor original do CMA-ES \cite{manual_cma-es}.
 
 %=====================================================
 
@@ -102,77 +102,83 @@ Como observado em \cite{survey2020}, a grande parte dos conteúdos ainda é foca
 
 %=====================================================
 
-\subsection{Exemplo de figura}
+\section{MarioGAN}
 
-A forma sugerida para incluir figuras em um documento \LaTeX\ é importá-las usando o pacote \texttt{graphicx}. Como formatos gráficos sugere-se:
+Em maio de 2018 publicou-se o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo Super Mario Bros. Aqui, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas a disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009\cite{marioai} de autoria de Robin Baumgarten.
 
-\begin{itemize}
+Para representar as fases, os autores utilizaram a representação do jogo Super Mario Bros. disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplificam a representação do jogo ao ignorar níveis submersos, onde a física do jogo diverge do comum, e ao representar todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. O gerador utilizado no artigo é treinado apenas com o primeiro nível do jogo, na intenção de mostrar como a LVE e a GAN que treinaram poderiam gerar níveis diferentes e jogáveis. Outra escolha interessante do artigo da MarioGAN \cite{marioGAN} é que, para gerar múltiplas amostras com apenas uma fase, a representação foi separadas com bases em janelas deslizantes de altura 14 e largura 28, com um único bloco de passo. 
 
-\item Formatos \emph{raster}, como PNG (\emph{Portable Network Graphics}) ou JPG (\emph{Joint Photographic Experts Group}) para fotografias; procure usar uma resolução de ao menos 150 dpi (\emph{dots per inch}).
+%\subsection{Exemplo de figura}
 
-\item Formatos vetoriais, como PDF (\emph{Portable Document Format}) ou EPS (\emph{Extended PostScript}) para diagramas e gráficos\footnote{NUNCA use JPG ou GIF para desenhos vetoriais, pois o resultado final geralmente fica borrado.}.
+%A forma sugerida para incluir figuras em um documento \LaTeX\ é importá-las usando o pacote \texttt{graphicx}. Como formatos gráficos sugere-se:
 
-\end{itemize}
+%\begin{itemize}
 
-A maior parte das ferramentas permite exportar figuras nesses formatos (a figura do exemplo foi produzida com o \emph{Inkscape}, um programa livre multiplataforma). A figura \ref{fig:comun-intra-inter} mostra um exemplo de inclusão de figura em PDF.
+%\item Formatos \emph{raster}, como PNG (\emph{Portable Network Graphics}) ou JPG (\emph{Joint Photographic Experts Group}) para fotografias; procure usar uma resolução de ao menos 150 dpi (\emph{dots per inch}).
+
+%\item Formatos vetoriais, como PDF (\emph{Portable Document Format}) ou EPS (\emph{Extended PostScript}) para diagramas e gráficos\footnote{NUNCA use JPG ou GIF para desenhos vetoriais, pois o resultado final geralmente fica borrado.}.
+
+%\end{itemize}
+
+%A maior parte das ferramentas permite exportar figuras nesses formatos (a figura do exemplo foi produzida com o \emph{Inkscape}, um programa livre multiplataforma). A figura \ref{fig:comun-intra-inter} mostra um exemplo de inclusão de figura em PDF.
 
 % exemplo de inserção de figura
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{exemplo-figura.pdf}
-\caption{Comunicação inter-processos.}
-\label{fig:comun-intra-inter}
-\end{figure}
+%\begin{figure}[!htb]
+%\centering
+%\includegraphics[width=12cm]{exemplo-figura.pdf}
+%\caption{Comunicação inter-processos.}
+%\label{fig:comun-intra-inter}
+%\end{figure}
 
-Para mais informações consulte \cite{goossens93}.
-
-%=====================================================
-
-\subsection{Exemplo de tabela}
-
-Tabelas são elementos importantes de um documento. No \LaTeX\ as tabelas podem ser objetos flutuantes (definidas no ambiente \texttt{table} e referenciadas por números usando \texttt{label} e \texttt{ref}) ou objetos fixos simples, criados pelo ambiente \texttt{tabular}. A tabela \ref{tab:modelos} é um exemplo de tabela flutuante, cuja posição no texto pode variar em função das quebras de página.
-
-\begin{table}[!htp]
-\centering
-\caption{Os 16 modelos centrais do UCON$_{\mathrm{ABC}}$}
-\label{tab:modelos}
-\begin{tabular}{|c|cccc|}
-\cline{2-5}
-\multicolumn{1}{c|}{}& 0 (imutável) & 1 (\emph{pre-update}) & 2 (\emph{on-update}) & 3 (\emph{pos-update}) \\
-\hline
-\texttt{preA} & \textbullet & \textbullet & -- & \textbullet \\
-\hline
-\texttt{onA} & \textbullet & \textbullet & \textbullet & \textbullet \\
-\hline
-\texttt{preB} & \textbullet & \textbullet & -- & \textbullet \\
-\hline
-\texttt{onB} & \textbullet & \textbullet & \textbullet & \textbullet \\
-\hline
-\texttt{preC} & \textbullet & -- & -- & -- \\
-\hline
-\texttt{onC} & \textbullet & -- & -- & -- \\
-\hline
-\end{tabular}
-\end{table}
+%Para mais informações consulte \cite{goossens93}.
 
 %=====================================================
 
-\subsection{Exemplo de fórmula}
+%\subsection{Exemplo de tabela}
 
-Equações destacadas devem ser numeradas como mostra a equação \ref{eq:relatividade}:
+%Tabelas são elementos importantes de um documento. No \LaTeX\ as tabelas podem ser objetos flutuantes (definidas no ambiente \texttt{table} e referenciadas por números usando \texttt{label} e \texttt{ref}) ou objetos fixos simples, criados pelo ambiente \texttt{tabular}. A tabela \ref{tab:modelos} é um exemplo de tabela flutuante, cuja posição no texto pode variar em função das quebras de página.
 
-\begin{equation}
-E = m \times c^2
-\label{eq:relatividade}
-\end{equation}
+%\begin{table}[!htp]
+%\centering
+%\caption{Os 16 modelos centrais do UCON$_{\mathrm{ABC}}$}
+%\label{tab:modelos}
+%\begin{tabular}{|c|cccc|}
+%\cline{2-5}
+%\multicolumn{1}{c|}{}& 0 (imutável) & 1 (\emph{pre-update}) & 2 (\emph{on-update}) & 3 (\emph{pos-update}) \\
+%\hline
+%\texttt{preA} & \textbullet & \textbullet & -- & \textbullet \\
+%\hline
+%\texttt{onA} & \textbullet & \textbullet & \textbullet & \textbullet \\
+%\hline
+%\texttt{preB} & \textbullet & \textbullet & -- & \textbullet \\
+%\hline
+%\texttt{onB} & \textbullet & \textbullet & \textbullet & \textbullet \\
+%\hline
+%\texttt{preC} & \textbullet & -- & -- & -- \\
+%\hline
+%\texttt{onC} & \textbullet & -- & -- & -- \\
+%\hline
+%\end{tabular}
+%\end{table}
 
 %=====================================================
 
-\subsection{Exemplos de código-fonte}
+%\subsection{Exemplo de fórmula}
 
-Códigos-fonte podem ser produzidos de forma simples através do ambiente \texttt{verbatim}, como mostra este exemplo:
+%Equações destacadas devem ser numeradas como mostra a equação \ref{eq:relatividade}:
 
-\begin{footnotesize}
+%\begin{equation}
+%E = m \times c^2
+%\label{eq:relatividade}
+%\end{equation}
+
+%=====================================================
+
+%\subsection{Exemplos de código-fonte}
+
+%Códigos-fonte podem ser produzidos de forma simples através do ambiente \texttt{verbatim}, como mostra este exemplo:
+
+%\begin{footnotesize}
 \begin{verbatim}
 #include <stdio.h>
 
@@ -184,87 +190,87 @@ int main (int argc, char *argv[])
       printf ("i vale %d\n", i) ;    // uma saída na tela
 }
 \end{verbatim}
-\end{footnotesize}
+%\end{footnotesize}
 
-No entanto, é preferível usar pacotes especializados para a edição ou inclusão de códigos-fonte, como o pacote \texttt{listings}. Eis um exemplo de código-fonte escrito com esse pacote:
+%No entanto, é preferível usar pacotes especializados para a edição ou inclusão de códigos-fonte, como o pacote \texttt{listings}. Eis um exemplo de código-fonte escrito com esse pacote:
 
 % exemplo de código-fonte definido no próprio texto
 
-\begin{lstlisting}
-#include <stdio.h>
+%\begin{lstlisting}
+%#include <stdio.h>
 
-int main (int argc, char *argv[])
-{
-   int i ;                           // uma variável local
+%int main (int argc, char *argv[])
+%{
+  % int i ;                           // uma variável local
 
-   for (i=0; i< 100; i++)            // um laço for
-      printf ("i vale %d\n", i) ;    // uma saída na tela
-}
-\end{lstlisting}
+ %  for (i=0; i< 100; i++)            // um laço for
+%      printf ("i vale %d\n", i) ;    // uma saída na tela
+%}
+%\end{lstlisting}
 
-Esse pacote também permite incluir códigos-fonte de arquivos externos. Eis um exemplo:
+%Esse pacote também permite incluir códigos-fonte de arquivos externos. Eis um exemplo:
 
 % exemplo de código-fonte incluso
 
-\lstinputlisting{2-fundam/exemplo.c}
+%\lstinputlisting{2-fundam/exemplo.c}
 
 %=====================================================
 
-\subsection{Exemplo de algoritmo}
+%\subsection{Exemplo de algoritmo}
 
-Os pacotes \texttt{algorithm} e \texttt{algorithmic} permitem formatar algoritmos facilmente. Eis um exemplo:
+%Os pacotes \texttt{algorithm} e \texttt{algorithmic} permitem formatar algoritmos facilmente. Eis um exemplo:
 
-\begin{algorithm}[H]
-\caption{Ações de $s_i$ ao encerrar um ciclo:}
-\label{alg:on-period-ending}
-\begin{small}
-\begin{algorithmic}[1]
-\FORALL{$x \in \mathcal{K}_i$}
-  \STATE{$\mathit{banned}_i(x) \gets$ FALSE}
-  \STATE{$mi_i(x) \gets 0$}
-  \STATE{$mm_i(x) \gets 0$}
-  \STATE{$\mathit{age}_i(x) \gets \mathit{age}_i(x) + 1$}
-  \IF{$\mathit{age}_i(x) = \mathit{age}_\mathit{max}$}
-     \STATE{$\mathcal{K}_i \gets \mathcal{K}_i - \{x\}$}
-     \COMMENT{``esquece'' do servidor $x$}
-     \STATE{remove as informações locais sobre $x$}
-     \STATE{envia $\mathit{notify}(x,\mathit{undef})$ ao grupo de confiança $\mathcal{T}_i$}
-  \ENDIF
-\ENDFOR
-\end{algorithmic}
-\end{small}
-\end{algorithm}
+%\begin{algorithm}[H]
+%\caption{Ações de $s_i$ ao encerrar um ciclo:}
+%\label{alg:on-period-ending}
+%\begin{small}
+%\begin{algorithmic}[1]
+%\FORALL{$x \in \mathcal{K}_i$}
+%  \STATE{$\mathit{banned}_i(x) \gets$ FALSE}
+%  \STATE{$mi_i(x) \gets 0$}
+%  \STATE{$mm_i(x) \gets 0$}
+%  \STATE{$\mathit{age}_i(x) \gets \mathit{age}_i(x) + 1$}
+%  \IF{$\mathit{age}_i(x) = \mathit{age}_\mathit{max}$}
+%     \STATE{$\mathcal{K}_i \gets \mathcal{K}_i - \{x\}$}
+%     \COMMENT{``esquece'' do servidor $x$}
+%     \STATE{remove as informações locais sobre $x$}
+%     \STATE{envia $\mathit{notify}(x,\mathit{undef})$ ao grupo de confiança $\mathcal{T}_i$}
+%  \ENDIF
+%\ENDFOR
+%\end{algorithmic}
+%\end{small}
+%\end{algorithm}
  
 %=====================================================
 
-\subsection{Exemplos de citação}
+%\subsection{Exemplos de citação}
 
-Citação curta (só um parágrafo): como afirmou Maquiavel em seu livro \emph{O Príncipe}:
+%Citação curta (só um parágrafo): como afirmou Maquiavel em seu livro \emph{O Príncipe}:
 
-\begin{quote}
-``Nada é mais difícil de instituir, mais perigoso de conduzir, mais incerto no seu sucesso, do que liderar a introdução de uma nova ordem de coisas... O inovador faz inimigos em todos aqueles que prosperavam sobre as antigas regras, e somente tíbio suporte é esperado daqueles que prosperariam na novidade, porque os homens são geralmente incrédulos, nunca realmente confiam nas coisas novas, a menos que as tenham testado em experiência''.
-\end{quote}
+%\begin{quote}
+%``Nada é mais difícil de instituir, mais perigoso de conduzir, mais incerto no seu sucesso, do que liderar a introdução de uma nova ordem de coisas... O inovador faz inimigos em todos aqueles que prosperavam sobre as antigas regras, e somente tíbio suporte é esperado daqueles que prosperariam na novidade, porque os homens são geralmente incrédulos, nunca realmente confiam nas coisas novas, a menos que as tenham testado em experiência''.
+%\end{quote}
 
-Citação longa (mais de um parágrafo): como afirmou Maquiavel em seu livro \emph{O Príncipe}:
+%Citação longa (mais de um parágrafo): como afirmou Maquiavel em seu livro \emph{O Príncipe}:
 
-\begin{quotation}
-``Nada é mais difícil de instituir, mais perigoso de conduzir, mais incerto no seu sucesso, do que liderar a introdução de uma nova ordem de coisas...
+%\begin{quotation}
+%``Nada é mais difícil de instituir, mais perigoso de conduzir, mais incerto no seu sucesso, do que liderar a introdução de uma nova ordem de coisas...
 
-O inovador faz inimigos em todos aqueles que prosperavam sobre as antigas regras, e somente tíbio suporte é esperado daqueles que prosperariam na novidade, porque os homens são geralmente incrédulos, nunca realmente confiam nas coisas novas, a menos que as tenham testado em experiência''.
-\end{quotation}
-
-%=====================================================
-
-\section{Uma seção}
-
-\subsection{Uma subseção}
-
-\subsubsection{Uma subsubseção}
+%O inovador faz inimigos em todos aqueles que prosperavam sobre as antigas regras, e somente tíbio suporte é esperado daqueles que prosperariam na novidade, porque os homens são geralmente incrédulos, nunca realmente confiam nas coisas novas, a menos que as tenham testado em experiência''.
+%\end{quotation}
 
 %=====================================================
 
-\section{Conclusão}
+%\section{Uma seção}
 
-Todo capítulo (com exceção da introdução e da conclusão) deve encerrar com uma pequena conclusão local, resumindo os tópicos apresentados no capítulo e preparando o leitor para o próximo capítulo (exceto se esse for a conclusão geral). Caso o capítulo tenha apresentado resultados obtidos pelo próprio autor, estes devem ser sucintamente relembrados aqui.
+%\subsection{Uma subseção}
+
+%\subsubsection{Uma subsubseção}
+
+%=====================================================
+
+%\section{Conclusão}
+%
+%Todo capítulo (com exceção da introdução e da conclusão) deve encerrar com uma pequena conclusão local, resumindo os tópicos apresentados no capítulo e preparando o leitor para o próximo capítulo (exceto se esse for a conclusão geral). Caso o capítulo tenha apresentado resultados obtidos pelo próprio autor, estes devem ser sucintamente relembrados aqui.
 
 %=====================================================
