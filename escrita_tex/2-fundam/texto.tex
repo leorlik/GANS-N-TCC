@@ -95,6 +95,42 @@ A survey de Summerville e colegas \cite{survey2018} define \emph{Procedural Cont
 
 %=====================================================
 
+\section{NSGA-II}
+
+Em Abril de 2002 foi proposto a evolução do nondominated sorting genetic algorithm (algoritmo genético de ordenção não-dominada), o NSGA-II\cite{Deb:02}, que hoje em dia conta com 37971 citações(Connected Papers, acesso em 05/11/2023). Esse algoritmo foi proposto na intenção de contornar os três principais problemas dos algoritmos evolucionários apontados na época:
+
+\begin{itemize}
+    \item Alta complexidade computacional(especificamente $O(MN^{3})$, onde M é o numero de objetivos e N o tamanho da população);
+    \item A falta de elitismo;
+    \item A necessidade de especificar parâmetros, como o de compartilhamento do primeiro NSGA\cite{Deb:94};
+\end{itemize}
+
+E sua implementação nos permite:
+
+\begin{itemize}
+    \item Preservar a diversidade;
+    \item e enfatizar soluções não-dominadas.
+\end{itemize}
+
+Tendo populaçoes de tamanho N, o NSGA-II recombina tal população numa população de tamanho 2N e a ordena baseado no ranking da fronteira de pareto, priorizando soluções da fronteira classe 1 e completando com as fronteiras subsequentes. Quando a fronteira $F_{g}$ nao cabe mais inteira na próxima população, são selecionadas os indivíduos com maior \texit{crowd distance}, que é a área/volume (dependente do tamanho do espaço objetivo $Z$ do problema) ao seu redor sem nenhuma solução presente (cabe enfatizar que as funções objetivo são normalizadas para que nenhuma domine a outra). Este operador permite escolher as soluções que estão mais distantes das outras, por consequência também sendo um preservador de diversidade por si só.
+
+%=====================================================
+
+\section{PSO}
+
+Otimização por enxames de partículas foi proposta por \cite{PSO}. Segundo os autores, é um método de otimização para funções contínuas e não-lineares que simula um modelo social simplificado. O algoritmo instância uma população candidata e a move pelo domínio de acordo com fórmulas matemáticas simples em relação a posição e velocidade da partícula. 
+
+A metaheurística associada ao PSO faz pouca ou nenhuma suposição do problema que será otimizado. Outra vantagem é que o algoritmo não utiliza otimização por gradiente como muitos dos algoritmos de computação evolutiva, o que significa que a função objetivo não precisa ser diferenciável. 
+%=====================================================
+
+\section{Algoritmo A estrela}
+
+O algoritmo A estrela é uma extensão do Algoritmo de Djikstra que utiliza alguma metaheurística para guiar a busca pelo caminho mais curto ao objetivo. Para que o algoritmo funcione corretamente, a heurística definida para auxiliar a busca deve ser admissível, isto é, o custo estimado para atingir o estado final em relação ao estado atual deve ser menor ou igual ao custo verdadeiro para atingir o estado final do estado atual. 
+
+A busca A estrela possui múltiplas aplicações, entre elas a busca por caminhos viáveis em videogames. Até os dias de hoje, o mais popular algoritmo para o teste de jogabilidade de níveis do jogo \textit{}
+
+%=====================================================
+
 \section{MarioGAN}
 
 Em maio de 2018 publicou-se o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Aqui, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas a disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009\cite{marioai} de autoria de Robin Baumgarten.
