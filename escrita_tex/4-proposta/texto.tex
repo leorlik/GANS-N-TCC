@@ -1,0 +1,69 @@
+\chapter{Proposta}
+
+Este capítulo apresenta os métodos propostos para comparação entre os métodos de LVE, bem como os para avaliação do conteúdo gerado por redes treinadas em diferentes conjuntos. Ele apresenta a arquitetura do modelo neural adversarial utilizado, o conjunto de dados em que o modelo foi treinado e as funções objetivo propostas.
+
+\section{Conjunto de treino}
+
+O jogo escolhido para o trabalho é o mesmo presente em \cite{marioGAN}, \textit{Super Mario Bros}. Enquanto \cite{marioGAN} se propõe a avaliar a diversidade de conteúdo gerado a partir do treinamento do modelo com um único nível (o primeiro), neste trabalho é avaliado o quão diversificados são os conteúdos gerados em conjuntos de granularidade diversa.
+
+Como em \cite{marioGAN}, a representação utilizada é a mesma do repositório aberto da \textit{Video Game Level Corpus} (\cite{VGLC}), em que os blocos estão representados na (FIGURA N). Reproduzindo a divisão do artigo de inspiração, a representação textual é dividida por uma janela deslizante de 14 blocos/caracteres de altura e 28 blocos/caracteres de largura. Além do modelo disponibilizado por \cite{marioGAN}(colocar a footnote), treinado em uma única fase, nós treinamos redes com os oito mundos (agrupamentos de níveis com dificuldade gradual). A (TABELA A) mostra, em sua totalidade, a quantidade de níveis processados em cada conjunto de treino, bem como a quantidade de janelas obtidas.
+
+%Fazer a tabela aqui
+
+\section{Arquitetura do modelo neural}
+
+Neste trabalho, a arquitetura do modelo de \cite{marioGAN} foi preservada, arquitetura esta devidamente ilustrada na(FIGURA X). A principal motivação para tal preservação é para que a comparação entre conjuntos de treinamento e métodos de busca em espaço latente seja justa. Embora seja possível facilmente trocar o modelo no fluxo de dados (assim como é possível trocar o modelo de LVE), este não é o foco deste trabalho. O código utilizado no modelo é o mesmo disponibilizado por \cite{marioGAN}, com sua implementação com auxílio da biblioteca \textit{PyTorch} (\cite{PyTorch}).
+
+\section{Métodos para LVE}
+
+Este estudo realiza a comparação de três diferentes métodos para LVE. Primeiro, o modelo neural generativo adversarial é devidamente treinado em algum conjunto de níveis humanos do jogo \textit{Super Mario Bros}. Após isso, algum dos métodos de evolução de variável latente é aplicado na intenção de guiar a geração de conteúdo para atender propriedades específicas. 
+
+Os algoritmos utilizados para a evolução de variável são: o CMA-ES, como em \cite{marioGAN}, o PSO, e o NSGA-II, que foi usado em \cite{cesagan}. A motivação para a escolha desses três algoritmos foi, respectivamente, manter o algoritmo utilizado em \cite{marioGAN} juntamente com seu paradigma (um algoritmo genético), testar a otimização por enxame de partículas por ser simples e rápida, e também avaliar uma abordagem multi-objetivo. A tabela C sintetiza os hiperparâmetros destes três algoritmos.
+
+%% Colocar a Tabela aqui
+
+Para o CMA-ES, a biblioteca utilizada foi a \textit{CMA}(\cite{cma}). Já para o PSO e o NSGA-II, foram usadas as implementaçõs do \textit{framework} pymoo(\cite{pymoo}). 
+
+\section{Funções objetivos}
+
+Neste trabalho, a função objetivo otimizada é relacionada ao número de blocos de um certo tipo do conteúdo gerado, seguindo a equação:
+
+\[
+	\frac{(100 - (\sum_{i=1}^{14} \sum_{j=1}^{28} f(x_{ij}, b)))}{100} \quad \text{tal que} \quad f(x,b) =
+	\begin{cases}
+		1 & \text{se } x = b \\
+		0 & \text{caso contrário}
+	\end{cases}
+\]
+
+Onde i é o valor de linha e j o da coluna da janela deslizante, e $x_{ij}$ o valor numérico presente nesta posição e b o valor numérico a ser maximizado, ou seja, a representação numérica do bloco a ser máximizado. Os valores de b utilizados foram 6 (um pedaço do cano) e 5 (número de inimigos).
+
+\section{Avaliação de conteúdo}
+
+Como devidamente elicitado por \cite{pcg2013}, uma das maiores dificuldades da PCGML é avaliar o conteúdo gerado proceduralmente. Neste trabalho, foram propostas três métodos de avaliação:
+
+\begin{itemize}
+	\item Os valores das funções objetivos utilizadas na técnica de LVE;
+	\item Um classificador para avaliar se os geradores seguem suficientemente um padrão;
+	\item Um agente para testar a jogabilidade dos níveis.
+\end{itemize}
+
+Para que cada teste deste seja em quantidades suficientes, avaliadas 500 entradas aleatórias e 500 execuções de cada algoritmo para cada função objetivo, com exceção do NSGA-II que, por ser uma abordagem multi-objetivo, otimizou a função para $b = 5$ e $b = 6$ simultâneamente. Na totalidade, por rede, foram avaliados 3000 níveis gerados.
+
+\subsection{Classificação de níveis}
+
+A primeira abordagem para a classificação de níveis foi a criação de um SVC de classe única treinado em todas as janelas deslizantes geradas em cima dos níveis existentes. Uma vez que esse método mostrou-se insuficiente por classificar um pouco menos da metade do conjunto de treinamento como anomalia, foi treinado um outro SVC buscando separar os 8 mundos mais uma classe extra de matrizes 14 X 28 com números aleatórios entre 0 e 9, totalizando 9 classes. A performance deste classificador não ultrapassou 55\% de acurácia.
+
+Por fim, uma rede neural simples, codificada em \textit{PyTorch} foi treinada em cima das mesmas janelas deslizantes e sua performance foi julgada suficiente para avaliar o padrão de uma fase. (AQUI VAI IR A TOPOLOGIA DA REDE NEURAL).
+
+Para este treinamento, 80\% do conjunto de dados foi usado para treino, 10\% para validação e 10\% para teste. Os resultados do teste estão presentes na (TABELA D).
+
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA tabela D aqui.
+
+Para os testes de classificação, este modelo foi empregado em torno das entradas geradas.
+
+\subsection{Jogabilidade e performance de jogo}
+
+Em 2009, em associação a \textit{IEEE Games Innovation Conference} e a \textit{IEEE Symposium on Computational Intelligence and Games}, ocorreu a \textit{Mario AI Competition}, documentada em \cite{marioAI}. Até hoje, um dos agentes mais utilizados para testar a jogabilidade de níveis gerados de \textit{Super Mario Bros} é o agente A estrela de autoria de Robin Baumgarten.
+
+Este agente define o jogo como estado atual e leva em conta a velocidade do jogador. 
