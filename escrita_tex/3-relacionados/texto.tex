@@ -10,11 +10,17 @@ Antes mesmo do machine learning chegar a área de geração procedural de conte�
 
 Alguns exemplos de PCGML são o \emph{Bardo Composer}\cite{bardo} que gera musicas para RPGs de Mesa, geração de personagens em jogos no estilo pixel-art em \cite{sprites}, ou até mesmo aplicações mais práticas, como a desenvolvedora \emph{CD Projekt RED}, que fez uma parceria com a empresa canadense \emph{Jali Research} para, através de técnicas híbridas de inteligência artificial clássica e aprendizado de máquina, fazer com que a boca dos personagens se adapte a dublagem correspondente do diálogo, e o recente anúncio da desenvolvedora francesa \emph{Ubisoft} do desenvolvimento de uma ferramenta para ajuda de construção de narrativas de jogos, a \emph{Ubisoft Ghostwritter}.
 
-Porém a geração de conteúdo procedural data ao jogo de 1984 \textit{Elite}, onde os desenvolvedores usavam uma sequencia definida de sementes aleatórias para gerar composições de planetas na intenção de economizar memória armazenando apenas um gerador ao invés dos planetas inteiros. De acordo com o gráfico presente em \cite{survey2020}, quando se fala de PCGML, há uma quantia desproporcional de pesquisa em geração de níveis 2D em comparação aos demais tópicos. Para além disso, \cite{survey2020} ilustra no mesmo gráfico o quando o paradigma do aprendizado adversarial domina este tópico. Segundo os autores, o modelo adversarial mais popular neste campo seriam as GANs e suas variações.
+Porém a geração de conteúdo procedural data ao jogo de 1984 \textit{Elite}, onde os desenvolvedores usavam uma sequencia definida de sementes aleatórias para gerar composições de planetas na intenção de economizar memória armazenando apenas um gerador ao invés dos planetas inteiros. De acordo com o gráfico da \textbf{Figura 2.1}, quando se fala de PCGML, há uma quantia desproporcional de pesquisa em geração de níveis 2D em comparação aos demais tópicos. Para além disso, \cite{survey2020} ilustra no mesmo gráfico o quanto o paradigma do aprendizado adversarial domina este tópico. Segundo os autores, o modelo adversarial mais popular neste campo seriam as GANs e suas variações.
 
-%Aqui cabe o gráfico
+Em \cite{doom}, algumas GANs combinaram imagens e atributos topológicos e posicionais extraídos de conteúdo feito por humanos para gerar níveis do jogo \textit{Doom}. Neste trabalho em específico, os níveis não foram testados para checar se são jogáveis ou não. Já em \cite{cesagan}, além de propor uma nova arquitetura que acrescenta camadas de \textit{embedding} e módulos de atenção, a pequena quantia de dados de treino do jogo \textit{The Legend Of Zelda (1986)}foi expandida por uma técnica de \emph{bootstrapping}. Alguns dos resultados de \cite{cesagan} estão na \textbf{Figura 3.1}. 
 
-Em \cite{doom}, algumas GANs combinaram imagens e atributos topológicos e posicionais extraídos de conteúdo feito por humanos para gerar níveis do jogo \textit{Doom}. Neste trabalho em específico, os níveis não foram testados para checar se são jogáveis ou não. Já em \cite{cesagan}, além de propor uma nova arquitetura que acrescenta camadas de \textit{embedding} e módulos de atenção, a pequena quantia de dados de treino do jogo \textit{The Legend Of Zelda (1986)}foi expandida por uma técnica de \emph{bootstrapping}. Alguns dos resultados de \cite{cesagan} estão na (Figura N). 
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{figuras/zelda.png}
+        \caption{Fases geradas pela CESAGAN. Em a, níveis jogáveis e em b níveis injogáveis. Fonte: \cite{cesagan}}
+\label{fig:3.1}
+\end{figure}
+
 
 \cite{multigan} utiliza múltiplas GANs, um modelo o qual os autores apelidaram como multiGAN, para gerar níveis melhores conectados do jogo \textit{megaman} (1987). Para evoluir os níveis a atingirem certa propriedade, ao invés do CMA-ES, os autores utilizam o NSGA-II (\textit{Non-Dominated Sorting Genetic Algorithm}), um algoritmo multi-objetivo baseado em conceitos de Pareto. Para além disso, \cite{multigan} utiliza um algoritmo A estrela para predizer os caminhos e ajudar na mutação das variáveis latentes.
 
@@ -22,3 +28,8 @@ Para além de geração de níveis, GANs também são utilizadas para produzir p
 
 Como já explicado anteriormente, \cite{marioGAN} define uma DCGAN baseada na WGAN apresentada por \cite{WGAN} treinada em um único nível do jogo \emph{Super Mario Bros} e inova na forma de adicionar restrições a rede geradora após seu treinamento utilizando a técnica de LVE para adicionar restrições a saída do modelo. Neste artigo, o CMA-ES é o algoritmo utilizado para a busca no espaço latente e é aplicado após o treinamento da rede neural adversarial.
 
+%=====================================================
+
+\section{Conclusão}
+
+Neste capítulo, foram revisitados alguns trabalhos que utilizam conceitos de PCGML, muitos trabalhos estes que utilizam conceitos de \cite{marioGAN}, além de algumas aplicações práticas no início da sessão. Não se limitando a geração de níveis, o objetivo desta sessão foi justificar a importância do aprendizado adversarial na área de PCGML como um todo, área esta bastante aquecida porém recente, sem um estado da arte definido. No próximo capítulo, será apresentada a proposta deste trabalho. 

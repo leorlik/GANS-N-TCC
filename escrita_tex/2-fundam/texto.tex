@@ -14,7 +14,7 @@ Este capítulo revisita os tópicos fundamentais deste trabalho, incluindo os pr
 
 \section{Redes Neurais Adversariais Generativas}
 
-O paradigma do Aprendizado Adversarial e As Redes Neurais Adversariais Generativas (GANs) foram introduzidos por Godfellow et al. em 2014 como solução para o problema de estimação de máxima verossimilhança, dilema no qual o custo computacional e a complexidade são extremamente altos, podendo chegar a ser computacionalmente inviável a depender do contexto. Enquanto a gama mais popular de modelos profundos na época de publicação do artigo consistiam de apenas uma rede neural de alta profundidade usada em classificação e, em certos casos, regressão, o aprendizado adversarial proposto pelo artigo usufrui de duas MLPs.
+O paradigma do Aprendizado Adversarial e as Redes Neurais Adversariais Generativas (GANs) foram introduzidos em \cite{gan} em 2014 como solução para o problema de estimação de máxima verossimilhança, dilema no qual o custo computacional e a complexidade são extremamente altos, podendo chegar a ser computacionalmente inviável a depender do contexto. Enquanto a gama mais popular de modelos profundos na época de publicação do artigo consistiam de apenas uma rede neural de alta profundidade usada em classificação e, em certos casos, regressão, o aprendizado adversarial proposto pelo artigo usufrui de duas MLPs.
 
 Um desses modelos é apelidado de gerador, abreviado como \textit{G}, enquanto o outro modelo é chamado de discriminador e abreviado como \textit{D}. O modelo gerador representa uma função diferenciável responsável por aproximar a distribuição de seus dados de treinamento. Para gerar novos dados, a rede \textit{G} projeta entradas ruidosas no espaço dos dados conhecidos, na intenção de aproximar o conteúdo gerado da distribuição dos conjuntos conhecidos.
 
@@ -97,12 +97,12 @@ A survey de Summerville e colegas \cite{survey2018} define \emph{Procedural Cont
 
 \section{NSGA-II}
 
-Em Abril de 2002 foi proposto a evolução do nondominated sorting genetic algorithm (algoritmo genético de ordenção não-dominada), o NSGA-II\cite{Deb:02}, que hoje em dia conta com 37971 citações(Connected Papers, acesso em 05/11/2023). Esse algoritmo foi proposto na intenção de contornar os três principais problemas dos algoritmos evolucionários apontados na época:
+Em Abril de 2002 foi proposto a evolução do \textit{nondominated sorting genetic algorithm} (algoritmo genético de ordenção não-dominada), o NSGA-II\cite{Deb:02}, que hoje em dia conta com 37971 citações(Connected Papers, acesso em 05/11/2023). Esse algoritmo foi proposto na intenção de contornar os três principais problemas dos algoritmos evolucionários apontados na época:
 
 \begin{itemize}
     \item Alta complexidade computacional(especificamente $O(MN^{3})$, onde M é o numero de objetivos e N o tamanho da população);
     \item A falta de elitismo;
-    \item A necessidade de especificar parâmetros, como o de compartilhamento do primeiro NSGA\cite{Deb:94};
+    \item A necessidade de especificar parâmetros, como o caso do NSGA proposto em \cite{Deb:94};
 \end{itemize}
 
 E sua implementação nos permite:
@@ -127,7 +127,7 @@ A metaheurística associada ao PSO faz pouca ou nenhuma suposição do problema 
 
 O algoritmo A estrela é uma extensão do Algoritmo de Djikstra que utiliza alguma metaheurística para guiar a busca pelo caminho mais curto ao objetivo. Para que o algoritmo funcione corretamente, a heurística definida para auxiliar a busca deve ser admissível, isto é, o custo estimado para atingir o estado final em relação ao estado atual deve ser menor ou igual ao custo verdadeiro para atingir o estado final do estado atual. 
 
-A busca A estrela possui múltiplas aplicações, entre elas a busca por caminhos viáveis em videogames. Até os dias de hoje, o mais popular algoritmo para o teste de jogabilidade de níveis do jogo \textit{}
+A busca A estrela possui múltiplas aplicações, entre elas a busca por caminhos viáveis em videogames. Até os dias de hoje, o mais popular algoritmo para o teste de jogabilidade de níveis do jogo \textit{Super Mario Bros} é o agente A* proposto por Robin Baumgarten em \cite{marioAI}.
 
 %=====================================================
 
@@ -135,7 +135,14 @@ A busca A estrela possui múltiplas aplicações, entre elas a busca por caminho
 
 Em maio de 2018 publicou-se o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Aqui, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas a disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009\cite{marioai} de autoria de Robin Baumgarten.
 
-Para representar as fases, os autores utilizaram a representação do jogo \textit{Super Mario Bros} disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplificam a representação do jogo ao ignorar níveis específicos, onde a física do jogo diverge do padrão seguido pela maioria das fases, e também representa todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. Nesta representação, cada tipo de bloco é mapeado para um caracter específico, transformando a imagem em uma sequência de caracteres que indicam um bloco específico. Uma vez que o artigo implementa a arquitetura a partir da biblioteca \textit{Pytorch}, esta representação textual precisou ser remapeada para uma representação numérica, conforme mostrado pela (Figura Y). 
+Para representar as fases, os autores utilizaram a representação do jogo \textit{Super Mario Bros} disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplificam a representação do jogo ao ignorar níveis específicos, onde a física do jogo diverge do padrão seguido pela maioria das fases, e também representa todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. Nesta representação, cada tipo de bloco é mapeado para um caracter específico, transformando a imagem em uma sequência de caracteres que indicam um bloco específico. Uma vez que o artigo implementa a arquitetura a partir da biblioteca \textit{Pytorch}, esta representação textual precisou ser remapeada para uma representação numérica, conforme mostrado pela \textbf{Figura 2.1}. 
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=12cm]{imagens/representacao_mario.png}
+\caption{Representação dos elementos do jogo \textit{Super Mario Bros} pela VGLC e pelos autores de \cite{marioGAN}, respectivamente. Fonte: \cite{marioGAN} }
+\label{fig:2.1}
+\end{figure}
 
 A GAN convolucional profunda (DCGAN) utilizada no artigo é baseada na Wassertein Gan apresentada em \cite{wgan}, em que o discriminador utiliza convoluções com deslocamento (\textit{strided convolutions} ), enquanto o gerador utiliza convoluções com deslocamento fracionário (\textit{fractional-strided convolutions}. A arquitetura em \cite{marioGAN} difere de \cite{WGAN} nos seguintes pontos:
 
@@ -147,11 +154,80 @@ A GAN convolucional profunda (DCGAN) utilizada no artigo é baseada na Wassertei
 
 \end{itemize}
 
-Tanto o discriminador quanto o gerador são treinados com o otimizador RMSprop, com um \textit{batch size} de tamanho 32 e a taxa de aprendizado de 0,00005 por 5000 iterações. A arquitetura é devidamente ilustrada na (Figura Y).
+Tanto o discriminador quanto o gerador são treinados com o otimizador RMSprop, com um \textit{batch size} de tamanho 32 e a taxa de aprendizado de 0,00005 por 5000 iterações. A arquitetura é devidamente ilustrada na \textbf{Figura 2.2}.
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{imagens/arquitetura_mariogan.png}
+	\caption{Representação da arquitetura da GAN utilizada no paper. Fonte: \cite{marioGAN}}
+\label{fig:2.2}
+\end{figure}
 
 O gerador utilizado no artigo é treinado apenas com o primeiro nível do jogo, na intenção de mostrar como a LVE e a GAN treinada poderiam, em conjunto, gerar níveis diferentes e jogáveis. Outra escolha interessante do artigo da MarioGAN \cite{marioGAN} é que, para gerar múltiplas amostras com apenas uma fase, a representação numérica foi separada com base em uma janela deslizante com dimensões de 14 de altura e 28 de largura, com passo de tamanho um. 
 
-Uma noção geral do processo executado por \cite{marioGAN} está devidamente traduzido na (Figura Z). Este método é dividido em duas fases básicas distintas: primeiro, a WGAN é treinada de maneira não-supervisionada para gerar níveis do \textit{Super Mario Bros}; após isso, o CMA-ES é utilizado de forma a buscar no espaço latente da GAN, ou seja, alterar a entrada do modelo para satisfazer propriedades específicas. Embora o artigo se baseie apenas em níveis do jogo \textit{Super Mario Bros}, os autores clamam que o modelo é suficientemente bom para generalizar qualquer jogo com representação compatível.
+Uma noção geral do processo executado por \cite{marioGAN} está devidamente traduzido na \textbf{Figura 2.3}. Este método é dividido em duas fases básicas distintas: primeiro, a WGAN é treinada de maneira não-supervisionada para gerar níveis do \textit{Super Mario Bros}; após isso, o CMA-ES é utilizado de forma a buscar no espaço latente da GAN, ou seja, alterar a entrada do modelo para satisfazer propriedades específicas. Embora o artigo se baseie apenas em níveis do jogo \textit{Super Mario Bros}, os autores clamam que o modelo é suficientemente bom para generalizar qualquer jogo com representação compatível.
+
+\begin{figure}[!htb]
+\centering
+        \includegraphics[width=12cm]{imagens/arquitetura_mariogan.png}
+	\caption{Representação do processo de treinamento e de LVE. Fonte: \cite{marioGAN}}
+\label{fig:2.3}
+\end{figure}
+
+Quanto as funções minimizadas em relação a topologia do nível minimizadas no artigo, as equações (1) e (2) as traduzem, em que g e t são respectivamente a fração da quantidade de blocos de chão na ultima linha da matriz que representa a fase e a fração desejada, e n o número de inimigos.
+
+\begin{equation}
+    F_1 = \sqrt{(g - t)^2}
+\end{equation}
+
+\begin{equation}
+    F_2 = F_1 + 0.5 \cdot (20.0 - n)
+\end{equation}
+
+No artigo, a ideia apresentada é que a dificuldade aumente gradativamente conforme a progressão no eixo x, lembrando que o objetivo do jogo é chegar ao fim da fase, ou seja, no último ponto do eixo x. Para isso, os autores juntam dois níveis otimizados com $F_1$ e $t = 1$, um nível otimizado com $F_1$ e $g = 0.7$, e dois níveis otimizando $F_2$ com $g = 0.7$. O exemplo desta junção está na \textbf{Figura 2.3}.
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{imagens/nivel_gerado.png}
+        \caption{Nível gerado pelos autores, com progressão de dificuldade no eixo x. Fonte: \cite{marioGAN}}
+\label{fig:2.3}
+\end{figure}
+
+Em outros experimentos, os autores usam duas funções relacionadas ao teste pelo agente A estrela vencedor da competição da marioAI de 2009, conforme as equações (3) e (4), onde p é a fração da fase em que o agente passou, e #jumps a quantia de pulos:
+
+\begin{equation}
+    F_3 =
+    \begin{cases}
+        -p, & \text{se } p < 1, \\
+        -p - \#jumps, & \text{se } p = 1.
+    \end{cases}
+\end{equation}
+
+\begin{equation}
+    F_4 =
+    \begin{cases}
+        -p + 60, & \text{se } p < 1, \\
+        -p + \#jumps, & \text{se } p = 1.
+    \end{cases}
+\end{equation}
+
+Na verdade, $F_3$ maximiza os pulos e recompensa fases passáveis, enquanto $F_4$ também recompensa fases jogáveis, mas minimizando pulos. A \textbf{Figura 2.4} ilustra alguns desses níveis gerados.
+
+\begin{figure}[!htb]
+\centering
+        \includegraphics[width=12cm]{imagens/nivel_gerado}
+        \caption{Nível gerado pelos autores, de acordo com a performance do agente. A letra a utiliza $F_3$, enquanto a parte b utiliza $F_4$. Fonte: \cite{marioGAN}}
+\label{fig:2.4}
+\end{figure}
+
+Lembrando que não foram feitas abordagem multi-objetivo utilizando $F_1$ ou $F_2$ e $F_3$ ou $F_4$.
+
+%=====================================================
+
+\section{Conclusão}
+
+Neste capítulo, foram apresentados os conceitos de GAN, PCGML e LVE, além de três algoritmos bioinspirados - CMA-ES, PSO e NSGA-II - que se relacionarão diretamente aos demais conceitos no decorrer do trabalho. Também foi apresentado o algoritmo A estrela, que será utilizado para teste e otimização das fases, além de uma visão ampla de um dos principais artigos da área de PCGML, artigo em que a rede proposta ficou conhecida como \textit{MarioGAN}. No próximo capítulo, serão visitados alguns outros artigos da área, muitos os quais utilizam de alguma forma os conceitos aqui apresentados.
+
 
 %\subsection{Exemplo de figura}
 
