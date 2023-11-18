@@ -10,6 +10,118 @@ Por ser simples, utilizando apenas algumas fórmulas, uma comparação entre o P
 
 \section{Topologia dos níveis}
 
+Assim como foram analisadas as funções propostas em \cite{marioGAN}, também foi observado o efeito da evolução de variáveis latentes com uma função diretamente ligada com a topologia das fases, no caso a função da equação (5) que busca maximizar um certo tipo de bloco, isto é, a quantia de vezes que um elemento (ou número, em termos literais) aparece na matriz que representa um nível. Para este experimento o bloco maximizado, ou seja, o valor de $b$ na equação (5), foi 5 (inimigos) e 6 (canto superior esquerdo do cano). 
+
+Para além da análise de um modelo treinado com o mesmo conjunto de \cite{marioGAN}, ou seja, apenas com a primeira fase do jogo \textit{Super Mario Bros}, também foram feitos treinamentos com cada um dos conjuntos presentes na \textbf{Tabela 4.1.1}, ou seja, com cada um dos conjuntos de fases disponíveis agrupados em mundo. Para cada conjunto foram realizadas 1000 iterações do PSO e do CMA-ES, sendo 500 para maximizar inimigos e 500 para maximizar canos, enquanto o NSGA-II realizou apenas 500 iterações, otimizando simultaneamente a função para $b = 5$ e $b = 6$. Adicionalmente, foram realizadas 500 iterações com entradas aleatórias por conjunto de treino, na intenção de comparar os efeitos do uso da LVE com entradas ruidosas sem cuidado algum. Em todos os casos, as entradas foram limitadas a números reais entre -2 e 2. Os resultados estão nas \textbf{tabelas 5.3.1} e \textbf{tabelas 5.3.2}.  
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|p{2cm}|p{3cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+        \hline
+        \multirow{2}{*}{\textbf{Mundo}} & \multirow{2}{*}{\textbf{Entrada}} & \textbf{Média de Canos} & \textbf{Desvio Padrão (Canos)} & \textbf{Média de Inimigos} & \textbf{Desvio Padrão (Inimigos)} \\
+         & & \textbf{($\bar{x}$)} & \textbf{($\sigma$)} & \textbf{($\bar{x}$)} & \textbf{($\sigma$)} \\
+        \hline
+        & Aleatórias & 0.482 & 0.715 & 1.77 & 1.57 \\
+	    & CMA-ES & \textbf{5.81} & 0.558 & 1.17 & 0.522 \\
+	    Mundo 1 & NSGA-II & 1.44 & 0.807 & \textbf{6.00} & 1.85 \\
+        & PSO & 4.64 & 0.934 & 1.54 & 1.06 \\
+        \hline
+        &  Aleatórias & 0.650 & 0.548 & 4.07 & 2.68 \\
+	&  CMA-ES & \textbf{3.43} & 1.12 & 4.61 & 2.26 \\
+	Mundo 2 &  NSGA-II & 1.01 & 0.498 & \textbf{9.27} & 1.78 \\
+        &  PSO & 3.25 & 0.882 & 4.74 & 2.32 \\
+        \hline
+        & Aleatórias & 0.280 & 0.512 & 2.29 & 1.83 \\
+	& CMA-ES & \textbf{2.86} & 0.345 & 3.91 & 1.51 \\
+	Mundo 3 & NSGA-II & 1.51 & 0.686 & \textbf{7.17} & 1.83 \\
+        & PSO & 2.82 & 0.383 & 3.87 & 1.62 \\
+        \hline
+        & Aleatórias & 0.652 & 0.832 & 0.918 & 1.05 \\
+	& CMA-ES & \textbf{5.68} & 0.467 & 4.39 & 1.02 \\
+	Mundo 4 & NSGA-II & 3.96 & 0.778 & \textbf{5.19} & 1.01 \\
+        & PSO & 5.31 & 0.640 & 4.40 & 1.01 \\
+        \hline
+        & Aleatórias & 0.230 & 0.527 & 3.05 & 2.14 \\
+	&  CMA-ES & \textbf{4.08} & 0.599 & 3.41 & 1.38 \\
+	Mundo 5 & NSGA-II & 0.530 & 0.809 & \textbf{10.7} & 2.21 \\
+        &  PSO & 3.69 & 0.637 & 3.51 & 1.36 \\
+        \hline
+        & Aleatórias & 0.0900 & 0.293 & 0.0940 & 0.312 \\
+        & CMA-ES & 1.84 & 0.543 & 1.34 & 0.724 \\
+        Mundo 6 & NSGA-II & 1.27 & 0.536 & 1.28 & 0.547 \\
+	& PSO & \textbf{1.99} & 0.0999 & \textbf{1.57} & 0.612 \\
+        \hline
+        & Aleatórias & 0.452 & 0.733 & 1.26 & 1.14 \\
+	& CMA-ES & \textbf{4.84} & 0.494 & 2.47 & 0.728 \\
+	Mundo 7 & NSGA-II & 2.38 & 1.02 & \textbf{4.50} & 1.17 \\
+        &  PSO & 4.62 & 0.705 & 2.50 & 0.758 \\
+        \hline
+        &  Aleatórias & 0.778 & 0.922 & 3.56 & 1.96 \\
+	& CMA-ES & \textbf{5.85} & 0.398 & 3.91 & 0.870 \\
+	Mundo 8 & NSGA-II & 1.64 & 1.01 & \textbf{9.86} & 2.05 \\
+        & PSO & 5.22 & 0.702 & 3.93 & 1.37 \\
+        \hline
+    \end{tabular}
+    \caption{Estatísticas dos conjuntos de treino maximizando o número de canos}
+    \label{tab:conjunto_treino_pipe}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|p{2cm}|p{3cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+        \hlin
+        \multirow{2}{*}{\textbf{Mundo}} & \multirow{2}{*}{\textbf{Entrada}} & \textbf{Média de Canos} & \textbf{Desvio Padrão (Canos)} & \textbf{Média de Inimigos} & \textbf{Desvio Padrão (Inimigos)} \\
+         & & \textbf{($\bar{x}$)} & \textbf{($\sigma$)} & \textbf{($\bar{x}$)} & \\
+        \hline
+         & Aleatórias & 0.482 & 0.715 & 1.77 & 1.57 \\
+	 &  CMA-ES & 0.140 & 0.391 & \textbf{11.0} & 0.79 \\
+	Mundo 1 &  NSGA-II & \textbf{1.44} & 0.807 & 6.00 & 1.85 \\
+        & PSO & 0.234 & 0.442 & 10.2 & 1.215 \\
+        \hline
+        & Aleatórias & 0.650 & 0.548 & 4.07 & 2.63 \\
+	& CMA-ES & 0.556 & 0.536 & \textbf{15.3} & 1.22 \\
+	Mundo 2 & NSGA-II & \textbf{1.01} & 0.498 & 9.27 & 1.77 \\
+         & PSO & 0.712 & 0.574 & 13.8 & 1.14 \\
+        \hline
+        & Aleatórias & 0.280 & 0.512 & 2.29 & 1.830 \\
+	&  CMA-ES & 0.806 & 0.519 & \textbf{12.2} & 1.03 \\
+	Mundo 3 & NSGA-II & \textbf{1.51} & 0.686 & 7.17 & 1.82 \\
+        & PSO & 0.720 & 0.585 & 11.1 & 1.14 \\
+        \hline
+        &  Aleatórias & 0.652 & 0.832 & 0.918 & 1.058 \\
+	&  CMA-ES & 3.35 & 0.844 & \textbf{7.00} & 0.07 \\
+	Mundo 4 & NSGA-II & \textbf{3.96} & 0.778 & 5.19 & 1.01\\
+        & PSO & 2.97 & 1.07 & 6.80 & 0.449 \\
+        \hline
+        & Aleatórias & 0.230 & 0.527 & 3.05 & 2.14 \\
+	& CMA-ES & 0 & 0 & \textbf{15.2} & 1.16 \\
+	Mundo 5 & NSGA-II & \textbf{0.530} & 0.809 & 10.7 & 2.21 \\
+        & PSO & 0.0380 & 0.270 & 13.5 & 1.52 \\
+        \hline
+        & Aleatórias & 0.0900 & 0.293 & 0.0940 & 0.31 \\
+        & CMA-ES & 1.27 & 0.673 & 1.86 & 0.62 \\
+        Mundo 6 & NSGA-II & 1.27 & 0.536 & 1.28 & 0.54 \\
+	& PSO & \textbf{1.38} & 0.556 & \textbf{2.06} & 0.23 \\
+        \hline
+        & Aleatórias & 0.452 & 0.733 & 1.26 & 1.13 \\
+	& CMA-ES & 1.47 & 0.647 & \textbf{6.78} & 0.562 \\
+	Mundo 7 & NSGA-II & \textbf{2.38} & 1.02 & 4.50 & 1.16 \\
+         & PSO & 1.14 & 0.697 & 6.43 & 0.63 \\
+        \hline
+        & Aleatórias & 0.778 & 0.922 & 3.56 & 1.96 \\
+	& CMA-ES & 1.14 & 0.917 & \textbf{16.4} & 0.928 \\
+	Mundo 8 & NSGA-II & \textbf{1.64} & 1.01 & 9.86 & 2.05 \\
+        & PSO & 0.906 & 0.977 & 14.3 & 1.60 \\
+        \hline
+    \end{tabular}
+    \caption{Estatísticas dos conjuntos de treino maximizando o número de inimigos}
+    \label{tab:conjunto_treino}
+\end{table}
+
+As \textbf{tabelas 5.3.1} e \textbf{ 5.3.2} contém vários resultados interessantes. O mais importante deles é que para qualquer método usado para a LVE - seja o CMA-ES, o PSO ou o NSGA-II - a função objetivo otimizada e, consequentemente, o tipo de elemento visado(maximizando canos na primeira tabela e inimigos na segunda) aparece em quantia maior do que quando comparado com entradas aleatórias, significando que o uso da LVE possui sim impacto relevante pelo menos quando se diz respeito à topologia da fase. Para além disso, na grande maioria das fases geradas a partir de múltiplos conjuntos de treino, o CMA-ES é o algoritmo que melhor converge. Porém vale lembrar que, além do tempo de execução do CMA-ES ser maior que o do PSO, o CMA-ES neste experimento não foi limitado em número de gerações, e também a diferença entre os valores da média das funções objetivo do PSO e o CMA-ES ainda é pequena e, caso algum teste estatístico corrobore que não são significativas, em aplicações práticas em que o tempo de geração deveria ser menor o PSO seria a melhor opção, mesmo com valores um pouco abaixo do CMA-ES.
+
+Em relação ao NSGA-II, embora ele não tenha superado no objetivo principal nenhum dos outros métodos de LVE, no oposto (número de inimigos quando se maximiza canos ou número de canos quando se maximizando canos) ele sempre é superior com exceção do mundo 6, o que poderia levar a um estudo da correlação entre o número de canos e de inimigos neste mundo específico. Além disso, como já dito anteriormente, o NSGA-II ainda foi melhor que as entradas aleatórias, justificando seu uso numa situação de equilíbrio entre duas funções não correlacionadas em relação à topologia do nível. Outro detalhe que deve se ter atenção é que, para as análises do NSGA-II foi utilizado um critério de desempate que equilibra as duas funções igualmente, e o algoritmo pode ou não ter gerado soluções não dominadas mais interessantes que os demais. 
+
 \section{Classificação dos padrões gerados}
 
 É importante também avaliarmos o conteúdo gerado. Como um SVC de uma classe ou múltiplas não se mostraram suficientes para dividir as janelas deslizantes dos mundos, um modelo neural simples foi testado e, como mostrado no capítulo anterior, alcançou valores satisfatórios. Uma vez decidida a forma de classificar o padrão, esta rede foi utilizada para avaliar os pedaços de fase gerados, comparando as entradas geradas de forma aleatória e utilizando o PSO e o CMA-ES como técnicas de evolução de variáveis latentes. Nesta comparação, nós utilizamos nove conjuntos diferentes de treino da rede geradora, sendo a primeira fase como em \cite{marioGAN} e cada um dos oito mundos, totalizando 9 conjuntos de treino. Para cada conjunto, foram geradas 500 entradas aleatórias, 500 entradas com uso de CMA-ES como método de LVE e 500 com o uso do PSO, totalizando 1500 entradas por conjunto de treino, totalizando 1350 níveis avaliados. Neste experimento, a função otimizada foi a da equação (5) com $b = 6$, ou seja, maximizando o número de canos. Os gráficos presente nas figuras \textbf{5.4.1}, \textbf{5.4.2} e \textbf{5.4.3} sintetizam estes resultados, com uso de entradas aleatórias, entradas construídas pelo CMA-ES e PSO, respectivamente.
