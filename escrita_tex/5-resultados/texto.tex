@@ -1,336 +1,91 @@
-\chapter{Resultados - Em construção, apenas imagens}
+\chapter{Resultados}
 
-\section{Jogabilidade Maximizando Canos}
+Neste capítulo, são apresentados os resultados dos testes elicitados no capítulo anterior. Com análises tanto visual quanto em tabelas e gráficos, foram aplicadas múltiplas funções de LVE na GAN, que foi treinada com múltiplos mundos. Também vale lembrar que três tipos de algoritmos foram utilizados (CMA-ES, PSO e NSGA-II) e, além das funções objetivo, os níveis gerados também foram avaliados por um classificador neural simples e o algoritmo A estrela de Robin Baumgarten.
+
+\section{Comparação de tempo entre CMA-ES e PSO}
+
+Por ser simples, utilizando apenas algumas fórmulas, uma comparação entre o PSO e o CMA-ES nos quesitos tempo e performance. Embora, em sua essência, o CMA-ES não seja limitado em iterações mas sim em um valor aceitável da função objetivo, para esta comparação de tempo ele foi limitado em 50 iterações, assim como o algoritmo de partículas. Neste experimento, o conjunto de treino do gerador foi composto apenas por janelas geradas pelo processamento da primeira fase, para devidamente comparar o CMA-ES manipulando um gerador treinado com o conjunto de treino presente no artigo e sua impĺementação com o PSO. Os resultados estão presentes na \textit{Tabela 5.1.1}, com média e desvio padrão.
+
+\section{Níveis em progressão de dificuldade}
+
+\section{Topologia dos níveis}
+
+\section{Classificação dos padrões gerados}
+
+É importante também avaliarmos o conteúdo gerado. Como um SVC de uma classe ou múltiplas não se mostraram suficientes para dividir as janelas deslizantes dos mundos, um modelo neural simples foi testado e, como mostrado no capítulo anterior, alcançou valores satisfatórios. Uma vez decidida a forma de classificar o padrão, esta rede foi utilizada para avaliar os pedaços de fase gerados, comparando as entradas geradas de forma aleatória e utilizando o PSO e o CMA-ES como técnicas de evolução de variáveis latentes. Nesta comparação, nós utilizamos nove conjuntos diferentes de treino da rede geradora, sendo a primeira fase como em \cite{marioGAN} e cada um dos oito mundos, totalizando 9 conjuntos de treino. Para cada conjunto, foram geradas 500 entradas aleatórias, 500 entradas com uso de CMA-ES como método de LVE e 500 com o uso do PSO, totalizando 1500 entradas por conjunto de treino, totalizando 1350 níveis avaliados. Neste experimento, a função otimizada foi a da equação (5) com $b = 6$, ou seja, maximizando o número de canos. Os gráficos presente nas figuras \textbf{5.4.1}, \textbf{5.4.2} e \textbf{5.4.3} sintetizam estes resultados, com uso de entradas aleatórias, entradas construídas pelo CMA-ES e PSO, respectivamente.
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=12cm]{plots_canos/plot_wins_world_1.pdf}
-\caption{Jogabilidade do Mundo 1}
-\label{fig:0x}
+        \includegraphics[width=12cm]{plot_classificacao/classificacao_aleatorias.pdf}
+        \caption{Classificação corretas das entradas aleatórias}
+\label{fig:5.4.1}
 \end{figure}
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=12cm]{plots_canos/plot_wins_world_2.pdf}
-\caption{Jogabilidade do Mundo 2}
-\label{fig:1}
+        \includegraphics[width=12cm]{plot_classificacao/classificacao_cma.pdf}
+        \caption{Classificação corretas das entradas do CMA-ES}
+\label{fig:5.4.2}
 \end{figure}
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=12cm]{plots_canos/plot_wins_world_3.pdf}
-\caption{Jogabilidade do Mundo 3}
-\label{fig:2}
+        \includegraphics[width=12cm]{plot_classificacao/classificacao_pso.pdf}
+        \caption{Classificação corretas das entradas do PSO}
+\label{fig:5.4.3}
 \end{figure}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_canos/plot_wins_world_4.pdf}
-\caption{Jogabilidade do Mundo 4}
-\label{fig:3}
-\end{figure}
+Para além desses gráficos, é interessante ressaltar que majoritariamente as fases foram classificadas dentro de um padrão específico pela GAN. A \textbf{Tabela 5.4.4} explicita os padrões de cada conjunto de treino, técnica e padrão.
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_canos/plot_wins_world_5.pdf}
-\caption{Jogabilidade do Mundo 5}
-\label{fig:4}
-\end{figure}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Conjunto de treino & Entradas & Classe Predominante & Quantia Classificada \\
+        \hline
+        \multirow{3}{*}{Primeira fase} & Aleatória & 1 & 489 \\
+                                       & CMA-ES & 1 & 491 \\
+                                       & PSO & 1 & 496 \\
+        \hline
+        \multirow{3}{*}{Mundo 1} & Aleatória & 7 & 454 \\
+                                  & CMA-ES & 7 & 460 \\
+                                  & PSO & 7 & 475 \\
+        \hline
+        \multirow{3}{*}{Mundo 2} & Aleatória & 8 & 382 \\
+                                  & CMA-ES & 8 & 412 \\
+                                  & PSO & 8 & 431 \\
+        \hline
+        \multirow{3}{*}{Mundo 3} & Aleatória & 5 & 456 \\
+                                  & CMA-ES & 5 & 489 \\
+                                  & PSO & 5 & 481 \\
+        \hline
+        \multirow{3}{*}{Mundo 4} & Aleatória & 4 & 347 \\
+                                  & CMA-ES & 4 & 424 \\
+                                  & PSO & 4 & 396 \\
+        \hline
+        \multirow{3}{*}{Mundo 5} & Aleatória & 7 & 464 \\
+                                  & CMA-ES & 7 & 472 \\
+                                  & PSO & 7 & 468 \\
+        \hline
+        \multirow{3}{*}{Mundo 6} & Aleatória & 6 & 498 \\
+                                  & CMA-ES & 6 & 499 \\
+                                  & PSO & 6 & 498 \\
+        \hline
+        \multirow{3}{*}{Mundo 7} & Aleatória & 7 & 494 \\
+                                  & CMA-ES & 7 & 497 \\
+                                  & PSO & 7 & 499 \\
+        \hline
+        \multirow{3}{*}{Mundo 8} & Aleatória & 8 & 324 \\
+                                  & CMA-ES & 8 & 410 \\
+                                  & PSO & 8 & 422 \\
+        \hline
+    \end{tabular}
+    \caption{Descrição do Conjunto de Treino}
+    \label{tab:conjunto_treino}
+\end{table}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_canos/plot_wins_world_6.pdf}
-\caption{Jogabilidade do Mundo 6}
-\label{fig:5}
-\end{figure}
+Embora alguns mundos do primeiro ao quinto, com exceção do quarto, sejam classificados fora do padrão esperado, é importante ressaltar que eles não distoam na questão do padrão atribuído. A GAN treinada com o mundo 3, por exemplo, tem seus conteúdo gerados majoritariamente classificados como níveis do mundo 5, independente do tipo de entrada. Comparando as entradas aleatórias com técnicas de LVE, a afirmação de que o uso de uma técnica de manipulação de espaço latente não interfere no padrão que se encaixa um conteúdo gerado ganha um tanto de força. Porém, embora empiricamente provada com uma única função, esta possível conclusão só seria correta caso haja uma prova matemática para tal.
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_canos/plot_wins_world_7.pdf}
-\caption{Jogabilidade do Mundo 7}
-\label{fig:6}
-\end{figure}
+Para tanto, esta sessão do capítulo ainda justifica a escolha das redes treinadas com os mundos 1 e 6, que possuem mais níveis e são classificadas fora e dentro do padrão esperado, respectivamente, além da primeira fase, que é o mesmo conjunto de treinamento de \cite{marioGAN}. Com estes três conjuntos de treinos, podemos cobrir de forma satisfatória naturezas distintas de conjuntos de treino.
 
-Mundo 8:
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_canos/plot_wins_world_8.pdf}
-\caption{Jogabilidade do Mundo 8}
-\label{fig:7}
-\end{figure}
-
-\section{Jogabilidade Maximizando Inimigos}
-
-
-Mundo 1:
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_inimigos/plot_wins_world_1.pdf}
-\caption{Jogabilidade do Mundo 1}
-\label{fig:0c}
-\end{figure}
-
-Jogabilidade Mundo 2:
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_inimigos/plot_wins_world_2.pdf}
-\caption{Jogabilidade do Mundo 2}
-\label{fig:1c}
-\end{figure}
-
-Mundo 3:
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_inimigos/plot_wins_world_3.pdf}
-\caption{Jogabilidade do Mundo 3}
-\label{fig:2c}
-\end{figure}
-
-Mundo 4:
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_inimigos/plot_wins_world_4.pdf}
-\caption{Jogabilidade do Mundo 4}
-\label{fig:3c}
-\end{figure}
-
-Mundo 5:
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_inimigos/plot_wins_world_5.pdf}
-\caption{Jogabilidade do Mundo 5}
-\label{fig:4c}
-\end{figure}
-
-Mundo 6:
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_inimigos/plot_wins_world_6.pdf}
-\caption{Jogabilidade do Mundo 6}
-\label{fig:5c}
-\end{figure}
-
-Mundo 7:
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_inimigos/plot_wins_world_7.pdf}
-\caption{Jogabilidade do Mundo 7}
-\label{fig:6c}
-\end{figure}
-
-Mundo 8:
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plots_inimigos/plot_wins_world_8.pdf}
-\caption{Jogabilidade do Mundo 8}
-\label{fig:7c}
-\end{figure}
-
-\section{Tabela De Valores Otimizando Canos}
-
-Tabela de valores otimizando canos:
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{tabelas_otm/TABELA_OTM_CANOS.png}
-\caption{Tabela Maximizando canos}
-\label{fig:TO}
-\end{figure}
-
-\section{Tabela de Valores Otimizando Inimigos}
-
-Tabela:
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{tabelas_otm/TABELA_OTM_INIMIGOS.png}
-\caption{Tabela Inimigos}
-\label{fig:TI}
-\end{figure}
-
-\section{Classificação de Padrões}
-
-Primeiro Mundo
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Primeiro Mundo - Vetores Aleatórios.png}
-\caption{Primeiro Mundo}
-\label{fig:TO}
-\end{figure}
-
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Primeiro Mundo - Vetores do CMA-ES.png}
-\caption{Primeiro Mundo}
-\label{fig:T}
-\end{figure}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Primeiro Mundo - Vetores do PSO.png}
-\caption{Primeiro Mundo}
-\label{fig:T}
-\end{figure}
-
-Segundo Mundo
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Segundo Mundo - Vetores Aleatórios.png}
-\caption{segundo Mundo}
-\label{fig:TO}
-\end{figure}
-
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Segundo Mundo - Vetores do CMA-ES.png}
-\caption{Segundo Mundo}
-\label{fig:T}
-\end{figure}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Segundo Mundo - Vetores do PSO.png}
-\caption{Segundo Mundo}
-\label{fig:T}
-\end{figure}
-
-Terceiro Mundo
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Terceiro Mundo - Vetores Aleatórios.png}
-\caption{39 Mundo}
-\label{fig:TO}
-\end{figure}
-
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Terceiro Mundo - Vetores do CMA-ES.png}
-\caption{3o Mundo}
-\label{fig:T}
-\end{figure}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Terceiro Mundo - Vetores do PSO.png}
-\caption{3o Mundo}
-\label{fig:T}
-\end{figure}
-
-Quarto Mundo
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Quarto Mundo - Vetores Aleatórios.png}
-\caption{4 Mundo}
-\label{fig:TO}
-\end{figure}
-
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Quarto Mundo - Vetores do CMA-ES.png}
-\caption{4o Mundo}
-\label{fig:T}
-\end{figure}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Quarto Mundo - Vetores do PSO.png}
-\caption{4o Mundo}
-\label{fig:T}
-\end{figure}
-
-Quinto Mundo
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Quinto Mundo - Vetores Aleatórios.png}
-\caption{5 Mundo}
-\label{fig:TO}
-\end{figure}
-
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Quinto Mundo - Vetores do CMA-ES.png}
-\caption{5o Mundo}
-\label{fig:T}
-\end{figure}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Quinto Mundo - Vetores do PSO.png}
-\caption{5o Mundo}
-\label{fig:T}
-\end{figure}
-
-Sexto Mundo
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Sexto Mundo - Vetores Aleatórios.png}
-\caption{6 Mundo}
-\label{fig:TO}
-\end{figure}
-
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Sexto Mundo - Vetores do CMA-ES.png}
-\caption{6o Mundo}
-\label{fig:T}
-\end{figure}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Sexto Mundo - Vetores do PSO.png}
-\caption{6o Mundo}
-\label{fig:T}
-\end{figure}
-
-Sétimo Mundo
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Sétimo Mundo - Vetores Aleatórios.png}
-\caption{7 Mundo}
-\label{fig:TO}
-\end{figure}
-
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Sétimo Mundo - Vetores do CMA-ES.png}
-\caption{7o Mundo}
-\label{fig:T}
-\end{figure}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Sétimo Mundo - Vetores do PSO.png}
-\caption{7o Mundo}
-\label{fig:T}
-\end{figure}
-
-Oitavo Mundo
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Oitavo Mundo - Vetores Aleatórios.png}
-\caption{8 Mundo}
-\label{fig:TO}
-\end{figure}
-
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Oitavo Mundo - Vetores do CMA-ES.png}
-\caption{8o Mundo}
-\label{fig:T}
-\end{figure}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=12cm]{plot_padroes/GAN Treinada com o Oitavo Mundo - Vetores do PSO.png}
-\caption{8o Mundo}
-\label{fig:T}
-\end{figure}
-
+\section{Jogabilidade}
