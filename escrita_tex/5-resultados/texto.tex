@@ -4,7 +4,9 @@ Neste capítulo, são apresentados os resultados dos testes elicitados no capít
 
 \section{Comparação de tempo entre CMA-ES e PSO}
 
-Por ser simples, utilizando apenas algumas fórmulas, uma comparação entre o PSO e o CMA-ES nos quesitos tempo e performance. Embora, em sua essência, o CMA-ES não seja limitado em iterações mas sim em um valor aceitável da função objetivo, para esta comparação de tempo ele foi limitado em 50 iterações, assim como o algoritmo de partículas. Neste experimento, o conjunto de treino do gerador foi composto apenas por janelas geradas pelo processamento da primeira fase, para devidamente comparar o CMA-ES manipulando um gerador treinado com o conjunto de treino presente no artigo e sua impĺementação com o PSO. Os resultados estão presentes na \textit{Tabela 5.1.1}, com média e desvio padrão.
+Por ser simples, utilizando apenas algumas fórmulas, uma comparação entre o PSO e o CMA-ES nos quesitos tempo e performance. Embora, em sua essência, o CMA-ES não seja limitado em iterações mas sim em um valor aceitável da função objetivo, para esta comparação de tempo ele foi limitado em 50 iterações, assim como o algoritmo de partículas. Neste experimento, o conjunto de treino do gerador foi composto apenas por janelas geradas pelo processamento da primeira fase, para devidamente comparar o CMA-ES manipulando um gerador treinado com o conjunto de treino presente no artigo e sua impĺementação com o PSO. 
+
+A função objetivo otimizada foi a da equação 2.2, com $g = 5$. Como nos experimentos dos autores duas janelas diferentes minimizavam a função desta equação, foram realizadas 200 iterações por método de LVE. Os resultados estão presentes na \textbf{Tabela 5.1}, com média e desvio padrão.
 
 \section{Níveis em progressão de dificuldade}
 

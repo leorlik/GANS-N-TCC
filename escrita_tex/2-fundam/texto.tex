@@ -169,7 +169,7 @@ Uma noção geral do processo executado por \cite{marioGAN} está devidamente tr
 
 \begin{figure}[!htb]
 \centering
-        \includegraphics[width=12cm]{imagens/arquitetura_mariogan.png}
+	\includegraphics[width=12cm]{imagens/LVE.png}
 	\caption{Representação do processo de treinamento e de LVE. Fonte: \cite{marioGAN}}
 \label{fig:2.3}
 \end{figure}
@@ -184,7 +184,7 @@ Quanto as funções minimizadas em relação a topologia do nível minimizadas n
     F_2 = F_1 + 0.5 \cdot (20.0 - n)
 \end{equation}
 
-No artigo, a ideia apresentada é que a dificuldade aumente gradativamente conforme a progressão no eixo x, lembrando que o objetivo do jogo é chegar ao fim da fase, ou seja, no último ponto do eixo x. Para isso, os autores juntam dois níveis otimizados com $F_1$ e $t = 1$, um nível otimizado com $F_1$ e $g = 0.7$, e dois níveis otimizando $F_2$ com $g = 0.7$. O exemplo desta junção está na \textbf{Figura 2.3}.
+No artigo, a ideia apresentada é que a dificuldade aumente gradativamente conforme a progressão no eixo x, lembrando que o objetivo do jogo é chegar ao fim da fase, ou seja, no último ponto do eixo x. Para isso, os autores juntam dois níveis otimizados com $F_1$ e $t = 1$, um nível otimizado com $F_1$ e $g = 0.7$, e dois níveis otimizando $F_2$ com $g = 0.7$. O exemplo desta junção está na \textbf{Figura 2.4}.
 
 \begin{figure}[!htb]
 \centering
@@ -211,7 +211,7 @@ Em outros experimentos, os autores usam duas funções relacionadas ao teste pel
     \end{cases}
 \end{equation}
 
-Na verdade, $F_3$ maximiza os pulos e recompensa fases passáveis, enquanto $F_4$ também recompensa fases jogáveis, mas minimizando pulos. A \textbf{Figura 2.4} ilustra alguns desses níveis gerados.
+Na verdade, $F_3$ maximiza os pulos e recompensa fases passáveis, enquanto $F_4$ também recompensa fases jogáveis, mas minimizando pulos. A \textbf{Figura 2.5} ilustra alguns desses níveis gerados.
 
 \begin{figure}[!htb]
 \centering
