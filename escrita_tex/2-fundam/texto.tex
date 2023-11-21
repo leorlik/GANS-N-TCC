@@ -114,6 +114,12 @@ E sua implementação nos permite:
 
 Tendo populaçoes de tamanho N, o NSGA-II recombina tal população numa população de tamanho 2N e a ordena baseado no ranking da fronteira de pareto, priorizando soluções da fronteira classe 1 e completando com as fronteiras subsequentes. Quando a fronteira $F_{g}$ nao cabe mais inteira na próxima população, são selecionadas os indivíduos com maior \texit{crowd distance}, que é a área/volume (dependente do tamanho do espaço objetivo $Z$ do problema) ao seu redor sem nenhuma solução presente (cabe enfatizar que as funções objetivo são normalizadas para que nenhuma domine a outra). Este operador permite escolher as soluções que estão mais distantes das outras, por consequência também sendo um preservador de diversidade por si só.
 
+\subsection{Decisão entre soluções}
+
+Um dos dilemas de algoritmos multi-objetivo é projetado numa área chamada de MCDM (\textit{multiple criteria decision making}, em que deve-se decidir entre as soluções qual é a melhor. Os experimentos deste trabalho seguem a ideia de \cite{datamining} de compromise programming (CP) para este propósito conforme discutido em \cite{cp}. 
+
+Assumindo a existência de uma solução ideal e a conversão próxima a fonteira de pareto, o suposto ponto ideal é projetado levando em conta as soluções não dominadas existentes (ou seja, os menores valores dos objetivos). Uma vez feita essa projeção, o ponto escolhido é o de menor distância deste ponto.
+
 %=====================================================
 
 \section{PSO}
