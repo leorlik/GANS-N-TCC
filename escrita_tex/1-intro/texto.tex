@@ -1,5 +1,7 @@
 \chapter{Introdução}
 
+\graphicspath{\currfiledir/figuras/}
+
 %=====================================================
 
 % A introdução geral do documento pode ser apresentada através das seguintes seções: Desafio, Motivação, Proposta, Contribuição e Organização do documento (especificando o que será tratado em cada um dos capítulos). O Capítulo 1 não contém subseções\footnote{Ver o Capítulo \ref{cap-exemplos} para comentários e exemplos de subseções.}.
@@ -21,9 +23,9 @@ A área acadêmica também estuda a geração de conteúdo para jogos, muitos de
 
 \section{objetivo}
 
-Este trabalho utiliza a rede geradora proposta em \cite{marioGAN} e, além da já treinada rede com uma única fase do jogo disponibilizada pelos autores, neste estudo o modelo defendido do artigo também foi treinado com as fases de cada um dos 8 mundos do jogo \textit{Super Mario Bros.} (agrupamentos de até três níveis, que tem como objetivo um aumento de dificuldade gradual) no intuito de avaliar tanto a qualidade, jogabilidade e diversidade das fases geradas em um conjunto maior de níveis quanto se as redes aproximam ou não de forma diferencíavel o conjunto de fases apresentados no treinamento do modelo gerador.
+Este trabalho utiliza a rede geradora proposta em \cite{marioGAN} e, além da já treinada rede com uma única fase do jogo disponibilizada pelos autores, neste estudo o modelo defendido do artigo também foi treinado com as fases de cada um dos 8 mundos do jogo \textit{Super Mario Bros} (agrupamentos de até três níveis, que tem como objetivo um aumento de dificuldade gradual) no intuito de avaliar tanto a qualidade, jogabilidade e diversidade das fases geradas em um conjunto maior de níveis quanto se as redes aproximam ou não de forma diferencíavel o conjunto de fases apresentados no treinamento do modelo gerador.
 
-Para além disso, avaliamos a efetividade do algoritmo proposto para a evolução de variáveis latentes, o CMA-ES, em comparação com um algoritmo simples de otimização de partículas (PSO). Também comparamos uma abordagem multi-objetivo através do algoritmo NSGA-II proposto em \cite{nsga} otimizando diferentes funções tanto com relação a topologia do nível quanto as propostas em \cite{marioGAN}.
+Para além disso, avaliamos a efetividade do algoritmo proposto para a evolução de variáveis latentes, o CMA-ES, em comparação com um algoritmo simples de otimização de partículas (PSO). Também comparamos uma abordagem multi-objetivo através do algoritmo NSGA-II proposto em \cite{Deb:02} otimizando diferentes funções tanto com relação a topologia do nível quanto as propostas em \cite{marioGAN}.
 
 %Este modelo foi proposto com o intuito de padronizar e simplificar as monografias, dissertações e teses produzidas no Departamento de Informática da UFPR. Ele foi vagamente inspirado nas normas da ABNT (conforme indicado em \cite{bibufpr15}), mas não as segue \emph{ipsis litteris}. Várias alterações foram feitas com o objetivo de melhorar sua estética e tornar o texto mais legível para trabalhos na área de informática. A versão atualizada deste modelo está disponível em \cite{maziero15}.
 

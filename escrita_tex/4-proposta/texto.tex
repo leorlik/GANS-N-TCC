@@ -6,7 +6,7 @@ Este capítulo apresenta os métodos propostos para comparação entre os métod
 
 O jogo escolhido para o trabalho é o mesmo presente em \cite{marioGAN}, \textit{Super Mario Bros}. Enquanto \cite{marioGAN} se propõe a avaliar a diversidade de conteúdo gerado a partir do treinamento do modelo com um único nível (o primeiro), neste trabalho é avaliado o quão diversificados são os conteúdos gerados em conjuntos de granularidade diversa.
 
-Como em \cite{marioGAN}, a representação utilizada é a mesma do repositório aberto da \textit{Video Game Level Corpus} (\cite{VGLC}), em que os blocos estão representados na \textbf{Figura 2.1}. Reproduzindo a divisão do artigo de inspiração, a representação textual é dividida por uma janela deslizante de 14 blocos/caracteres de altura e 28 blocos/caracteres de largura. Além do modelo disponibilizado por \cite{marioGAN}(colocar a footnote), treinado em uma única fase, nós treinamos redes com os oito mundos (agrupamentos de níveis com dificuldade gradual). A \textbf{Tabela 4.1} mostra, em sua totalidade, a quantidade de níveis processados em cada conjunto de treino, bem como a quantidade de janelas obtidas.
+Como em \cite{marioGAN}, a representação utilizada é a mesma do repositório aberto da \textit{Video Game Level Corpus} (\cite{VGLC}), em que os blocos estão representados na \textbf{Figura 2.1}. Reproduzindo a divisão do artigo de inspiração, a representação textual é dividida por uma janela deslizante de 14 blocos/caracteres de altura e 28 blocos/caracteres de largura. Além do modelo disponibilizado por \cite{marioGAN}, treinado em uma única fase, nós treinamos redes com os oito mundos (agrupamentos de níveis com dificuldade gradual). A \textbf{Tabela 4.1} mostra, em sua totalidade, a quantidade de níveis processados em cada conjunto de treino, bem como a quantidade de janelas obtidas.
 
 \begin{table}[h]
     \centering
@@ -57,9 +57,9 @@ Para o CMA-ES, a biblioteca utilizada foi a \textit{CMA}(\cite{cma}). Já para o
 
 \section{Funções objetivos}
 
-Neste trabalho, muitas funções objetivos foram otimizadas. Foram minimizadas as funções das equações (1) e (2) seguindo a proposta de progressão de dificuldade em \cite{marioGAN}, e a performance do CMA-ES e do PSO foram comparadas. Em comparação, fizemos algumas rodadas de otimização destas funções em conjunto com a presenta na equação (3) utilizando NSGA-II, para avaliar a performance geral. 
+Neste trabalho, muitas funções objetivos foram otimizadas. Foram minimizadas as funções das equações (2.1) e (2.2) seguindo a proposta de progressão de dificuldade em \cite{marioGAN}, e a performance do CMA-ES e do PSO foram comparadas. Em comparação, fizemos algumas rodadas de otimização destas funções em conjunto com a presenta na equação (2.3) utilizando NSGA-II, para avaliar a performance geral. 
 
-Além das funções das equações (1), (2) e (3), elaboramos outra função para comparar a topologia das fases. a função objetivo autoral otimizada é relacionada ao número de blocos de um certo tipo do conteúdo gerado, seguindo a equação (5):
+Além das funções das equações (2.1), (2.2) e (2.3), elaboramos outra função para comparar a topologia das fases. a função objetivo autoral otimizada é relacionada ao número de blocos de um certo tipo do conteúdo gerado, seguindo a equação (4.1).
 
 \begin{equation}
     \frac{(100 - (\sum_{i=1}^{14} \sum_{j=1}^{28} f(x_{ij}, b)))}{100} \quad \text{tal que} \quad f(x,b) =
@@ -122,7 +122,7 @@ Em 2009, em associação a \textit{IEEE Games Innovation Conference} e a \textit
 
 Este agente define o jogo como estado atual e leva em conta a velocidade do jogador para os estados próximos. Para além do estado próximo, a heurística leva em conta que o agente está sempre na velocidade máxima, o que a torna nem tanto admissível, sendo uma relaxação segundo o autor. Tanto em \cite{marioGAN} quanto em \cite{marioAI} é dito que o agente performa em níveis sobre-humanos, agente este que é utilizado até os dias de hoje, como em \cite{mariogpt}.
 
-Seguindo os trabalhos já existentes, nós testamos a jogabilidade das fases com o agente de Baumgarten, assim como este agente foi utilizado para o uso da equação (3) nos experimentos multi-objetivo.
+Seguindo os trabalhos já existentes, nós testamos a jogabilidade das fases com o agente de Baumgarten, assim como este agente foi utilizado para o uso da equação (2.3) nos experimentos multi-objetivo.
 
 \section{Conclusão}
 
