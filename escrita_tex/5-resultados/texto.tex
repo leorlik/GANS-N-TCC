@@ -18,7 +18,7 @@ A função objetivo otimizada foi a da equação 2.2, com $g = 5$. Como nos expe
         PSO & \textbf{10.2} & 0.143 & \textbf{2.08} & 0.615 \\
         \hline
     \end{tabular}
-    \caption{Descrição dos Métodos}
+	\caption{Comparação de Tempo e Fitness do CMA-ES e PSO}
     \label{tab:metodos}
 \end{table}
 
@@ -158,9 +158,66 @@ As \textbf{tabelas 5.3} e \textbf{5.4} contém vários resultados interessantes.
 
 Em relação ao NSGA-II, embora ele não tenha superado no objetivo principal nenhum dos outros métodos de LVE, no oposto (número de inimigos quando se maximiza canos ou número de canos quando se maximizando canos) ele sempre é superior com exceção do mundo 6, o que poderia levar a um estudo da correlação entre o número de canos e de inimigos neste mundo específico. Além disso, como já dito anteriormente, o NSGA-II ainda foi melhor que as entradas aleatórias, justificando seu uso numa situação de equilíbrio entre duas funções não correlacionadas em relação à topologia do nível. Outro detalhe que deve se ter atenção é que, para as análises do NSGA-II foi utilizado um critério de desempate que equilibra as duas funções igualmente, e o algoritmo pode ou não ter gerado soluções não dominadas mais interessantes que os demais. 
 
+\subsection{Análise visual}
+
+Para além de resultados métricos, o fato de o que estar sendo analisado ser as fases do jogo, podemos analisar de forma visual os níveis gerados. Alguns casos interessantes foram selecionados. A \textbf{Figura 5.1} mostra 10 conteúdos gerados por uma GAN treinada com as amostras do mundo dois, de forma aleatória, algumas sendo não passáveis, outras com alguma quantidade de canos e inimigos. De imediato, podemos afirmar que, visualmente, os níveis são diferentes com alguns graus de semelhança. A \textbf{Figura 5.2} mostra a mesma GAN, mas utilizando o CMA-ES como técnica de LVE e maximizando canos. Analisando estes níveis, podemos ver que a geração de canos foi, de fato, priorizada, com algumas ressalvas. Nesta função, o bloco que corresponde ao número 6 da matriz faz contar como o elemento, mas, na prática, o que queremos é mais canos. Em alguns dos níveis da \textbf{Figura 5.2} há canos sem o canto superior esquerdo, não contando para a função, assim como há canos quebrados que possuem mais de um bloco deste tipo, sendo que no conjunto de treino cada cano possui apenas um desses blocos. Isto nos leva a crer que o contexto não foi totalmente traduzido, sendo talvez ainda mais ignorado com métodos de LVE.
+
+\begin{figure}[!htb]
+\centering
+        \includegraphics[width=12cm]{level_images/grid_minimal_random_world_2.png}
+        \caption{Fases aleatórias geradas pela GAN treinada com o mundo 2}
+\label{fig:5.1}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{level_images/grid_minimal_cma_world_2.png}
+	\caption{Fases geradas pela GAN treinada com o mundo 2 utilizando o CMA-ES como técnica de LVE, maximizando canos}
+\label{fig:5.2}
+\end{figure}
+
+Já num exemplo utilizando o mundo 5 como conjunto de treinamento, que tem fases mais planas, podemos ver como se comporta a função maximizando o número de inimigos. A \textbf{figura 5.3} mostra conteúdo aleatórios gerados pela GAN treinada com o mundo 5, já as \textbf{figura 5.4 e 5.5} mostram níveis utilizando o CMA-ES e o PSO como técnicas de LVE, respectivamente, aplicando a equação (4.1) como função, maximizando o número de inimigos. Por fim, a \textbf{figura 5.6}mostra níveis gerados pelo NSGA-II. Visualmente, podemos afirmar que o PSO e o CMA-ES conduziram o espaço latente de forma a gerarem níveis razoavelmente parecidos. Já o NSGA-II conseguiu gerar alguns canos além dos inimigos, porém, não em uma quantia exorbitante, já que não faz sentido gerar algo que você não vê tanto em seu conjunto de treino.
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{level_images/grid_minimal_random_world_5.png}
+	\caption{Fases aleatórias geradas pela GAN treinada com o mundo 5}
+\label{fig:5.3}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{level_images/grid_minimal_cma_world_5.png}
+	\caption{Fases geradas pela GAN treinada com o mundo 5 utilizando o CMA-ES como técnica de LVE, maximizando inimigos}
+\label{fig:5.4}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{level_images/grid_minimal_pso_world_5.png}
+	\caption{Fases geradas pela GAN treinada com o mundo 5 utilizando o PSO como técnica de LVE, maximizando inimigos}
+\label{fig:5.5}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{level_images/grid_minimal_nsga_world_5.png}
+	\caption{Fases geradas pela GAN treinada com o mundo 5 utilizando o NSGA-II como técnica de LVE, maximizando canos e inimigos simultâneamente}
+\label{fig:5.6}
+\end{figure}
+
+Por fim, outro caso interessante é utilizar a LVE maximizando inimigos conhecendo o mundo 6 como conjunto de treino, conforme mostra a \textbf{figura 5.7}, em que a técnica de LVE utilizada foi o PSO. Neste caso, não há inimigos pois as fases do mundo 6 não possuem inimigos, são focadas em pulos complexos - e as simplificações do dataset da VGLC ignoram alguns outros elementos - mostrando que, se de fato não conhece aquilo, fica impossível gerar tal conteúdo.
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{level_images/grid_minimal_cma_world_6.png}
+	\caption{Fases geradas pela GAN treinada com o mundo 6 utilizando o CMA-ES como técnica de LVE, maximizando inimigos}
+\label{fig:5.7}
+\end{figure}
+
 \section{Classificação dos padrões gerados}
 
-É importante também avaliarmos o conteúdo gerado. Como um SVC de uma classe ou múltiplas não se mostraram suficientes para dividir as janelas deslizantes dos mundos, um modelo neural simples foi testado e, como mostrado no capítulo anterior, alcançou valores satisfatórios. Uma vez decidida a forma de classificar o padrão, esta rede foi utilizada para avaliar os pedaços de fase gerados, comparando as entradas geradas de forma aleatória e utilizando o PSO e o CMA-ES como técnicas de evolução de variáveis latentes. Nesta comparação, nós utilizamos nove conjuntos diferentes de treino da rede geradora, sendo a primeira fase como em \cite{marioGAN} e cada um dos oito mundos, totalizando 9 conjuntos de treino. Para cada conjunto, foram geradas 500 entradas aleatórias, 500 entradas com uso de CMA-ES como método de LVE e 500 com o uso do PSO, totalizando 1500 entradas por conjunto de treino, totalizando 1350 níveis avaliados. Neste experimento, a função otimizada foi a da equação (4.1) com $b = 6$, ou seja, maximizando o número de canos. Os gráficos presente nas figuras \textbf{5.1}, \textbf{5.2} e \textbf{5.3} sintetizam estes resultados, com uso de entradas aleatórias, entradas construídas pelo CMA-ES e PSO, respectivamente.
+É importante também avaliarmos o conteúdo gerado. Como um SVC de uma classe ou múltiplas não se mostraram suficientes para dividir as janelas deslizantes dos mundos, um modelo neural simples foi testado e, como mostrado no capítulo anterior, alcançou valores satisfatórios. Uma vez decidida a forma de classificar o padrão, esta rede foi utilizada para avaliar os pedaços de fase gerados, comparando as entradas geradas de forma aleatória e utilizando o PSO e o CMA-ES como técnicas de evolução de variáveis latentes. Nesta comparação, nós utilizamos nove conjuntos diferentes de treino da rede geradora, sendo a primeira fase como em \cite{marioGAN} e cada um dos oito mundos, totalizando 9 conjuntos de treino. Para cada conjunto, foram geradas 500 entradas aleatórias, 500 entradas com uso de CMA-ES como método de LVE e 500 com o uso do PSO, totalizando 1500 entradas por conjunto de treino, totalizando 1350 níveis avaliados. Neste experimento, a função otimizada foi a da equação (4.1) com $b = 6$, ou seja, maximizando o número de canos. Os gráficos presente nas figuras \textbf{5.8}, \textbf{5.9} e \textbf{5.10} sintetizam estes resultados, com uso de entradas aleatórias, entradas construídas pelo CMA-ES e PSO, respectivamente.
 
 \begin{figure}[!htb]
 \centering
@@ -183,7 +240,7 @@ Em relação ao NSGA-II, embora ele não tenha superado no objetivo principal ne
 \label{fig:5.4.3}
 \end{figure}
 
-Para além desses gráficos, é interessante ressaltar que majoritariamente as fases foram classificadas dentro de um padrão específico pela GAN. A \textbf{Tabela 5.4.4} explicita os padrões de cada conjunto de treino, técnica e padrão.
+Para além desses gráficos, é interessante ressaltar que majoritariamente as fases foram classificadas dentro de um padrão específico pela GAN. A \textbf{Tabela 5.5} explicita os padrões de cada conjunto de treino, técnica e padrão.
 
 \begin{table}[h]
     \centering
