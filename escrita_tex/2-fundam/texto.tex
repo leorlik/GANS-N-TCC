@@ -114,6 +114,12 @@ E sua implementação nos permite:
 
 Tendo populaçoes de tamanho N, o NSGA-II recombina tal população numa população de tamanho 2N e a ordena baseado no ranking da fronteira de pareto, priorizando soluções da fronteira classe 1 e completando com as fronteiras subsequentes. Quando a fronteira $F_{g}$ nao cabe mais inteira na próxima população, são selecionadas os indivíduos com maior \texit{crowd distance}, que é a área/volume (dependente do tamanho do espaço objetivo $Z$ do problema) ao seu redor sem nenhuma solução presente (cabe enfatizar que as funções objetivo são normalizadas para que nenhuma domine a outra). Este operador permite escolher as soluções que estão mais distantes das outras, por consequência também sendo um preservador de diversidade por si só.
 
+\subsection{Decisão entre soluções}
+
+Um dos dilemas de algoritmos multi-objetivo é projetado numa área chamada de MCDM (\textit{multiple criteria decision making}, em que deve-se decidir entre as soluções qual é a melhor. Os experimentos deste trabalho seguem a ideia de \cite{datamining} de compromise programming (CP) para este propósito conforme discutido em \cite{cp}. 
+
+Assumindo a existência de uma solução ideal e a conversão próxima a fonteira de pareto, o suposto ponto ideal é projetado levando em conta as soluções não dominadas existentes (ou seja, os menores valores dos objetivos). Uma vez feita essa projeção, o ponto escolhido é o de menor distância deste ponto.
+
 %=====================================================
 
 \section{PSO}
@@ -133,7 +139,7 @@ A busca A estrela possui múltiplas aplicações, entre elas a busca por caminho
 
 \section{MarioGAN}
 
-Em maio de 2018 publicou-se o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Aqui, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas a disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009\cite{marioai} de autoria de Robin Baumgarten.
+Em maio de 2018 publicou-se o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Aqui, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas a disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009\cite{marioAI} de autoria de Robin Baumgarten.
 
 Para representar as fases, os autores utilizaram a representação do jogo \textit{Super Mario Bros} disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplificam a representação do jogo ao ignorar níveis específicos, onde a física do jogo diverge do padrão seguido pela maioria das fases, e também representa todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. Nesta representação, cada tipo de bloco é mapeado para um caracter específico, transformando a imagem em uma sequência de caracteres que indicam um bloco específico. Uma vez que o artigo implementa a arquitetura a partir da biblioteca \textit{Pytorch}, esta representação textual precisou ser remapeada para uma representação numérica, conforme mostrado pela \textbf{Figura 2.1}. 
 
@@ -174,7 +180,7 @@ Uma noção geral do processo executado por \cite{marioGAN} está devidamente tr
 \label{fig:2.3}
 \end{figure}
 
-Quanto as funções minimizadas em relação a topologia do nível minimizadas no artigo, as equações (1) e (2) as traduzem, em que g e t são respectivamente a fração da quantidade de blocos de chão na ultima linha da matriz que representa a fase e a fração desejada, e n o número de inimigos.
+Quanto as funções minimizadas em relação a topologia do nível minimizadas no artigo, as equações (2.1) e (2.2) as traduzem, em que g e t são respectivamente a fração da quantidade de blocos de chão na ultima linha da matriz que representa a fase e a fração desejada, e n o número de inimigos.
 
 \begin{equation}
     F_1 = \sqrt{(g - t)^2}
@@ -193,7 +199,7 @@ No artigo, a ideia apresentada é que a dificuldade aumente gradativamente confo
 \label{fig:2.3}
 \end{figure}
 
-Em outros experimentos, os autores usam duas funções relacionadas ao teste pelo agente A estrela vencedor da competição da marioAI de 2009, conforme as equações (3) e (4), onde p é a fração da fase em que o agente passou, e #jumps a quantia de pulos:
+Em outros experimentos, os autores usam duas funções relacionadas ao teste pelo agente A estrela vencedor da competição da marioAI de 2009, conforme as equações (2.3) e (2.4), onde p é a fração da fase em que o agente passou, e #jumps a quantia de pulos:
 
 \begin{equation}
     F_3 =
