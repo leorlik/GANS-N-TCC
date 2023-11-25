@@ -26,7 +26,8 @@ Os resultados são interessantes. Primeiro, vale notar que o CMA-ES obteve um de
 
 \section{Níveis em progressão de dificuldade}
 
-Neste experimento, nós comparamos o desempenho e a variedade de fases geradas dos métodos de LVE CMA-ES e PSO utilizando as funções das equações (2.1) e (2.2) da mesma forma sugerida no artigo: concatenando duas janelas geradas minimizando a função da equação (2.1) com $t = 1$, uma com $t = 0.7$, e outras duas utilizando a equação (2.2) com $t = 0.7$. Neste experimento, foram considerados três diferentes conjuntos de treino: o conjunto gerado pelo processamento apenas da primeira fase (o mesmo de \cite{marioGAN}) e os gerado pelo processamento das três fases do mundo 1 e 6. Para cada uma das cinco partes foram geradas 100 instâncias, totalizando 500 fases por método de LVE e fases, totalizando 13500 níveis analisados, com 300 para cada pedaço das fases. A \textbf{tabela 5.2} mostra os resultados desta comparação. (tabela em construção)
+Neste experimento, nós comparamos o desempenho e a variedade de fases geradas dos métodos de LVE CMA-ES e PSO utilizando as funções das equações (2.1) e (2.2) da mesma forma sugerida no artigo: concatenando duas janelas geradas minimizando a função da equação (2.1) com $t = 1$, uma com $t = 0.7$, e outras duas utilizando a equação (2.2) com $t = 0.7$.
+Neste experimento, foram considerados três diferentes conjuntos de treino: o conjunto gerado pelo processamento apenas da primeira fase (o mesmo de \cite{marioGAN}) e os gerado pelo processamento das três fases do mundo 1 e 6. Para cada uma das cinco partes foram geradas 100 instâncias, totalizando 500 fases por método de LVE e fases, que se tornaram 1500 níveis analisados, com 300 para cada pedaço das fases. A \textbf{tabela 5.2} mostra os resultados desta comparação entre o CMA-ES e o PSO para esta aplicação específica.
 
 \begin{table}[h]
     \centering
@@ -41,8 +42,13 @@ Neste experimento, nós comparamos o desempenho e a variedade de fases geradas d
 	\label{tab:slah}
 \end{table}
 
-
 (NOTA: Depois de analisar a tabela, vou colocar alguns níveis de forma visual)
+
+\subsection{Abordagem multi-objetivo}
+
+No artigo de \cite{marioGAN}, há a sugestão de utilizar algum método multi-objetivo para a evolução de dados latentes, juntando as funções das equações (2.1) e (2.2) para serem utilizadas em conjunto a função da equação (2.3). O motivo para tal sugestão é que as primeiras duas funções levam em conta apenas a estrutura geral do nível com relação a chão e inimigos, com manipulação do parâmetro $t$ para induzir uma dificuldade gradativa. O problema é que os níveis com melhores valores das funções de fitness, especialmente com a equação (2.2) como função minimizada (que diminui a quantidade de blocos no chão e aumenta a de inimigos levando, portanto, a tornar a fase menos trivial para se concluir) podem se tornar impossíveis de chegar ao fim. A função da equação (2.3) busca resolver este problema, minimizando mais a função quando um agente é capaz de concluir a fase completamente, e ainda adiciona maior dificuldade ao minimizar mais ainda a função utilizando o número de pulos.  
+
+O problema desta abordagem é o alto custo computacional de utilizar um agente para resolver as fases, ainda mais dentro de um algoritmo genético. Levando em conta 50 gerações e uma população de tamanho 28, para cada execução do algoritmo um agente jogaria 1400 níveis, ou seja, se o agente de Baumgarten for levado em conta, seriam 1400 execuções de um algoritmo A estrela por execução do algoritmo genético. Uma vez que isto gera um alto custo computacional (aproximadamente 105 minutos por execução, levando em conta o computador em que foram feitos os testes), não foi possível realizar execuções em alto volume como nos demais experimentos. Para este experimento, o conjunto de teste considerado, para fins de comparação justa, foi apenas o gerado pelo processamento do primeiro nível do jogo \textit{Super Mario Bros}, o mesmo utilizado por \cite{marioGAN}. Para cada pedaço dos níveis foram realizadas 5 execuções do algoritmo NSGA-II e, ao invés de utilizar a técnica de \textit{comprommise programming} como critério de decisão entre as soluções não dominadas, todas as soluções não dominadas geradas foram observadas para uma maior variedade de possíveis soluções. 
 
 \section{Topologia dos níveis}
 
