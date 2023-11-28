@@ -1,12 +1,12 @@
 \chapter{Resultados}
 
-Neste capítulo, são apresentados os resultados dos testes elicitados no capítulo anterior. Com análises tanto visual quanto em tabelas e gráficos, foram aplicadas múltiplas funções de LVE na GAN, que foi treinada com múltiplos mundos. Também vale lembrar que três tipos de algoritmos foram utilizados (CMA-ES, PSO e NSGA-II) e, além das funções objetivo, os níveis gerados também foram avaliados por um classificador neural simples e o algoritmo A estrela de Robin Baumgarten.
+Neste capítulo, são apresentados os resultados dos testes propostos no capítulo anterior. Com análises tanto visual quanto em tabelas e gráficos, foram aplicadas múltiplas funções de LVE na GAN, que foi treinada com múltiplos mundos. Também vale lembrar que três tipos de algoritmos foram utilizados (CMA-ES, PSO e NSGA-II) e, além das funções objetivo, os níveis gerados também foram avaliados por um classificador neural simples e o algoritmo A estrela de Robin Baumgarten.
 
 \section{Comparação de tempo e performance entre CMA-ES e PSO}
 
-Por ser simples, utilizando apenas algumas fórmulas, uma comparação entre o PSO e o CMA-ES nos quesitos tempo e performance. Embora, em sua essência, o CMA-ES não seja limitado em iterações mas sim em um valor aceitável da função objetivo, para esta comparação de tempo ele foi limitado em 50 iterações, assim como o algoritmo de partículas. Neste experimento, o conjunto de treino do gerador foi composto apenas por janelas geradas pelo processamento da primeira fase, para devidamente comparar o CMA-ES manipulando um gerador treinado com o conjunto de treino presente no artigo e sua implementação com o PSO. 
+Por ser simples, utilizando apenas algumas fórmulas, uma comparação entre o PSO e o CMA-ES nos quesitos tempo e desempenho. Embora, em sua essência, o CMA-ES não seja limitado em iterações mas sim em um valor aceitável da função objetivo, para esta comparação de tempo ele foi limitado em 50 iterações, assim como o algoritmo de partículas. Neste experimento, o conjunto de treino do gerador foi composto apenas por janelas geradas pelo processamento da primeira fase, para devidamente comparar o CMA-ES manipulando um gerador treinado com o conjunto de treino presente no artigo e sua implementação com o PSO. 
 
-A função objetivo otimizada foi a da equação 2.2, com $g = 5$. Como nos experimentos dos autores duas janelas diferentes minimizavam a função desta equação, foram realizadas 200 iterações por método de LVE. Os resultados estão presentes na \textbf{Tabela 5.1}, com média e desvio padrão.
+A função-objetivo otimizada foi a da equação 2.2, com $g = 5$. Como nos experimentos dos autores duas janelas diferentes minimizavam a função desta equação, foram realizadas 200 iterações por método de LVE. Os resultados estão presentes na \textbf{Tabela 5.1}, com média e desvio padrão.
 
 \begin{table}[h]
     \centering
@@ -14,19 +14,20 @@ A função objetivo otimizada foi a da equação 2.2, com $g = 5$. Como nos expe
         \hline
         \textbf{Método} & \textbf{Média da Fitness} & \textbf{Desvio Padrão (Fitness)} & \textbf{Média do Tempo} & \textbf{Desvio Padrão (Tempo)} \\
         \hline
-        CMA-ES & 10.0 & 0 & 8.50 & 2.69 \\
-        PSO & \textbf{10.2} & 0.143 & \textbf{2.08} & 0.615 \\
+	  CMA-ES & \textbf{10.0} & 0 & 8.50 & 2.69 \\
+        PSO & 10.2 & 0.143 & \textbf{2.08} & 0.615 \\
         \hline
     \end{tabular}
 	\caption{Comparação de Tempo e Fitness do CMA-ES e PSO}
     \label{tab:metodos}
 \end{table}
 
-Os resultados são interessantes. Primeiro, vale notar que o CMA-ES obteve um desvio padrão de 0, com todas suas execuções convergindo a uma região muito parecida. Em caso de dúvida, algumas destas fases foram checadas e, de fato, as entradas - assim como as fases geradas - são diferentes, sendo pontos do espaço latente razoavelmente distantes entre si. Mas mais interessante que isso é notar como é pequena a diferença, algo que apenas um teste estatístico poderia dizer com toda certeza se é significativa ou não. Fato é que cada execução do CMA-ES levou, em média, 8.5 segundos, enquanto as execuções do PSO levaram apenas 2.08 segundos. Isto leva a crer que o uso de um algoritmo mais simples, como o de otimização de partículas, é relevantemente mais rápido que o CMA-ES, e alcança marcas parecidas ou até mesmo superiores.
+Os resultados são interessantes. Primeiro, vale notar que o CMA-ES obteve um desvio padrão de 0, com todas suas execuções gerando o mesmo valor da função-objetivo minimizada. Em caso de dúvida, algumas destas fases foram checadas e, de fato, as entradas - assim como as fases geradas - são diferentes, sendo pontos do espaço latente razoavelmente distantes entre si. Mas mais interessante que isso é notar como é pequena a diferença, algo que apenas um teste estatístico poderia dizer com toda certeza se é significativa ou não. Fato é que cada execução do CMA-ES levou, em média, 8.5 segundos, enquanto as execuções do PSO levaram apenas 2.08 segundos. Isto leva a crer que o uso de um algoritmo que demanda menos recursos computacionais, como o de otimização de partículas, é relevantemente mais rápido que o CMA-ES, e alcança marcas parecidas ou até mesmo superiores.
 
 \section{Níveis em progressão de dificuldade}
 
 Neste experimento, nós comparamos o desempenho e a variedade de fases geradas dos métodos de LVE CMA-ES e PSO utilizando as funções das equações (2.1) e (2.2) da mesma forma sugerida no artigo: concatenando duas janelas geradas minimizando a função da equação (2.1) com $t = 1$, uma com $t = 0.7$, e outras duas utilizando a equação (2.2) com $t = 0.7$.
+
 Neste experimento, foram considerados três diferentes conjuntos de treino: o conjunto gerado pelo processamento apenas da primeira fase (o mesmo de \cite{marioGAN}) e os gerado pelo processamento das três fases do mundo 1 e 6. Para cada uma das cinco partes foram geradas 100 instâncias, totalizando 500 fases por método de LVE e fases, que se tornaram 1500 níveis analisados, com 300 para cada pedaço das fases. A \textbf{tabela 5.2} mostra os resultados desta comparação entre o CMA-ES e o PSO para esta aplicação específica.
 
 \begin{table}[h]
@@ -46,15 +47,36 @@ Neste experimento, foram considerados três diferentes conjuntos de treino: o co
 
 \subsection{Abordagem multi-objetivo}
 
-No artigo de \cite{marioGAN}, há a sugestão de utilizar algum método multi-objetivo para a evolução de dados latentes, juntando as funções das equações (2.1) e (2.2) para serem utilizadas em conjunto a função da equação (2.3). O motivo para tal sugestão é que as primeiras duas funções levam em conta apenas a estrutura geral do nível com relação a chão e inimigos, com manipulação do parâmetro $t$ para induzir uma dificuldade gradativa. O problema é que os níveis com melhores valores das funções de fitness, especialmente com a equação (2.2) como função minimizada (que diminui a quantidade de blocos no chão e aumenta a de inimigos levando, portanto, a tornar a fase menos trivial para se concluir) podem se tornar impossíveis de chegar ao fim. A função da equação (2.3) busca resolver este problema, minimizando mais a função quando um agente é capaz de concluir a fase completamente, e ainda adiciona maior dificuldade ao minimizar mais ainda a função utilizando o número de pulos.  
+No artigo de \cite{marioGAN}, há a sugestão de utilizar algum método multi-objetivo para a evolução de variáveis latentes, juntando as funções das equações (2.1) e (2.2) para serem utilizadas em conjunto a função da equação (2.3). O motivo para tal sugestão é que as primeiras duas funções levam em conta apenas a estrutura geral do nível com relação a chão e inimigos, com manipulação do parâmetro $t$ para induzir uma dificuldade gradativa. O problema é que os níveis com melhores valores das funções de fitness, especialmente com a equação (2.2) como função minimizada (que diminui a quantidade de blocos no chão e aumenta a de inimigos levando, portanto, a tornar a fase menos trivial para se concluir) podem se tornar impossíveis de chegar ao fim. A função da equação (2.3) busca resolver este problema, minimizando mais a função quando um agente é capaz de concluir a fase completamente, e ainda adiciona maior dificuldade ao minimizar mais ainda a função utilizando o número de pulos.  
 
-O problema desta abordagem é o alto custo computacional de utilizar um agente para resolver as fases, ainda mais dentro de um algoritmo genético. Levando em conta 50 gerações e uma população de tamanho 28, para cada execução do algoritmo um agente jogaria 1400 níveis, ou seja, se o agente de Baumgarten for levado em conta, seriam 1400 execuções de um algoritmo A estrela por execução do algoritmo genético. Uma vez que isto gera um alto custo computacional (aproximadamente 105 minutos por execução, levando em conta o computador em que foram feitos os testes), não foi possível realizar execuções em alto volume como nos demais experimentos. Para este experimento, o conjunto de teste considerado, para fins de comparação justa, foi apenas o gerado pelo processamento do primeiro nível do jogo \textit{Super Mario Bros}, o mesmo utilizado por \cite{marioGAN}. Para cada pedaço dos níveis foram realizadas 5 execuções do algoritmo NSGA-II e, ao invés de utilizar a técnica de \textit{comprommise programming} como critério de decisão entre as soluções não dominadas, todas as soluções não dominadas geradas foram observadas para uma maior variedade de possíveis soluções. 
+O problema desta abordagem é o alto custo computacional de utilizar um agente para resolver as fases, ainda mais dentro de um algoritmo genético. Levando em conta 50 gerações e uma população de tamanho 28, para cada execução do algoritmo um agente jogaria 1400 níveis, ou seja, se o agente de Baumgarten for levado em conta, seriam 1400 execuções de um algoritmo A estrela por execução do algoritmo genético. Uma vez que isto gera um alto custo computacional (aproximadamente 105 minutos por execução, levando em conta o computador em que foram feitos os testes), não foi possível realizar execuções em alto volume como nos demais experimentos. Para este experimento, o conjunto de teste considerado, para fins de comparação justa, foi apenas o gerado pelo processamento do primeiro nível do jogo \textit{Super Mario Bros}, o mesmo utilizado por \cite{marioGAN}. Para cada pedaço dos níveis foram realizadas 5 execuções do algoritmo NSGA-II e, ao invés de utilizar a técnica de \textit{comprommise programming} como critério de decisão entre as soluções não dominadas, todas as soluções não dominadas geradas foram observadas para uma maior variedade de possíveis soluções. A \textbf{Tabela 5.3} sintetiza os resultados, considerando as cinco partes das fases dividas em \cite{marioGAN}.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{lcccccc}
+        \toprule
+        Parte do Nível & Média 1ª Fitness & Desvio Padrão (1ª Fitness) & Média F3 & Desvio Padrão (F3) & Número de Soluções & Soluções Jogáveis \\
+        \midrule
+	    Parte 1 & 0 ($F_1$ com $t = 1$) & 0 & -3.41 & 2.26 & 39 & 39 \\
+        Parte 2 & 0 & 0 ($F_1$ com $t = 1$) & -4.39 & 2.42 & 46 & 46 \\
+        Parte 3 & 0 & 0 ($F_1$ com $t = 0.7$) & -6.59 & 2.47 & 63 & 63 \\
+	Parte 4 & 10.0 ($F_2$ com $t = 0.7$) & 0.0167 & -4.66 & 2.63 & 87 & 84 \\
+        Parte 5 & 10.0 ($F_2$ com $t = 0.7$) & 0.0327 & -3.29 & 2.11 & 50 & 45 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Resultado dos experimentos multi-objetivo, usando NSGA-II, otimizando $F_1$ ou $F_2$ simultâneamente com $F_3$}
+    \label{tab:summary}
+\end{table}
+
+Podemos observar que o desvio padrão é muito baixo ou arredondado para 0 e que, com o uso de $F_3$ (ou seja, otimizando a função da equação (2.3)) juntamente com as funções das equações (2.1) ou (2.2) a grande maioria dos níveis gerados também são jogáveis, com algumas exceções quando estamos otimizando $F_2$, onde o número de inimigos é um fator que é aumentado. Isto pode mostrar beneficios do uso de um agente, porém este teste é de certa forma enviesado, já que o mesmo agente utilizado para testar as fases (O agente A estrela de Baumgarten) definiu se estas fases são jogáveis ou não. Para que a conclusão do uso do agente não seja enviesada, um agente diferente deveria ser utilizado para validar, porém este é um estudo para o futuro. 
+
+Como a menor quantia de partes jogáveis é 39 (da primeira parte) esta abordagem nos permite gerar 39 níveis jogáveis com progressão de dificuldade no eixo x. Porém, uma vez que estas 5 execuções por função otimizada levaram aproximadamente 20 horas, no momento parece não compensar em questão de tempo o uso do agente na função de fitness, mas sim como forma de desempate entre níveis gerados, mesmo que isto signifique perder a maximização de pulos (o que leva a fases mais interessantes, já que os pulos são assumidos um indicador de dificuldade do nível).
 
 \section{Topologia dos níveis}
 
 Assim como foram analisadas as funções propostas em \cite{marioGAN}, também foi observado o efeito da evolução de variáveis latentes com uma função diretamente ligada com a topologia das fases, no caso a função da equação (4.1) que busca maximizar um certo tipo de bloco, isto é, a quantia de vezes que um elemento (ou número, em termos literais) aparece na matriz que representa um nível. Para este experimento o bloco maximizado, ou seja, o valor de $b$ na equação (4.1), foi 5 (inimigos) e 6 (canto superior esquerdo do cano). 
 
-Para além da análise de um modelo treinado com o mesmo conjunto de \cite{marioGAN}, ou seja, apenas com a primeira fase do jogo \textit{Super Mario Bros}, também foram feitos treinamentos com cada um dos conjuntos presentes na \textbf{Tabela 4.1}, ou seja, com cada um dos conjuntos de fases disponíveis agrupados em mundo. Para cada conjunto foram realizadas 1000 iterações do PSO e do CMA-ES, sendo 500 para maximizar inimigos e 500 para maximizar canos, enquanto o NSGA-II realizou apenas 500 iterações, otimizando simultaneamente a função para $b = 5$ e $b = 6$. Adicionalmente, foram realizadas 500 iterações com entradas aleatórias por conjunto de treino, na intenção de comparar os efeitos do uso da LVE com entradas ruidosas sem cuidado algum. Em todos os casos, as entradas foram limitadas a números reais entre -2 e 2. Os resultados estão nas \textbf{tabela 5.3} e \textbf{tabela 5.4}.  
+Para além da análise de um modelo treinado com o mesmo conjunto de \cite{marioGAN}, ou seja, apenas com a primeira fase do jogo \textit{Super Mario Bros}, também foram feitos treinamentos com cada um dos conjuntos presentes na \textbf{Tabela 4.1}, ou seja, com cada um dos conjuntos de fases disponíveis agrupados em mundo. Para cada conjunto foram realizadas 1000 iterações do PSO e do CMA-ES, sendo 500 para maximizar inimigos e 500 para maximizar canos, enquanto o NSGA-II realizou apenas 500 iterações, otimizando simultaneamente a função para $b = 5$ e $b = 6$. Adicionalmente, foram realizadas 500 iterações com entradas aleatórias por conjunto de treino, na intenção de comparar os efeitos do uso da LVE com entradas ruidosas sem cuidado algum. Em todos os casos, as entradas foram limitadas a números reais entre -2 e 2. Os resultados estão nas \textbf{tabelas 5.4} e \textbf{5.5}
 
 \begin{table}[h]
     \centering
@@ -160,13 +182,17 @@ Para além da análise de um modelo treinado com o mesmo conjunto de \cite{mario
     \label{tab:conjunto_treino}
 \end{table}
 
-As \textbf{tabelas 5.3} e \textbf{5.4} contém vários resultados interessantes. O mais importante deles é que para qualquer método usado para a LVE - seja o CMA-ES, o PSO ou o NSGA-II - a função objetivo otimizada e, consequentemente, o tipo de elemento visado(maximizando canos na primeira tabela e inimigos na segunda) aparece em quantia maior do que quando comparado com entradas aleatórias, significando que o uso da LVE possui sim impacto relevante pelo menos quando se diz respeito à topologia da fase. Para além disso, na grande maioria das fases geradas a partir de múltiplos conjuntos de treino, o CMA-ES é o algoritmo que melhor converge. Porém vale lembrar que, além do tempo de execução do CMA-ES ser maior que o do PSO, o CMA-ES neste experimento não foi limitado em número de gerações, e também a diferença entre os valores da média das funções objetivo do PSO e o CMA-ES ainda é pequena e, caso algum teste estatístico corrobore que não são significativas, em aplicações práticas em que o tempo de geração deveria ser menor o PSO seria a melhor opção, mesmo com valores um pouco abaixo do CMA-ES.
+As \textbf{tabelas 5.4} e \textbf{5.5} contém vários resultados interessantes. O mais importante deles é que para qualquer método usado para a LVE - seja o CMA-ES, o PSO ou o NSGA-II - a função objetivo otimizada e, consequentemente, o tipo de elemento visado(maximizando canos na primeira tabela e inimigos na segunda) aparece em quantia maior do que quando comparado com entradas aleatórias, significando que o uso da LVE possui sim impacto relevante pelo menos no que se diz respeito à topologia da fase. Para além disso, na grande maioria das fases geradas a partir de múltiplos conjuntos de treino, o CMA-ES é o algoritmo que melhor converge. 
+
+É importante lembrar que o CMA-ES neste experimento não foi limitado em número de gerações. A diferença entre os valores da média das funções objetivo do PSO e o CMA-ES ainda é pequena e, caso algum teste estatístico corrobore que não são significativas, o PSO seria uma melhor alternativa ao CMA-ES devido ao tempo de execução menor, conforme abordado na sessão 5.1.
 
 Em relação ao NSGA-II, embora ele não tenha superado no objetivo principal nenhum dos outros métodos de LVE, no oposto (número de inimigos quando se maximiza canos ou número de canos quando se maximizando canos) ele sempre é superior com exceção do mundo 6, o que poderia levar a um estudo da correlação entre o número de canos e de inimigos neste mundo específico. Além disso, como já dito anteriormente, o NSGA-II ainda foi melhor que as entradas aleatórias, justificando seu uso numa situação de equilíbrio entre duas funções não correlacionadas em relação à topologia do nível. Outro detalhe que deve se ter atenção é que, para as análises do NSGA-II foi utilizado um critério de desempate que equilibra as duas funções igualmente, e o algoritmo pode ou não ter gerado soluções não dominadas mais interessantes que os demais. 
 
 \subsection{Análise visual}
 
-Para além de resultados métricos, o fato de o que estar sendo analisado ser as fases do jogo, podemos analisar de forma visual os níveis gerados. Alguns casos interessantes foram selecionados. A \textbf{Figura 5.1} mostra 10 conteúdos gerados por uma GAN treinada com as amostras do mundo dois, de forma aleatória, algumas sendo não passáveis, outras com alguma quantidade de canos e inimigos. De imediato, podemos afirmar que, visualmente, os níveis são diferentes com alguns graus de semelhança. A \textbf{Figura 5.2} mostra a mesma GAN, mas utilizando o CMA-ES como técnica de LVE e maximizando canos. Analisando estes níveis, podemos ver que a geração de canos foi, de fato, priorizada, com algumas ressalvas. Nesta função, o bloco que corresponde ao número 6 da matriz faz contar como o elemento, mas, na prática, o que queremos é mais canos. Em alguns dos níveis da \textbf{Figura 5.2} há canos sem o canto superior esquerdo, não contando para a função, assim como há canos quebrados que possuem mais de um bloco deste tipo, sendo que no conjunto de treino cada cano possui apenas um desses blocos. Isto nos leva a crer que o contexto não foi totalmente traduzido, sendo talvez ainda mais ignorado com métodos de LVE.
+Além de resultados quantitativos, o fato de o que estar sendo analisado ser as fases do jogo, podemos analisar de forma visual os níveis gerados. Alguns casos interessantes foram selecionados. A \textbf{Figura 5.1} mostra 10 conteúdos gerados por uma GAN treinada com as amostras do mundo dois, de forma aleatória, algumas não sendo possível concluir, outras com alguma quantidade de canos e inimigos. De imediato, podemos afirmar que, visualmente, os níveis são diferentes porém com semelhanças reconhecíveis a olho nu. A \textbf{Figura 5.2} mostra a mesma GAN, mas utilizando o CMA-ES como técnica de LVE e maximizando canos. Analisando estes níveis, podemos ver que a geração de canos foi, de fato, priorizada, com algumas ressalvas. 
+
+Nesta função, o bloco que corresponde ao número 6 da matriz faz contar como o elemento a ser maximizado, mas no conjunto de teste apresentado este elemento aparece uma única vez por agrupamento dos blocos 6, 7, 8 e 9, isto é, deve aparecer apenas uma vez por cano verde presente no nível. Em alguns dos níveis da \textbf{Figura 5.2} há canos sem o canto superior esquerdo, não contando para a função, assim como há canos quebrados que possuem mais de um bloco deste tipo, sendo que no conjunto de treino cada cano possui apenas um desses blocos. Isto nos leva a crer que o contexto não foi totalmente traduzido, sendo talvez ainda mais ignorado com métodos de LVE.
 
 \begin{figure}[!htb]
 \centering
@@ -223,7 +249,7 @@ Por fim, outro caso interessante é utilizar a LVE maximizando inimigos conhecen
 
 \section{Classificação dos padrões gerados}
 
-É importante também avaliarmos o conteúdo gerado. Como um SVC de uma classe ou múltiplas não se mostraram suficientes para dividir as janelas deslizantes dos mundos, um modelo neural simples foi testado e, como mostrado no capítulo anterior, alcançou valores satisfatórios. Uma vez decidida a forma de classificar o padrão, esta rede foi utilizada para avaliar os pedaços de fase gerados, comparando as entradas geradas de forma aleatória e utilizando o PSO e o CMA-ES como técnicas de evolução de variáveis latentes. Nesta comparação, nós utilizamos nove conjuntos diferentes de treino da rede geradora, sendo a primeira fase como em \cite{marioGAN} e cada um dos oito mundos, totalizando 9 conjuntos de treino. Para cada conjunto, foram geradas 500 entradas aleatórias, 500 entradas com uso de CMA-ES como método de LVE e 500 com o uso do PSO, totalizando 1500 entradas por conjunto de treino, totalizando 1350 níveis avaliados. Neste experimento, a função otimizada foi a da equação (4.1) com $b = 6$, ou seja, maximizando o número de canos. Os gráficos presente nas figuras \textbf{5.8}, \textbf{5.9} e \textbf{5.10} sintetizam estes resultados, com uso de entradas aleatórias, entradas construídas pelo CMA-ES e PSO, respectivamente.
+É importante também avaliarmos se o conteúdo gerado se assemelha suficientemente ou não com o conjunto de treino apresentado. Como um SVC de uma classe ou múltiplas não se mostraram suficientes para dividir as janelas deslizantes dos mundos, um modelo neural simples foi testado e, como mostrado no capítulo anterior, alcançou valores satisfatórios. Uma vez decidida a forma de classificar o padrão, esta rede foi utilizada para avaliar os pedaços de fase gerados, comparando as entradas geradas de forma aleatória e utilizando o PSO e o CMA-ES como técnicas de evolução de variáveis latentes. Nesta comparação, nós utilizamos nove conjuntos diferentes de treinamento da rede geradora, sendo a primeira fase como em \cite{marioGAN} e cada um dos oito mundos, totalizando 9 conjuntos de treino. Para cada conjunto, foram geradas 500 entradas aleatórias, 500 entradas com uso de CMA-ES como método de LVE e 500 com o uso do PSO, totalizando 1500 entradas por conjunto de treino, totalizando 1350 níveis avaliados. Neste experimento, a função otimizada foi a da equação (4.1) com $b = 6$, ou seja, maximizando o número de canos. Os gráficos presente nas figuras \textbf{5.8}, \textbf{5.9} e \textbf{5.10} sintetizam estes resultados, com uso de entradas aleatórias, entradas construídas pelo CMA-ES e PSO, respectivamente.
 
 \begin{figure}[!htb]
 \centering
@@ -246,7 +272,7 @@ Por fim, outro caso interessante é utilizar a LVE maximizando inimigos conhecen
 \label{fig:5.4.3}
 \end{figure}
 
-Para além desses gráficos, é interessante ressaltar que majoritariamente as fases foram classificadas dentro de um padrão específico pela GAN. A \textbf{Tabela 5.5} explicita os padrões de cada conjunto de treino, técnica e padrão.
+Para além desses gráficos, é interessante ressaltar que majoritariamente as fases foram classificadas dentro de um padrão específico pela GAN. A \textbf{Tabela 5.6} explicita os padrões de cada conjunto de treino, técnica e padrão.
 
 \begin{table}[h]
     \centering
@@ -297,8 +323,55 @@ Para além desses gráficos, é interessante ressaltar que majoritariamente as f
 
 Embora alguns mundos do primeiro ao quinto, com exceção do quarto, sejam classificados fora do padrão esperado, é importante ressaltar que eles não distoam na questão do padrão atribuído. A GAN treinada com o mundo 3, por exemplo, tem seus conteúdo gerados majoritariamente classificados como níveis do mundo 5, independente do tipo de entrada. Comparando as entradas aleatórias com técnicas de LVE, a afirmação de que o uso de uma técnica de manipulação de espaço latente não interfere no padrão que se encaixa um conteúdo gerado ganha um tanto de força. Porém, embora empiricamente provada com uma única função, esta possível conclusão só seria correta caso haja uma prova matemática para tal.
 
-Para tanto, esta sessão do capítulo ainda justifica a escolha das redes treinadas com os mundos 1 e 6, que possuem mais níveis e são classificadas fora e dentro do padrão esperado, respectivamente, além da primeira fase, que é o mesmo conjunto de treinamento de \cite{marioGAN}. Com estes três conjuntos de treinos, podemos cobrir de forma satisfatória naturezas distintas de conjuntos de treino.
+Para tanto, esta sessão do capítulo ainda justifica a escolha das redes treinadas com os mundos 1 e 6, que possuem mais níveis e são classificadas fora e dentro do padrão esperado, respectivamente, além da primeira fase, que é o mesmo conjunto de treinamento de \cite{marioGAN}. Com estes três conjuntos de treinamento, é crível que se possa cobrir de forma satisfatória naturezas distintas de conjuntos de treino.
 
 \section{Jogabilidade}
 
-Além das duas formas de avaliação já apresentadas, nós avaliamos alguns conjuntos de conteúdos gerados através do agente A estrela de Robin Baumgarten além da abordagem multi-objetivo.
+Além das formas de análise já apresentadas, alguns dos conjuntos de níveis já apresentados foram avaliados utilizando o agente A estrela de Robin Baumgarten. Das métricas fornecidas pelo agente, foram avaliadas a quantidade de níveis jogáveis, a porcentagem de conclusão dos níveis injogáveis (isto é, o quanto o agente se deslocou no eixo x da fase) e o número de ações que o algoritmo avaliou até chegar em uma solução (que pode ser tomada como um possível indicador de dificuldade). 
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{lcccccc}
+        \toprule
+        \textbf{Conj. De Treino} & \textbf{Entrada} & \textbf{\% de Soluções Jogáveis} & \textbf{Média \% de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (\% de Conclusão Injogáveis)} & \textbf{Média de Ações dos Níveis Jogáveis} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
+        \midrule
+        Mundo 1 & Entradas Aleatórias & 0.754 & 0.0829 & 0.0263 & 78.9 & 10.0 \\
+        Mundo 1 & Entradas do CMA-ES & 0.836 & 0.198 & 0.144 & 103. & 40.0 \\
+        Mundo 1 & Entradas do PSO & 0.882 & 0.177 & 0.141 & 92.0 & 28.0 \\
+        \midrule
+        Mundo 2 & Entradas Aleatórias & 0.562 & 0.113 & 0.117 & 80.7 & 13.0 \\
+        Mundo 2 & Entradas do CMA-ES & 0.386 & 0.0820 & 0.0743 & 78.2 & 9.18 \\
+        Mundo 2 & Entradas do PSO & 0.494 & 0.0762 & 0.0669 & 78.1 & 8.03 \\
+        \midrule
+        Mundo 3 & Entradas Aleatórias & 0.674 & 0.156 & 0.140 & 81.1 & 18.4 \\
+        Mundo 3 & Entradas do CMA-ES & 0.936 & 0.0750 & 0.0265 & 80.9 & 9.77 \\
+        Mundo 3 & Entradas do PSO & 0.92 & 0.0835 & 0.0518 & 80.0 & 7.39 \\
+        \midrule
+        Mundo 4 & Entradas Aleatórias & 0.834 & 0.0863 & 0.0798 & 77.6 & 7.72 \\
+        Mundo 4 & Entradas do CMA-ES & 0.452 & 0.0941 & 0.0141 & 83.6 & 4.98 \\
+        Mundo 4 & Entradas do PSO & 0.302 & 0.0887 & 0.0223 & 82.9 & 6.10 \\
+        \midrule
+        Mundo 5 & Entradas Aleatórias & 0.672 & 0.0971 & 0.0687 & 74.3 & 6.52 \\
+        Mundo 5 & Entradas do CMA-ES & 0.784 & 0.0858 & 0.0127 & 73.5 & 4.28 \\
+        Mundo 5 & Entradas do PSO & 0.794 & 0.0882 & 0.0121 & 73.8 & 4.90 \\
+        \midrule
+        Mundo 6 & Entradas Aleatórias & 0.866 & 0.245 & 0.170 & 82.9 & 16.8 \\
+        Mundo 6 & Entradas do CMA-ES & 0.91 & 0.125 & 0.120 & 78.6 & 11.4 \\
+        Mundo 6 & Entradas do PSO & 0.944 & 0.0860 & 0.0714 & 77.4 & 7.25 \\
+        \midrule
+        Mundo 7 & Entradas Aleatórias & 0.64 & 0.0729 & 0.0322 & 75.9 & 5.66 \\
+        Mundo 7 & Entradas do CMA-ES & 0.102 & 0.0750 & 0.0263 & 78.2 & 3.06 \\
+        Mundo 7 & Entradas do PSO & 0.098 & 0.0713 & 0.0205 & 78.3 & 4.90 \\
+        \midrule
+        Mundo 8 & Entradas Aleatórias & 0.784 & 0.0845 & 0.0600 & 75.5 & 7.00 \\
+        Mundo 8 & Entradas do CMA-ES & 0.508 & 0.214 & 0.165 & 84.3 & 6.04 \\
+        Mundo 8 & Entradas do PSO & 0.5 & 0.211 & 0.162 & 86.0 & 7.63 \\
+        \midrule
+        Primeira Fase & Entradas Aleatórias & 0.684 & 0.112 & 0.106 & 79.6 & 16.8 \\
+        Primeira Fase & Entradas do CMA-ES & 0.558 & 0.0923 & 0.0695 & 80.1 & 16.4 \\
+        Primeira Fase & Entradas do PSO & 0.654 & 0.0942 & 0.0724 & 79.5 & 13.5 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Avaliação por agente com as técnicas de LVE otimizando a função (4.1), com $b = 6$, isto é, maximizando canos}
+    \label{tab:summary}
+\end{table}
