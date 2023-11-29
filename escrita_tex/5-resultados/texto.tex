@@ -28,21 +28,14 @@ Os resultados são interessantes. Primeiro, vale notar que o CMA-ES obteve um de
 
 Neste experimento, nós comparamos o desempenho e a variedade de fases geradas dos métodos de LVE CMA-ES e PSO utilizando as funções das equações (2.1) e (2.2) da mesma forma sugerida no artigo: concatenando duas janelas geradas minimizando a função da equação (2.1) com $t = 1$, uma com $t = 0.7$, e outras duas utilizando a equação (2.2) com $t = 0.7$.
 
-Neste experimento, foram considerados três diferentes conjuntos de treino: o conjunto gerado pelo processamento apenas da primeira fase (o mesmo de \cite{marioGAN}) e os gerado pelo processamento das três fases do mundo 1 e 6. Para cada uma das cinco partes foram geradas 100 instâncias, totalizando 500 fases por método de LVE e fases, que se tornaram 1500 níveis analisados, com 300 para cada pedaço das fases. A \textbf{tabela 5.2} mostra os resultados desta comparação entre o CMA-ES e o PSO para esta aplicação específica.
+Neste experimento, foram considerados três diferentes conjuntos de treinamento: o conjunto gerado pelo processamento apenas da primeira fase - o mesmo de \citet{marioGAN} - e os gerado pelo processamento das três fases do mundo 1 e 6. Para cada uma das cinco partes foram geradas 100 instâncias, totalizando 500 fases por método de LVE e fases, que se tornaram 1500 níveis analisados, com 300 para cada pedaço das fases. A \textbf{figura 5.1} mostra os resultados desta comparação entre o CMA-ES e o PSO para esta aplicação específica.
 
-\begin{table}[h]
-    \centering
-	\begin{tabular}{|p{2cm}|}
-        \hline
-	    \textbf{Em construção} \\
-        \hline
-        Em construção\\
-        \hline
-    \end{tabular}
-	\caption{No Caption}
-	\label{tab:slah}
-\end{table}
-
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{plot_fground/charts_fitness_fground.png}
+	\caption{Gráficos com as médias das fitness, para os três conjuntos de treinamento especificados}
+\label{fig:5.1.1.1.1}
+\end{figure}
 
 (NOTA: Depois de analisar a tabela, vou colocar alguns níveis de forma visual)
 
