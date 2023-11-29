@@ -26,13 +26,11 @@ Por sua vez, a MLP \textit{D} tem como objetivo traçar um plano que separe as d
 
 %Incluir computação evolutiva
 
-CMA-ES, a \emph{Covariance Matrix Adaptation Evolution Strategy}, foi instanciada primeiro em \cite{cma-es}. É uma estratégia evolucionária que se comporta bem com vetores de números reais, que neste casos são as entradas do gerador, e sua principal característica é o uso de uma matriz de covariância estimada iterativamente por diferenças finitas.
+CMA-ES, a \emph{Covariance Matrix Adaptation Evolution Strategy}, foi instanciada primeiro em \cite{cma-es} e é um algoritmo derivado do paradigma da computação evolutiva, um ramo da inteligência computacional inspirado pela evolução biológica, ramo este que resolve problemas de otimização utilizando populações, meta-heurísticas e muitas vezes otimização estocástica. O CMA-ES é uma estratégia evolucionária que se comporta bem com vetores de números reais, que neste casos são as entradas do gerador, e sua principal característica é o uso de uma matriz de covariância estimada iterativamente por diferenças finitas.
 
 Como está no seu nome, o algoritmo faz parte de um grupo de algoritmos evolucionários chamados \emph{evolutionary strategies}, que é um grupo de algoritmos caixa preta caracterizados também pelo uso da ordenação por ranking. A CMA-ES tem se mostrado eficiente para otimizar problemas não-convexos e não-lineares em domínios contínuos.
 
-O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covariância estimada. Esta gaussiana é traduzida numa elipse que se desloca de forma a contemplar as melhores soluções. Quanto mais distantes as melhores soluções estão do domínio dessa elipse, maior o \emph{step size} dela, ou seja, seu raio. De certa forma, no começo, o \emph{step size} costuma ser mais alto pois as melhores soluções conhecidas estão esparsas e a partir deste ponto de partida há a exploração global. Conforme a elipse fica melhor posicionada no domínio, as melhores soluções ficarão menos esparsas, fazendo com que o \emph{step size} diminua proporcionalmente com a concentração da população.
-
-Segue um pseudo-código do que seria o CMA-ES:
+O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covariância estimada. Esta Gaussiana é traduzida numa elipse que se desloca de forma a contemplar as melhores soluções. Quanto mais distantes as melhores soluções estão do domínio dessa elipse, maior o \emph{step size} dela, ou seja, seu raio. De certa forma, no começo, o \emph{step size} costuma ser mais alto pois as melhores soluções conhecidas estão esparsas e a partir deste ponto de partida há a exploração global. Conforme a elipse fica melhor posicionada no domínio, as melhores soluções ficarão menos esparsas, fazendo com que o \emph{step size} diminua proporcionalmente com a concentração da população. O \textbf{Algoritmo 1} ilustra um pseudo-código do algoritmo CMA-ES.
 
 \begin{algorithm}
 \caption{CMA-ES}
@@ -48,12 +46,12 @@ Segue um pseudo-código do que seria o CMA-ES:
 
 \State \textbf{repeat}
 \ForAll{$x \in \lambda$}
-  \State Calcula a gaussiana para $x$
+  \State Calcula a Gaussiana para $x$
 \EndFor
 
 \State Ordena $\lambda$ pelo fitness
 
-\State $c \gets$ calcula\_covariancia $(\lambda)$
+\State $c \gets$ Calcula\_covariancia $(\lambda)$
 
 \State $m \gets \sum_{i=1}^{\mu} W_i \cdot X_i$
 
@@ -93,7 +91,7 @@ O algoritmo utilizado por \cite{fingerprints} para busca no espaço latente é o
 
 \section{Geração de Conteúdo Procedural Usando Aprendizado de Máquina (PCGML) }
 
-A survey de Summerville e colegas \cite{survey2018} define \emph{Procedural Content Generation Via Machine Learning} como "geração de conteudo de jogos usando modelos de \emph{machine learning} em conteúdos existentes". Na área, busca-se aumentar o valor de replay, salvar memória, reduzir o custo e o esforço de produção, diversificar estética e reduzir a presença humana na geração de conteúdo de jogos. Na área acadêmica, além disso, pode-se dizer que se explora novas maneiras de experenciar os jogos, além de ser um desafio que estimula a criatividade computacional e o entendimento de \emph{game design} pela construção de modelos.
+\citet{survey2018} define \emph{Procedural Content Generation Via Machine Learning} como "geração de conteudo de jogos usando modelos de \emph{machine learning} em conteúdos existentes". Segundo \citep{survey2018}, na área busca-se aumentar o valor de \textit{replay} dos jogos, reduzir o custo e o esforço de produção, diversificar estética e otimizar o espaço de armazenamento. Em âmbitos acadêmicos também pode-se dizer que a área de PCGML explora novas maneiras de experenciar os jogos, além de ser um desafio que estimula a criatividade computacional e o entendimento de \emph{game design} pela construção de modelos.
 
 %=====================================================
 
@@ -126,7 +124,9 @@ Assumindo a existência de uma solução ideal e a conversão próxima a fonteir
 
 \section{PSO}
 
-Otimização por enxames de partículas foi proposta por \cite{PSO}. Segundo os autores, é um método de otimização para funções contínuas e não-lineares que simula um modelo social simplificado. O algoritmo instância uma população candidata e a move pelo domínio de acordo com fórmulas matemáticas simples em relação a posição e velocidade da partícula. 
+Otimização por enxames de partículas é um algoritmo bioinspirado proposto por \cite{PSO}, em que sua inspiração provém da navegação em bando de pássaros. Segundo os autores, é um método de otimização para funções contínuas e não-lineares que simula um modelo social simplificado. O algoritmo instância uma população candidata e a move pelo domínio de acordo com fórmulas matemáticas que não possuem alto custo computacional associado ao seu cálculo em relação a posição e velocidade da partícula (partícula, neste caso, equivale a uma solução candidata).
+
+Além de cada uma das partículas se deslocar na sua direção atual no espaço de soluções (esta direção é atualizada a cada iteração do algoritmo), há também deslocamentos em direção ao melhor ponto observado pela particúla individualmente e para a melhor solução encontrada entre todas as partículas, que também pode sofrer alteração se alguma solução melhor foi encontrada durante a iteração. A velocidade de deslocamento da população candidata também varia, tanto coletivamente - reduzindo de acordo com o número de iterações, para favorecer primeiro a exploração global e, após isto, a exploração local - quanto individualmente, levando em conta a distância para a melhor solução individual e global.
 
 A metaheurística associada ao PSO faz pouca ou nenhuma suposição do problema que será otimizado. Outra vantagem é que o algoritmo não utiliza otimização por gradiente como muitos dos algoritmos de computação evolutiva, o que significa que a função objetivo não precisa ser diferenciável. 
 %=====================================================
@@ -141,7 +141,7 @@ A busca A* possui múltiplas aplicações, entre elas a busca por caminhos viáv
 
 \section{MarioGAN}
 
-Em maio de 2018 publicou-se o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Aqui, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas à disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009\cite{marioAI} de autoria de Robin Baumgarten.
+Em maio de 2018 publicou-se o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Aqui, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas à disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009 \citet{marioAI} de autoria de Robin Baumgarten.
 
 Para representar as fases, os autores utilizaram a representação do jogo \textit{Super Mario Bros} disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplificam a representação do jogo ao ignorar níveis específicos, onde a física do jogo diverge do padrão seguido pela maioria das fases, e também representa todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. Nesta representação, cada tipo de bloco é mapeado para um caracter específico, transformando a imagem em uma sequência de caracteres que indicam um bloco específico. Uma vez que o artigo implementa a arquitetura a partir da biblioteca \textit{Pytorch}, esta representação textual precisou ser remapeada para uma representação numérica, conforme mostrado pela \textbf{Figura 2.1}. 
 
@@ -201,7 +201,7 @@ No artigo, a ideia apresentada é que a dificuldade aumente gradativamente confo
 \label{fig:2.3}
 \end{figure}
 
-Em outros experimentos, os autores usam duas funções relacionadas ao teste pelo agente A estrela vencedor da competição da mario AI de 2009, conforme as equações (2.3) e (2.4), onde p é a fração da fase em que o agente passou, e #jumps a quantia de pulos:
+Em outros experimentos, os autores usam duas funções relacionadas ao teste pelo agente A* vencedor da competição da mario AI de 2009, conforme as equações (2.3) e (2.4), onde p é a fração da fase em que o agente passou, e #jumps a quantia de pulos:
 
 \begin{equation}
     F_3 =
