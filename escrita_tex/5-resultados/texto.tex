@@ -43,34 +43,45 @@ Neste experimento, foram considerados três diferentes conjuntos de treino: o co
 	\label{tab:slah}
 \end{table}
 
+
 (NOTA: Depois de analisar a tabela, vou colocar alguns níveis de forma visual)
 
 \subsection{Abordagem multi-objetivo}
 
 No artigo de \cite{marioGAN}, há a sugestão de utilizar algum método multi-objetivo para a evolução de variáveis latentes, juntando as funções das equações (2.1) e (2.2) para serem utilizadas em conjunto a função da equação (2.3). O motivo para tal sugestão é que as primeiras duas funções levam em conta apenas a estrutura geral do nível com relação a chão e inimigos, com manipulação do parâmetro $t$ para induzir uma dificuldade gradativa. O problema é que os níveis com melhores valores das funções de fitness, especialmente com a equação (2.2) como função minimizada (que diminui a quantidade de blocos no chão e aumenta a de inimigos levando, portanto, a tornar a fase menos trivial para se concluir) podem se tornar impossíveis de chegar ao fim. A função da equação (2.3) busca resolver este problema, minimizando mais a função quando um agente é capaz de concluir a fase completamente, e ainda adiciona maior dificuldade ao minimizar mais ainda a função utilizando o número de pulos.  
 
-O problema desta abordagem é o alto custo computacional de utilizar um agente para resolver as fases, ainda mais dentro de um algoritmo genético. Levando em conta 50 gerações e uma população de tamanho 28, para cada execução do algoritmo um agente jogaria 1400 níveis, ou seja, se o agente de Baumgarten for levado em conta, seriam 1400 execuções de um algoritmo A estrela por execução do algoritmo genético. Uma vez que isto gera um alto custo computacional (aproximadamente 105 minutos por execução, levando em conta o computador em que foram feitos os testes), não foi possível realizar execuções em alto volume como nos demais experimentos. Para este experimento, o conjunto de teste considerado, para fins de comparação justa, foi apenas o gerado pelo processamento do primeiro nível do jogo \textit{Super Mario Bros}, o mesmo utilizado por \cite{marioGAN}. Para cada pedaço dos níveis foram realizadas 5 execuções do algoritmo NSGA-II e, ao invés de utilizar a técnica de \textit{comprommise programming} como critério de decisão entre as soluções não dominadas, todas as soluções não dominadas geradas foram observadas para uma maior variedade de possíveis soluções. A \textbf{Tabela 5.3} sintetiza os resultados, considerando as cinco partes das fases dividas em \cite{marioGAN}.
+O problema desta abordagem é o alto custo computacional de utilizar um agente para resolver as fases, ainda mais dentro de um algoritmo genético. Levando em conta 50 gerações e uma população de tamanho 28, para cada execução do algoritmo um agente jogaria 1400 níveis, ou seja, se o agente de Baumgarten for levado em conta, seriam 1400 execuções de um algoritmo A* por execução do algoritmo genético. Uma vez que isto gera um alto custo computacional (aproximadamente 105 minutos por execução, levando em conta o computador em que foram feitos os testes), não foi possível realizar execuções em alto volume como nos demais experimentos. Para este experimento, o conjunto de teste considerado, para fins de comparação justa, foi apenas o gerado pelo processamento do primeiro nível do jogo \textit{Super Mario Bros}, o mesmo utilizado por \cite{marioGAN}. Para cada pedaço dos níveis foram realizadas 5 execuções do algoritmo NSGA-II e, ao invés de utilizar a técnica de \textit{comprommise programming} como critério de decisão entre as soluções não dominadas, todas as soluções não dominadas geradas foram observadas para uma maior variedade de possíveis soluções. A \textbf{Tabela 5.3} sintetiza os resultados, considerando as cinco partes das fases dividas em \cite{marioGAN}.
 
-\begin{table}[ht]
+\begin{table}[h]
     \centering
     \begin{tabular}{lcccccc}
-        \toprule
-        Parte do Nível & Média 1ª Fitness & Desvio Padrão (1ª Fitness) & Média F3 & Desvio Padrão (F3) & Número de Soluções & Soluções Jogáveis \\
-        \midrule
-	    Parte 1 & 0 ($F_1$ com $t = 1$) & 0 & -3.41 & 2.26 & 39 & 39 \\
-        Parte 2 & 0 & 0 ($F_1$ com $t = 1$) & -4.39 & 2.42 & 46 & 46 \\
-        Parte 3 & 0 & 0 ($F_1$ com $t = 0.7$) & -6.59 & 2.47 & 63 & 63 \\
-	Parte 4 & 10.0 ($F_2$ com $t = 0.7$) & 0.0167 & -4.66 & 2.63 & 87 & 84 \\
-        Parte 5 & 10.0 ($F_2$ com $t = 0.7$) & 0.0327 & -3.29 & 2.11 & 50 & 45 \\
-        \bottomrule
+	    \hline
+        \textbf{Parte do Nível} & \textbf{Média 1ª Fitness} & \textbf{Desvio Padrão (1ª Fitness)} & \textbf{Média F3} & \textbf{Desvio Padrão (F3)} & \textbf{Numero de Soluções} & \textbf{Soluções Jogáveis} \\
+	    \hline
+	Parte 1 & 0 ($F_1$ com $t = 1$) & 0 	& -3.41 & 2.26 & 39 & 39 \\
+        Parte 2 & 0 ($F_1$ com $t = 1$) & 0 	& -4.39 & 2.42 & 46 & 46 \\
+        Parte 3 & 0 ($F_1$ com $t = 0.7$) & 0 	& -6.59 & 2.47 & 63 & 63 \\
+        Parte 4 & 5.84 ($F_2$ com $t = 0.7$) & 0.749 	& -2.65 & 1.98 & 38 & 35 \\
+        Parte 5 & 5.5 ($F_2$ com $t = 0.7$) & 0.63 	& -3.64 & 3.41 & 43 & 42 \\
+	   \hline
     \end{tabular}
-    \caption{Resultado dos experimentos multi-objetivo, usando NSGA-II, otimizando $F_1$ ou $F_2$ simultâneamente com $F_3$}
+	\caption{Resultados dos experimentos multi\_objetivo utilizando NSGA-II e as funções sugeridas em \citet{marioGAN}}
     \label{tab:summary}
 \end{table}
 
-Podemos observar que o desvio padrão é muito baixo ou arredondado para 0 e que, com o uso de $F_3$ (ou seja, otimizando a função da equação (2.3)) juntamente com as funções das equações (2.1) ou (2.2) a grande maioria dos níveis gerados também são jogáveis, com algumas exceções quando estamos otimizando $F_2$, onde o número de inimigos é um fator que é aumentado. Isto pode mostrar beneficios do uso de um agente, porém este teste é de certa forma enviesado, já que o mesmo agente utilizado para testar as fases (O agente A estrela de Baumgarten) definiu se estas fases são jogáveis ou não. Para que a conclusão do uso do agente não seja enviesada, um agente diferente deveria ser utilizado para validar, porém este é um estudo para o futuro. 
+É possível observar que o desvio padrão é muito baixo ou arredondado para 0 nas três primeiras partes e que, com o uso de $F_3$ (ou seja, otimizando a função da equação (2.3)) juntamente com as funções das equações (2.1) ou (2.2) a grande maioria dos níveis gerados também são jogáveis, com algumas exceções quando estamos otimizando $F_2$, onde o número de inimigos é um fator que é aumentado. Isto pode mostrar beneficios do uso de um agente, porém este teste é de certa forma enviesado, já que o mesmo agente utilizado para testar as fases (o agente A* de Baumgarten) definiu se estas fases são jogáveis ou não. Para que a conclusão do uso do agente não seja enviesada, um agente diferente deveria ser utilizado para validar, porém este é um estudo para o futuro. 
 
-Como a menor quantia de partes jogáveis é 39 (da primeira parte) esta abordagem nos permite gerar 39 níveis jogáveis com progressão de dificuldade no eixo x. Porém, uma vez que estas 5 execuções por função otimizada levaram aproximadamente 20 horas, no momento parece não compensar em questão de tempo o uso do agente na função de fitness, mas sim como forma de desempate entre níveis gerados, mesmo que isto signifique perder a maximização de pulos (o que leva a fases mais interessantes, já que os pulos são assumidos um indicador de dificuldade do nível).
+Como a menor quantia de partes jogáveis é 35 (da quarta parte) esta abordagem nos permite gerar 35 níveis jogáveis com progressão de dificuldade no eixo x. Porém, uma vez que estas 5 execuções por função otimizada levaram aproximadamente 20 horas, no momento parece não compensar em questão de tempo o uso do agente na função de fitness, mas sim como forma de desempate entre níveis gerados, mesmo que isto signifique perder a minimização de $F_3$, que se traduz na maximização de pulos (o que leva a fases mais interessantes, já que os pulos são assumidos como um indicador de dificuldade do nível por \citep{marioGAN}).
+
+A \textbf{figura 5.3} exemplifica uma fase jogável qualquer utilizando esta metodologia, juntando as cinco partes diferentes. Visualmente, é possível ver partes que o agente certamente precisaria executar a ação "pulo", assim como um pedaço do nível que não há chão, isto é, não há blocos na última linha da matriz que representa o nível. Após isso, o nível de inimigos cresce consideravelmente, porém a quantidade de inimigos domina a sugestão de que deveriam também faltar pedaços do solo nestas partes. \citet{marioGAN} mostra um exemplo em que isto não acontece, porém o artigo não mostra muitos exemplos possivelmente à complexidade computacional de gerar estes níveis, assim como não otimiza $F_3$ simultâneamente.
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{fases_geradas/fgroun_nsga.jpg}
+	\caption{Nível qualquer juntando as cinco partes, conforme detalhado na seção 5.2.1}
+\label{fig:5.4.3}
+\end{figure}
+
 
 \section{Topologia dos níveis}
 
@@ -317,7 +328,7 @@ Para além desses gráficos, é interessante ressaltar que majoritariamente as f
                                   & PSO & 8 & 422 \\
         \hline
     \end{tabular}
-    \caption{Descrição do Conjunto de Treino}
+    \caption{Padrões da classificação de cada conjunto de treino}
     \label{tab:conjunto_treino}
 \end{table}
 
@@ -327,51 +338,128 @@ Para tanto, esta sessão do capítulo ainda justifica a escolha das redes treina
 
 \section{Jogabilidade}
 
-Além das formas de análise já apresentadas, alguns dos conjuntos de níveis já apresentados foram avaliados utilizando o agente A estrela de Robin Baumgarten. Das métricas fornecidas pelo agente, foram avaliadas a quantidade de níveis jogáveis, a porcentagem de conclusão dos níveis injogáveis (isto é, o quanto o agente se deslocou no eixo x da fase) e o número de ações que o algoritmo avaliou até chegar em uma solução (que pode ser tomada como um possível indicador de dificuldade). 
+Além das formas de análise já apresentadas, alguns dos conjuntos de níveis já apresentados foram avaliados utilizando o agente A* de Robin Baumgarten. Das métricas fornecidas pelo agente, foram avaliadas a quantidade de níveis jogáveis, a porcentagem de conclusão dos níveis injogáveis (isto é, o quanto o agente se deslocou no eixo x da fase) e o número de ações que o algoritmo avaliou até chegar em uma solução (que pode ser tomada como um possível indicador de dificuldade). As \textbf{tabelas 5.7 e 5.8} mostram essas métricas para técnicas de LVE otimizando a função-objetivo da equação (4.1) para $b = 6$ e $b = 5$, respectivamente, enquanto a \textbf{tabela 5.9} mostra estes resultados quando o NSGA-II minimiza ambos os casos juntos. 
 
 \begin{table}[ht]
     \centering
     \begin{tabular}{lcccccc}
         \toprule
-        \textbf{Conj. De Treino} & \textbf{Entrada} & \textbf{\% de Soluções Jogáveis} & \textbf{Média \% de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (\% de Conclusão Injogáveis)} & \textbf{Média de Ações dos Níveis Jogáveis} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
+        \textbf{Conj. De Treino} & \textbf{Entrada} & \textbf{\% de Soluções Jogáveis} & \textbf{Proporção Média de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (Conclusão Injogáveis)} & \textbf{Média de Ações dos Níveis Jogáveis} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
         \midrule
-        Mundo 1 & Entradas Aleatórias & 0.754 & 0.0829 & 0.0263 & 78.9 & 10.0 \\
-        Mundo 1 & Entradas do CMA-ES & 0.836 & 0.198 & 0.144 & 103. & 40.0 \\
-        Mundo 1 & Entradas do PSO & 0.882 & 0.177 & 0.141 & 92.0 & 28.0 \\
+        Mundo 1 & Entradas Aleatórias & 75.4 & 0.0829 & 0.0263 & 78.9 & 10.0 \\
+        Mundo 1 & Entradas do CMA-ES & 83.6 & 0.198 & 0.144 & 103. & 40.0 \\
+        Mundo 1 & Entradas do PSO & 88.2 & 0.177 & 0.141 & 92.0 & 28.0 \\
         \midrule
-        Mundo 2 & Entradas Aleatórias & 0.562 & 0.113 & 0.117 & 80.7 & 13.0 \\
-        Mundo 2 & Entradas do CMA-ES & 0.386 & 0.0820 & 0.0743 & 78.2 & 9.18 \\
-        Mundo 2 & Entradas do PSO & 0.494 & 0.0762 & 0.0669 & 78.1 & 8.03 \\
+        Mundo 2 & Entradas Aleatórias & 56.2 & 0.113 & 0.117 & 80.7 & 13.0 \\
+        Mundo 2 & Entradas do CMA-ES & 38.6 & 0.0820 & 0.0743 & 78.2 & 9.18 \\
+        Mundo 2 & Entradas do PSO & 49.4 & 0.0762 & 0.0669 & 78.1 & 8.03 \\
         \midrule
-        Mundo 3 & Entradas Aleatórias & 0.674 & 0.156 & 0.140 & 81.1 & 18.4 \\
-        Mundo 3 & Entradas do CMA-ES & 0.936 & 0.0750 & 0.0265 & 80.9 & 9.77 \\
-        Mundo 3 & Entradas do PSO & 0.92 & 0.0835 & 0.0518 & 80.0 & 7.39 \\
+        Mundo 3 & Entradas Aleatórias & 67.4 & 0.156 & 0.140 & 81.1 & 18.4 \\
+        Mundo 3 & Entradas do CMA-ES & 93.6 & 0.0750 & 0.0265 & 80.9 & 9.77 \\
+        Mundo 3 & Entradas do PSO & 92 & 0.0835 & 0.0518 & 80.0 & 7.39 \\
         \midrule
-        Mundo 4 & Entradas Aleatórias & 0.834 & 0.0863 & 0.0798 & 77.6 & 7.72 \\
-        Mundo 4 & Entradas do CMA-ES & 0.452 & 0.0941 & 0.0141 & 83.6 & 4.98 \\
-        Mundo 4 & Entradas do PSO & 0.302 & 0.0887 & 0.0223 & 82.9 & 6.10 \\
+        Mundo 4 & Entradas Aleatórias & 83.4 & 0.0863 & 0.0798 & 77.6 & 7.72 \\
+        Mundo 4 & Entradas do CMA-ES & 45.2 & 0.0941 & 0.0141 & 83.6 & 4.98 \\
+        Mundo 4 & Entradas do PSO & 30.2 & 0.0887 & 0.0223 & 82.9 & 6.10 \\
         \midrule
-        Mundo 5 & Entradas Aleatórias & 0.672 & 0.0971 & 0.0687 & 74.3 & 6.52 \\
-        Mundo 5 & Entradas do CMA-ES & 0.784 & 0.0858 & 0.0127 & 73.5 & 4.28 \\
-        Mundo 5 & Entradas do PSO & 0.794 & 0.0882 & 0.0121 & 73.8 & 4.90 \\
+        Mundo 5 & Entradas Aleatórias & 67.2 & 0.0971 & 0.0687 & 74.3 & 6.52 \\
+        Mundo 5 & Entradas do CMA-ES & 78.4 & 0.0858 & 0.0127 & 73.5 & 4.28 \\
+        Mundo 5 & Entradas do PSO & 79.4 & 0.0882 & 0.0121 & 73.8 & 4.90 \\
         \midrule
-        Mundo 6 & Entradas Aleatórias & 0.866 & 0.245 & 0.170 & 82.9 & 16.8 \\
-        Mundo 6 & Entradas do CMA-ES & 0.91 & 0.125 & 0.120 & 78.6 & 11.4 \\
-        Mundo 6 & Entradas do PSO & 0.944 & 0.0860 & 0.0714 & 77.4 & 7.25 \\
+        Mundo 6 & Entradas Aleatórias & 86.6 & 0.245 & 0.170 & 82.9 & 16.8 \\
+        Mundo 6 & Entradas do CMA-ES & 91 & 0.125 & 0.120 & 78.6 & 11.4 \\
+        Mundo 6 & Entradas do PSO & 94.4 & 0.0860 & 0.0714 & 77.4 & 7.25 \\
         \midrule
-        Mundo 7 & Entradas Aleatórias & 0.64 & 0.0729 & 0.0322 & 75.9 & 5.66 \\
-        Mundo 7 & Entradas do CMA-ES & 0.102 & 0.0750 & 0.0263 & 78.2 & 3.06 \\
-        Mundo 7 & Entradas do PSO & 0.098 & 0.0713 & 0.0205 & 78.3 & 4.90 \\
+        Mundo 7 & Entradas Aleatórias & 64 & 0.0729 & 0.0322 & 75.9 & 5.66 \\
+        Mundo 7 & Entradas do CMA-ES & 10.2 & 0.0750 & 0.0263 & 78.2 & 3.06 \\
+        Mundo 7 & Entradas do PSO & 9.8 & 0.0713 & 0.0205 & 78.3 & 4.90 \\
         \midrule
-        Mundo 8 & Entradas Aleatórias & 0.784 & 0.0845 & 0.0600 & 75.5 & 7.00 \\
-        Mundo 8 & Entradas do CMA-ES & 0.508 & 0.214 & 0.165 & 84.3 & 6.04 \\
-        Mundo 8 & Entradas do PSO & 0.5 & 0.211 & 0.162 & 86.0 & 7.63 \\
+        Mundo 8 & Entradas Aleatórias & 78.4 & 0.0845 & 0.0600 & 75.5 & 7.00 \\
+        Mundo 8 & Entradas do CMA-ES & 50.8 & 0.214 & 0.165 & 84.3 & 6.04 \\
+        Mundo 8 & Entradas do PSO & 50 & 0.211 & 0.162 & 86.0 & 7.63 \\
         \midrule
-        Primeira Fase & Entradas Aleatórias & 0.684 & 0.112 & 0.106 & 79.6 & 16.8 \\
-        Primeira Fase & Entradas do CMA-ES & 0.558 & 0.0923 & 0.0695 & 80.1 & 16.4 \\
-        Primeira Fase & Entradas do PSO & 0.654 & 0.0942 & 0.0724 & 79.5 & 13.5 \\
+        Primeira Fase & Entradas Aleatórias & 68.4 & 0.112 & 0.106 & 79.6 & 16.8 \\
+        Primeira Fase & Entradas do CMA-ES & 55.8 & 0.0923 & 0.0695 & 80.1 & 16.4 \\
+        Primeira Fase & Entradas do PSO & 65.4 & 0.0942 & 0.0724 & 79.5 & 13.5 \\
         \bottomrule
     \end{tabular}
     \caption{Avaliação por agente com as técnicas de LVE otimizando a função (4.1), com $b = 6$, isto é, maximizando canos}
     \label{tab:summary}
+\end{table}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{lcccccc}
+        \toprule
+	\textbf{Conj. De Treino} & \textbf{Entrada} & \textbf{\% de Soluções Jogáveis} & \textbf{Proporção Média de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (Conclusão Injogáveis)} & \textbf{Média de Ações dos Níveis Jogáveis} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
+        \midrule
+        Mundo 1 & Entradas Aleatórias & 75.4 & 0.0829 & 0.0263 & 78.9 & 10.0 \\
+        Mundo 1 & Entradas do CMA-ES & 63.2 & 0.0640 & 0.0176 & 82.6 & 8.32 \\
+        Mundo 1 & Entradas do PSO & 48.4 & 0.0669 & 0.0354 & 82.4 & 10.4 \\
+        \midrule
+        Mundo 2 & Entradas Aleatórias & 56.2 & 0.113 & 0.117 & 80.7 & 13.0 \\
+        Mundo 2 & Entradas do CMA-ES & 57 & 0.0755 & 0.0668 & 80.4 & 8.21 \\
+        Mundo 2 & Entradas do PSO & 60.4 & 0.0714 & 0.0652 & 80.3 & 9.96 \\
+        \midrule
+        Mundo 3 & Entradas Aleatórias & 67.4 & 0.156 & 0.140 & 81.1 & 18.4 \\
+        Mundo 3 & Entradas do CMA-ES & 65.8 & 0.0659 & 0.0185 & 76.3 & 6.88 \\
+        Mundo 3 & Entradas do PSO & 76 & 0.0695 & 0.0287 & 77.9 & 15.1 \\
+        \midrule
+        Mundo 4 & Entradas Aleatórias & 83.4 & 0.0863 & 0.0798 & 77.6 & 7.72 \\
+        Mundo 4 & Entradas do CMA-ES & 4 & 0.0795 & 0.00670 & 84.7 & 14.2 \\
+        Mundo 4 & Entradas do PSO & 17.2 & 0.0790 & 0.0192 & 77.4 & 5.70 \\
+        \midrule
+        Mundo 5 & Entradas Aleatórias & 67.2 & 0.0971 & 0.0687 & 74.3 & 6.52 \\
+        Mundo 5 & Entradas do CMA-ES & 99.8 & 0.102 & 0.102 & 71.4 & 0.931 \\
+        Mundo 5 & Entradas do PSO & 93.6 & 0.164 & 0.122 & 71.3 & 0.585 \\
+        \midrule
+        Mundo 6 & Entradas Aleatórias & 86.6 & 0.245 & 0.170 & 82.9 & 16.8 \\
+        Mundo 6 & Entradas do CMA-ES & 93.2 & 0.136 & 0.118 & 78.5 & 10.5 \\
+        Mundo 6 & Entradas do PSO & 93.6 & 0.113 & 0.0888 & 78.0 & 7.58 \\
+        \midrule
+        Mundo 7 & Entradas Aleatórias & 64 & 0.0729 & 0.0322 & 75.9 & 5.66 \\
+        Mundo 7 & Entradas do CMA-ES & 93.8 & 0.145 & 0.142 & 82.1 & 9.37 \\
+        Mundo 7 & Entradas do PSO & 92.6 & 0.130 & 0.146 & 78.5 & 10.3 \\
+        \midrule
+        Mundo 8 & Entradas Aleatórias & 78.4 & 0.0845 & 0.0600 & 75.5 & 7.00 \\
+        Mundo 8 & Entradas do CMA-ES & 75.2 & 0.0959 & 0.0328 & 76.2 & 6.87 \\
+        Mundo 8 & Entradas do PSO & 81.8 & 0.0889 & 0.0167 & 74.3 & 6.43 \\
+        \midrule
+        Primeira Fase & Entradas Aleatórias & 68.4 & 0.112 & 0.106 & 79.6 & 16.8 \\
+        Primeira Fase & Entradas do CMA-ES & 88.2 & 0.0899 & 0.0611 & 83.8 & 10.4 \\
+        Primeira Fase & Entradas do PSO & 91.4 & 0.0926 & 0.0797 & 83.3 & 10.8 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Avaliação por agente com as técnicas de LVE otimizando a função (4.1), com $b = 5$, isto é, maximizando inimigos}
+	\label{tab:inimigos_}
+\end{table}
+
+Com exceção dos conjuntos de treino formado pelo processamento dos mundos 4, 7, e 8 não houve grande diferença na porcentagem dos níveis jogáveis dos 500 níveis gerados com cada conjunto de treino utilizando alguma técnica de LVE, seja com a função-objetivo maximizando canos ou inimigos. 
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{lcccccc}
+	    \hline
+	    \textbf{Conj. De Treino} & \textbf{\% de Soluções Jogáveis} & \textbf{Proporção Média de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (Conclusão Injogáveis)} & \textbf{Média de Ações dos Níveis Jogáveis} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
+	    \hline
+        Mundo 1 & 0.608 & 0.0805 & 0.0264 & 84.1 & 11.4 \\
+	    \hline
+        Mundo 2 & 0.412 & 0.0807 & 0.0883 & 83.1 & 10.9 \\
+	    \hline
+        Mundo 3 & 0.778 & 0.0650 & 0.0361 & 76.7 & 5.68 \\
+	    \hline
+        Mundo 4 & 0.18 & 0.0851 & 0.0113 & 83.6 & 4.14 \\
+	    \hline
+        Mundo 5 & 0.894 & 0.0917 & 0.00355 & 71.9 & 2.76 \\
+	    \hline
+        Mundo 6 & 0.92 & 0.117 & 0.0697 & 78.1 & 7.85 \\
+	    \hline
+        Mundo 7 & 0.486 & 0.0813 & 0.0637 & 82.7 & 16.2 \\
+	    \hline
+        Mundo 8 & 0.564 & 0.0956 & 0.0590 & 78.1 & 7.32 \\
+	    \hline
+        Primeira Fase & 0.92 & 0.104 & 0.103 & 83.3 & 11.4 \\
+	    \hline
+	    \caption{Avaliação por agente com o NSGa-II otimizando a função (4.1), com $b = 5$ e $b = 6$ simultaneamente}
+    \end{tabular}
 \end{table}
