@@ -43,7 +43,7 @@ O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covari�
 \begin{algorithmic}[1]
 
 \State Inicialize a população: $\lambda$
-\State Inicialize o \texit{step size}: $\sigma$
+\State Inicialize o \textit{step size}: $\sigma$
 \State Defina o tamanho da população: $m$
 
 \State Defina o número de melhores candidados $\mu$
@@ -118,7 +118,7 @@ E sua implementação nos permite:
     \item e enfatizar soluções não-dominadas.
 \end{itemize}
 
-Tendo populaçoes de tamanho N, o NSGA-II recombina tal população numa população de tamanho 2N e a ordena baseado no ranking da fronteira de Pareto, priorizando soluções da fronteira classe 1 e completando com as fronteiras subsequentes. Quando a fronteira $F_{g}$ não cabe mais inteira na próxima população, são selecionadas os indivíduos com maior \texit{crowding distance}, que é a área/volume (dependente do tamanho do espaço objetivo $Z$ do problema) ao seu redor sem nenhuma solução presente (cabe enfatizar que as funções objetivo são normalizadas para que nenhuma domine a outra). Este operador permite escolher as soluções que estão mais distantes das outras, por consequência também sendo um preservador de diversidade por si só.
+Tendo populaçoes de tamanho N, o NSGA-II recombina tal população numa população de tamanho 2N e a ordena baseado no ranking da fronteira de Pareto, priorizando soluções da fronteira classe 1 e completando com as fronteiras subsequentes. Quando a fronteira $F_{g}$ não cabe mais inteira na próxima população, são selecionadas os indivíduos com maior \textit{crowding distance}, que é a área/volume (dependente do tamanho do espaço objetivo $Z$ do problema) ao seu redor sem nenhuma solução presente (cabe enfatizar que as funções objetivo são normalizadas para que nenhuma domine a outra). Este operador permite escolher as soluções que estão mais distantes das outras, por consequência também sendo um preservador de diversidade por si só.
 
 \subsection{Decisão entre soluções}
 
