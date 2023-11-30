@@ -1,12 +1,12 @@
 \chapter{Resultados}
 
-Neste capítulo, são apresentados os resultados dos testes propostos no capítulo anterior. Com análises tanto visual quanto em tabelas e gráficos, foram aplicadas múltiplas funções de LVE na GAN, que foi treinada com múltiplos mundos. Também vale lembrar que três tipos de algoritmos foram utilizados (CMA-ES, PSO e NSGA-II) e, além das funções objetivo, os níveis gerados também foram avaliados por um classificador neural simples e o algoritmo A estrela de Robin Baumgarten.
+Neste capítulo, são apresentados os resultados dos testes propostos no capítulo anterior. Com análises tanto visual quanto em tabelas e gráficos, foram aplicadas técnicas de LVE utilizando diversas funções-objetivos em GANs, redes estas que foram treinada com múltiplos conjuntos. Também vale lembrar que três tipos de algoritmos foram utilizados (CMA-ES, PSO e NSGA-II) e, além das funções objetivo, os níveis gerados também foram avaliados por um classificador neural simples e o algoritmo A* de Robin Baumgarten.
 
 \section{Comparação de tempo e performance entre CMA-ES e PSO}
 
-Por ser simples, utilizando apenas algumas fórmulas, uma comparação entre o PSO e o CMA-ES nos quesitos tempo e desempenho. Embora, em sua essência, o CMA-ES não seja limitado em iterações mas sim em um valor aceitável da função objetivo, para esta comparação de tempo ele foi limitado em 50 iterações, assim como o algoritmo de partículas. Neste experimento, o conjunto de treino do gerador foi composto apenas por janelas geradas pelo processamento da primeira fase, para devidamente comparar o CMA-ES manipulando um gerador treinado com o conjunto de treino presente no artigo e sua implementação com o PSO. 
+Foi realizada uma comparação entre o PSO e o CMA-ES nos quesitos tempo de execução e desempenho. Embora, em sua essência, o CMA-ES não seja limitado em iterações mas sim em um valor aceitável da função-objetivo, para esta comparação de tempo ele foi limitado em 50 iterações, assim como o algoritmo de partículas. Neste experimento, o conjunto de treino do gerador foi composto apenas por janelas geradas pelo processamento da primeira fase, para devidamente comparar o CMA-ES manipulando um gerador treinado com o conjunto de treinamento presente no artigo e sua implementação com o PSO. 
 
-A função-objetivo otimizada foi a da equação 2.2, com $g = 5$. Como nos experimentos dos autores duas janelas diferentes minimizavam a função desta equação, foram realizadas 200 iterações por método de LVE. Os resultados estão presentes na \textbf{Tabela 5.1}, com média e desvio padrão.
+A função-objetivo otimizada foi a da equação (2.2), com $g = 5$. Como nos experimentos em \citet{marioGAN} duas janelas diferentes minimizavam a função desta equação, foram realizadas 200 iterações por método de LVE. Os resultados estão presentes na \textbf{Tabela 5.1}, com média e desvio padrão.
 
 \begin{table}[h]
     \centering
@@ -34,10 +34,37 @@ Neste experimento, foram considerados três diferentes conjuntos de treinamento:
 \centering
 	\includegraphics[width=12cm]{plot_fground/charts_fitness_fground.png}
 	\caption{Gráficos com as médias das fitness, para os três conjuntos de treinamento especificados}
-\label{fig:5.1.1.1.1}
+\label{fig:5.1.1.1.1.0}
 \end{figure}
 
-(NOTA: Depois de analisar a tabela, vou colocar alguns níveis de forma visual)
+Nota-se, neste gráfico, que as primeiras duas partes (que minimizam $F_1$ com $t = 1$) conseguem chegar a 0, que é o menor valor possível de $F_1$, sem dificuldades. Isto leva a crer que gerar níveis em que a matriz correspondente possui o bloco "0" em todas as posições da sua última linha - isto é, todo o chão da fase possui blocos - não é uma tarefa complexa para as técnicas de LVE, seja o algoritmo usado o PSO ou o CMA-ES. Uma vez que há muitas conversões neste primeiro caso, torna-se ainda mais interessante a ideia de minimizar simultaneamente $F_3$ numa abordagem multi-objetivo para tornar os níveis mais interessantes, forçando o agente testador a realizar mais ações de pulo, ação esta que pode ser relacionada com dificuldade.
+
+Quanto a parte três, que minimiza $F_1$ com $t = 0.7$, os três conjuntos de treinamento apresentaram a mesma média para ambos os algoritmos utilizados para a técnica de LVE, o que indica um desempenho semelhante de ambos. Quando se fala da quarta e quinta parte da fase, partes estas que a função-objetivo otimizada é $F_2$ com $t = 0.7$, o CMA-ES possui um desempenho 16\% melhor no conjunto de treino formado pela primeira fase, 7\% melhor no conjunto de treino formado pelo primeiro mundo, e 0.02\% pior no terceiro conjunto de treino em comparação com o PSO. Estes resultados não são expressivos o suficiente para afirmar qual técnica é melhor, levando em conta que o PSO executa em média, segundo o experimento da seção 5.1, pouco mais de 4 vezes mais rápido que o CMA-ES. Os desvios padrões do PSO também são maiores que o CMA-ES neste caso (no mundo 1, por exemplo, o desvio padrão da média da função-objetivo das execuções do PSO para $F_2$ é de 0.425, enquanto o desvio padrão do CMA-ES é de 0.585), o que pode ser um indicativo de algumas execuções do PSO chegarem em soluções até melhores que o CMA-ES.
+
+As figuras \textbf{figuras 5.2, 5.3} e \textbf{5.4} exemplificam níveis gerados com esta técnica utilizando os conjuntos de treinamento da primeira fase, do mundo um e do mundo seis, respectivamente. Interessante notar que o nível escolhido da primeira fase não parece ser jogável, já que possui um espaço muito grande sem blocos. Outra coisa interessante é que domina-se a quantia de inimigos sobre os 70\% de blocos de chão nas fases das figuras \textbf{5.2 e 5.3}, enquanto isso não acontece na figura \textbf{5.4}, onde há poucos inimigos, mas há falhas nos blocos da linha mais baixa da fase como o esperado.
+
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{fases_geradas/nivel_gerado_primeira_fase.jpg}
+	\caption{Nível gerado pela GAN treinada com a primeira fase, utilizando a técnica de LVE e funções-objetivos sugeridas em \citet{marioGAN}}
+\label{fig:5.1.1.1.1.1.1}
+\end{figure}
+
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{fases_geradas/nivel_gerado_mundo_1.jpg}
+        \caption{Nível gerado pela GAN treinada com as fases do mundo um, utilizando a técnica de LVE e funções-objetivos sugeridas em \citet{marioGAN}}
+\label{fig:5.1.1.1.1.1}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=12cm]{fases_geradas/nivel_gerado_mundo_6.jpg}
+        \caption{Nível gerado pela GAN treinada com as fases do mundo 6, utilizando a técnica de LVE e funções-objetivos sugeridas em \citet{marioGAN}}
+\label{fig:5.1.1.1.1.3.3}
+\end{figure}
 
 \subsection{Abordagem multi-objetivo}
 
@@ -427,7 +454,7 @@ Além das formas de análise já apresentadas, alguns dos conjuntos de níveis j
 	\label{tab:inimigos_}
 \end{table}
 
-Com exceção dos conjuntos de treino formado pelo processamento dos mundos 4, 7, e 8 não houve grande diferença na porcentagem dos níveis jogáveis dos 500 níveis gerados com cada conjunto de treino utilizando alguma técnica de LVE, seja com a função-objetivo maximizando canos ou inimigos. 
+Com exceção dos conjuntos de treinamento formado pelo processamento dos mundos 4, 7, e 8 não houve grande diferença na porcentagem dos níveis jogáveis dos 500 níveis gerados com cada conjunto de treino utilizando alguma técnica de LVE, seja com a função-objetivo maximizando canos ou inimigos, com alguns casos até mesmo superando a porcentagem das entradas aleatórias. As ações também se mantém com valores razoavelmente parecidos. Possivelmente, a altura dos canos ou muitos inimigos fizeram o agente perder muitas vezes, algo que faz sentido levando em consideração o tipo de manipulação de espaço latente realizada. De qualquer forma, isto mostra que para gerar níveis interessantes e que ainda sejam jogáveis utilizando técnicas de LVE um agente possível poderia auxiliar ou pelo menos ser utilizado como critério de desempate. Este experimento também mostra a importância do conjunto de treinamento e como ele influencia na forma que a rede geradora irá se comportar: levando em conta as entradas aleatórias e as diferenças em níveis jogáveis utilizando alguma técnica de LVE, os resultados foram diretamente influenciados pelo conjunto de treinamento do modelo. Os resultados são análogos a \textbf{Última tabela}, que mostra essas métricas para o NSGA-II utilizado como técnica de LVE, otimizando simultaneamente a função-objetivo da equação (4.1) para canos e inimigos.
 
 \begin{table}[ht]
     \centering
@@ -456,3 +483,7 @@ Com exceção dos conjuntos de treino formado pelo processamento dos mundos 4, 7
 	    \caption{Avaliação por agente com o NSGa-II otimizando a função (4.1), com $b = 5$ e $b = 6$ simultaneamente}
     \end{tabular}
 \end{table}
+
+\section{Considerações Finais}
+
+Este capítulo discutiu empiricamente como tanto o conjunto de treinamento quanto as funções-objetivos utilizadas na técnica de LVE influenciam no conteúdo gerado de um gerador de fases do jogo \textit{Super Mario Bros}. Para esta discussão, foram utilizadas tanto funções-objetivo sugeridas em \citep{marioGAN} quanto a função da equação (4.1). Com exemplos visuais e resultados quantitativos, foram comparadas desempenho e valores finais dos algoritmos bioinspirados CMA-ES, PSO e NSGA-II em diversas situações com diversos conjuntos de treinamento, proporcionando uma ampla visão do uso do gerador de níveis proposto em \citep{marioGAN} e como a técnica de LVE pode conduzir os níveis gerados a seguir certo padrão. No próximo capítulo, haverá uma sintese de tudo realizado neste trabalho, bem como discussão dos resultados e apontamento de trabalhos futuros que possam se desenvolver à partir deste.
