@@ -10,7 +10,7 @@ Como em \cite{marioGAN}, a representação utilizada é a mesma do repositório 
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{|c|c|}
+    \begin{tabular}{|c|c|c|}
         \hline
 	    Mundo & Número de Níveis & Número de Janelas Deslizantes\\
         \hline
@@ -56,9 +56,9 @@ Os algoritmos utilizados para a evolução de variável são: o CMA-ES, como em 
 
 Para o CMA-ES, a biblioteca utilizada foi a \textit{CMA}\cite{cma}. Já para o PSO e o NSGA-II, foram usadas as implementaçõs do \textit{framework} pymoo(\cite{pymoo}). 
 
-\section{Funções-objetivos}
+\section{Funções-objetivo}
 
-Neste trabalho, muitas funções-objetivos foram otimizadas. Foram minimizadas as funções das equações (2.1) e (2.2) seguindo a proposta de progressão de dificuldade em \cite{marioGAN}, e o desempenho do CMA-ES e do PSO foram comparados. Também foram feitas algumas rodadas de otimização destas funções em conjunto com a presente na equação (2.3) utilizando NSGA-II, para avaliar o desempenho geral, conforme sugerido por \cite{marioGAN}. 
+Neste trabalho, muitas funções-objetivo foram otimizadas. Foram minimizadas as funções das equações (2.1) e (2.2) seguindo a proposta de progressão de dificuldade em \cite{marioGAN}, e o desempenho do CMA-ES e do PSO foram comparados. Também foram feitas algumas rodadas de otimização destas funções em conjunto com a presente na equação (2.3) utilizando NSGA-II, para avaliar o desempenho geral, conforme sugerido por \cite{marioGAN}. 
 
 Além das funções das equações (2.1), (2.2) e (2.3), elaboramos outra função para comparar a topologia das fases. A função-objetivo autoral otimizada é relacionada ao número de blocos de um certo tipo do conteúdo gerado, seguindo a equação (4.1).
 
