@@ -8,7 +8,7 @@
 
 %\section{}
 
-Este capítulo revisita os tópicos fundamentais deste trabalho, incluindo os princípios de redes neurais adversariais, evolução de variável latente e algoritmos genéticos para exploração do espaço latente com o exemplo do CMA-ES; explora a literatura no tópico de geração de conteúdo procedural utilizando aprendizado de máquina; e apresenta o principal artigo que guiou este trabalho, que utiliza uma DCGAN para gerar níveis do jogo Super Mario Bros.(1985). 
+Este capítulo revisita os tópicos fundamentais deste trabalho, incluindo os princípios de redes neurais adversariais, evolução de variável latente e algoritmos genéticos para exploração do espaço latente com o exemplo do CMA-ES; explora a literatura no tópico de geração de conteúdo procedural utilizando aprendizado de máquina; e apresenta o principal artigo que guiou este trabalho, que utiliza uma DCGAN para gerar níveis do jogo \textit{Super Mario Bros}(1985). 
 
 %=====================================================
 
@@ -28,7 +28,7 @@ Por sua vez, a MLP \textit{D} tem como objetivo traçar um plano que separe as d
 
 CMA-ES, a \emph{Covariance Matrix Adaptation Evolution Strategy}, foi instanciada primeiro em \cite{cma-es} e é um algoritmo derivado do paradigma da computação evolutiva, um ramo da inteligência computacional inspirado pela evolução biológica, ramo este que resolve problemas de otimização utilizando populações, meta-heurísticas e muitas vezes otimização estocástica. O CMA-ES é uma estratégia evolucionária que se comporta bem com vetores de números reais, que neste casos são as entradas do gerador, e sua principal característica é o uso de uma matriz de covariância estimada iterativamente por diferenças finitas.
 
-Como está no seu nome, o algoritmo faz parte de um grupo de algoritmos evolucionários chamados \emph{evolutionary strategies}, que é um grupo de algoritmos caixa preta caracterizados também pelo uso da ordenação por ranking. A CMA-ES tem se mostrado eficiente para otimizar problemas não-convexos e não-lineares em domínios contínuos.
+Como está no seu nome, o algoritmo faz parte de um grupo de algoritmos evolucionários chamados \emph{evolutionary strategies}, que é um grupo de algoritmos caixa preta caracterizados também pelo uso da ordenação por ranking. O CMA-ES tem se mostrado eficiente para otimizar problemas não-convexos e não-lineares em domínios contínuos.
 
 O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covariância estimada. Esta Gaussiana é traduzida numa elipse que se desloca de forma a contemplar as melhores soluções. Quanto mais distantes as melhores soluções estão do domínio dessa elipse, maior o \emph{step size} dela, ou seja, seu raio. De certa forma, no começo, o \emph{step size} costuma ser mais alto pois as melhores soluções conhecidas estão esparsas e a partir deste ponto de partida há a exploração global. Conforme a elipse fica melhor posicionada no domínio, as melhores soluções ficarão menos esparsas, fazendo com que o \emph{step size} diminua proporcionalmente com a concentração da população. O \textbf{Algoritmo 1} ilustra um pseudo-código do algoritmo CMA-ES.
 
@@ -152,7 +152,7 @@ Para representar as fases, os autores utilizaram a representação do jogo \text
 \label{fig:2.1}
 \end{figure}
 
-A GAN convolucional profunda (DCGAN) utilizada no artigo é baseada na Wassertein Gan apresentada em \cite{wgan}, em que o discriminador utiliza convoluções com deslocamento (\textit{strided convolutions}), enquanto o gerador utiliza convoluções com deslocamento fracionário (\textit{fractional-strided convolutions}. A arquitetura em \cite{marioGAN} difere da arquitetura de \cite{WGAN} nos seguintes pontos:
+A GAN convolucional profunda (DCGAN) utilizada no artigo é baseada na Wassertein Gan apresentada em \cite{wgan}, em que o discriminador utiliza convoluções com deslocamento (\textit{strided convolutions}), enquanto o gerador utiliza convoluções com deslocamento fracionário (\textit{fractional-strided convolutions}. A arquitetura em \cite{marioGAN} difere da arquitetura de \cite{wgan} nos seguintes pontos:
 
 \begin{itemize}
 
@@ -228,7 +228,7 @@ Na verdade, $F_3$ maximiza os pulos e recompensa fases passáveis, enquanto $F_4
 \label{fig:2.4}
 \end{figure}
 
-Lembrando que não foram feitas abordagem multi-objetivo utilizando $F_1$ ou $F_2$ e $F_3$ ou $F_4$.
+Lembrando que não foram feitas abordagem multi-objetivo utilizando $F_1$ ou $F_2$ e $F_3$ ou $F_4$ no artigo.
 
 %=====================================================
 
