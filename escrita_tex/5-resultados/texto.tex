@@ -305,7 +305,7 @@ Neste experimento, foi realizada uma tentativa de avaliar se o conteúdo gerado 
 
 Além desses gráficos, é interessante ressaltar que majoritariamente as fases foram classificadas dentro de um padrão específico pela GAN. A \textbf{Tabela 5.5} explicita os padrões de cada conjunto de treino, técnica e padrão.
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \begin{tabular}{|c|c|c|c|}
         \hline
@@ -348,7 +348,7 @@ Além desses gráficos, é interessante ressaltar que majoritariamente as fases 
                                   & PSO & 8 & 422 \\
         \hline
     \end{tabular}
-    \caption{Padrões da classificação de cada conjunto de treino}
+    \caption{Padrões da classificação de cada conjunto de treinamento}
     \label{tab:conjunto_treino}
 \end{table}
 
@@ -362,46 +362,46 @@ Além das formas de análise já apresentadas, alguns dos conjuntos de níveis j
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{lcccccc}
-	    \hline
-        \textbf{Conj. De Treino} & \textbf{Entrada} & \textbf{\% de Soluções Jogáveis} & \textbf{Proporção Média de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (Conclusão Injogáveis)} & \textbf{Média de Ações dos Níveis Jogáveis} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
-	    \hline
-        Mundo 1 & Entradas Aleatórias & 75.4 & 0.0829 & 0.0263 & 78.9 & 10.0 \\
-        Mundo 1 & Entradas do CMA-ES & 83.6 & 0.198 & 0.144 & 103. & 40.0 \\
-        Mundo 1 & Entradas do PSO & 88.2 & 0.177 & 0.141 & 92.0 & 28.0 \\
-	    \hline
-        Mundo 2 & Entradas Aleatórias & 56.2 & 0.113 & 0.117 & 80.7 & 13.0 \\
-        Mundo 2 & Entradas do CMA-ES & 38.6 & 0.0820 & 0.0743 & 78.2 & 9.18 \\
-        Mundo 2 & Entradas do PSO & 49.4 & 0.0762 & 0.0669 & 78.1 & 8.03 \\
-	    \hline
-        Mundo 3 & Entradas Aleatórias & 67.4 & 0.156 & 0.140 & 81.1 & 18.4 \\
-        Mundo 3 & Entradas do CMA-ES & 93.6 & 0.0750 & 0.0265 & 80.9 & 9.77 \\
-        Mundo 3 & Entradas do PSO & 92 & 0.0835 & 0.0518 & 80.0 & 7.39 \\
-	    \hline
-        Mundo 4 & Entradas Aleatórias & 83.4 & 0.0863 & 0.0798 & 77.6 & 7.72 \\
-        Mundo 4 & Entradas do CMA-ES & 45.2 & 0.0941 & 0.0141 & 83.6 & 4.98 \\
-        Mundo 4 & Entradas do PSO & 30.2 & 0.0887 & 0.0223 & 82.9 & 6.10 \\
-	    \hline
-        Mundo 5 & Entradas Aleatórias & 67.2 & 0.0971 & 0.0687 & 74.3 & 6.52 \\
-        Mundo 5 & Entradas do CMA-ES & 78.4 & 0.0858 & 0.0127 & 73.5 & 4.28 \\
-        Mundo 5 & Entradas do PSO & 79.4 & 0.0882 & 0.0121 & 73.8 & 4.90 \\
-	    \hline
-        Mundo 6 & Entradas Aleatórias & 86.6 & 0.245 & 0.170 & 82.9 & 16.8 \\
-        Mundo 6 & Entradas do CMA-ES & 91 & 0.125 & 0.120 & 78.6 & 11.4 \\
-        Mundo 6 & Entradas do PSO & 94.4 & 0.0860 & 0.0714 & 77.4 & 7.25 \\
-	    \hline
-        Mundo 7 & Entradas Aleatórias & 64 & 0.0729 & 0.0322 & 75.9 & 5.66 \\
-        Mundo 7 & Entradas do CMA-ES & 10.2 & 0.0750 & 0.0263 & 78.2 & 3.06 \\
-        Mundo 7 & Entradas do PSO & 9.8 & 0.0713 & 0.0205 & 78.3 & 4.90 \\
-	    \hline
-        Mundo 8 & Entradas Aleatórias & 78.4 & 0.0845 & 0.0600 & 75.5 & 7.00 \\
-        Mundo 8 & Entradas do CMA-ES & 50.8 & 0.214 & 0.165 & 84.3 & 6.04 \\
-        Mundo 8 & Entradas do PSO & 50 & 0.211 & 0.162 & 86.0 & 7.63 \\
-	    \hline
-        Primeira Fase & Entradas Aleatórias & 68.4 & 0.112 & 0.106 & 79.6 & 16.8 \\
-        Primeira Fase & Entradas do CMA-ES & 55.8 & 0.0923 & 0.0695 & 80.1 & 16.4 \\
-        Primeira Fase & Entradas do PSO & 65.4 & 0.0942 & 0.0724 & 79.5 & 13.5 \\
-	    \hline
+    \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{1cm}|p{2cm}|}
+            \hline
+        \textbf{Conjunto} & \textbf{Entradas} & \textbf{\% de Soluções Jogáveis} & \textbf{Média de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (Conclusão Injogáveis)} & \textbf{Média Ações (Jogá- veis)} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
+            \hline
+        & Aleatórias & 75.4 & 0.0829 & 0.0263 & 78.9 & 10.0 \\
+        Mundo 1 & CMA-ES & 83.6 & 0.198 & 0.144 & 103. & 40.0 \\
+        & PSO & 88.2 & 0.177 & 0.141 & 92.0 & 28.0 \\
+            \hline
+        & Aleatórias & 56.2 & 0.113 & 0.117 & 80.7 & 13.0 \\
+        Mundo 2 & CMA-ES & 38.6 & 0.0820 & 0.0743 & 78.2 & 9.18 \\
+        & PSO & 49.4 & 0.0762 & 0.0669 & 78.1 & 8.03 \\
+            \hline
+        & Aleatórias & 67.4 & 0.156 & 0.140 & 81.1 & 18.4 \\
+        Mundo 3 & CMA-ES & 93.6 & 0.0750 & 0.0265 & 80.9 & 9.77 \\
+        & PSO & 92 & 0.0835 & 0.0518 & 80.0 & 7.39 \\
+            \hline
+        & Aleatórias & 83.4 & 0.0863 & 0.0798 & 77.6 & 7.72 \\
+        Mundo 4 & CMA-ES & 45.2 & 0.0941 & 0.0141 & 83.6 & 4.98 \\
+        & PSO & 30.2 & 0.0887 & 0.0223 & 82.9 & 6.10 \\
+            \hline
+        & Aleatórias & 67.2 & 0.0971 & 0.0687 & 74.3 & 6.52 \\
+        Mundo 5 & CMA-ES & 78.4 & 0.0858 & 0.0127 & 73.5 & 4.28 \\
+        & PSO & 79.4 & 0.0882 & 0.0121 & 73.8 & 4.90 \\
+            \hline
+        & Aleatórias & 86.6 & 0.245 & 0.170 & 82.9 & 16.8 \\
+        Mundo 6 & CMA-ES & 91 & 0.125 & 0.120 & 78.6 & 11.4 \\
+        & PSO & 94.4 & 0.0860 & 0.0714 & 77.4 & 7.25 \\
+            \hline
+       & Aleatórias & 64 & 0.0729 & 0.0322 & 75.9 & 5.66 \\
+        Mundo 7 & CMA-ES & 10.2 & 0.0750 & 0.0263 & 78.2 & 3.06 \\
+        & PSO & 9.8 & 0.0713 & 0.0205 & 78.3 & 4.90 \\
+            \hline
+        & Aleatórias & 78.4 & 0.0845 & 0.0600 & 75.5 & 7.00 \\
+        Mundo 8 & CMA-ES & 50.8 & 0.214 & 0.165 & 84.3 & 6.04 \\
+        & PSO & 50 & 0.211 & 0.162 & 86.0 & 7.63 \\
+            \hline
+        & Aleatórias & 68.4 & 0.112 & 0.106 & 79.6 & 16.8 \\
+        1ª Fase & CMA-ES & 55.8 & 0.0923 & 0.0695 & 80.1 & 16.4 \\
+        & PSO & 65.4 & 0.0942 & 0.0724 & 79.5 & 13.5 \\
+            \hline
     \end{tabular}
     \caption{Avaliação por agente com as técnicas de LVE otimizando a função (4.1), com $b = 6$, isto é, maximizando canos}
     \label{tab:summary}
@@ -409,46 +409,46 @@ Além das formas de análise já apresentadas, alguns dos conjuntos de níveis j
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{lcccccc}
-	    \hline
-	\textbf{Conj. De Treino} & \textbf{Entrada} & \textbf{\% de Soluções Jogáveis} & \textbf{Proporção Média de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (Conclusão Injogáveis)} & \textbf{Média de Ações dos Níveis Jogáveis} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
-	    \hline
-        Mundo 1 & Entradas Aleatórias & 75.4 & 0.0829 & 0.0263 & 78.9 & 10.0 \\
-        Mundo 1 & Entradas do CMA-ES & 63.2 & 0.0640 & 0.0176 & 82.6 & 8.32 \\
-        Mundo 1 & Entradas do PSO & 48.4 & 0.0669 & 0.0354 & 82.4 & 10.4 \\
-	    \hline
-        Mundo 2 & Entradas Aleatórias & 56.2 & 0.113 & 0.117 & 80.7 & 13.0 \\
-        Mundo 2 & Entradas do CMA-ES & 57 & 0.0755 & 0.0668 & 80.4 & 8.21 \\
-        Mundo 2 & Entradas do PSO & 60.4 & 0.0714 & 0.0652 & 80.3 & 9.96 \\
-	    \hline
-        Mundo 3 & Entradas Aleatórias & 67.4 & 0.156 & 0.140 & 81.1 & 18.4 \\
-        Mundo 3 & Entradas do CMA-ES & 65.8 & 0.0659 & 0.0185 & 76.3 & 6.88 \\
-        Mundo 3 & Entradas do PSO & 76 & 0.0695 & 0.0287 & 77.9 & 15.1 \\
-	    \hline
-        Mundo 4 & Entradas Aleatórias & 83.4 & 0.0863 & 0.0798 & 77.6 & 7.72 \\
-        Mundo 4 & Entradas do CMA-ES & 4 & 0.0795 & 0.00670 & 84.7 & 14.2 \\
-        Mundo 4 & Entradas do PSO & 17.2 & 0.0790 & 0.0192 & 77.4 & 5.70 \\
-	    \hline
-        Mundo 5 & Entradas Aleatórias & 67.2 & 0.0971 & 0.0687 & 74.3 & 6.52 \\
-        Mundo 5 & Entradas do CMA-ES & 99.8 & 0.102 & 0.102 & 71.4 & 0.931 \\
-        Mundo 5 & Entradas do PSO & 93.6 & 0.164 & 0.122 & 71.3 & 0.585 \\
-	    \hline
-        Mundo 6 & Entradas Aleatórias & 86.6 & 0.245 & 0.170 & 82.9 & 16.8 \\
-        Mundo 6 & Entradas do CMA-ES & 93.2 & 0.136 & 0.118 & 78.5 & 10.5 \\
-        Mundo 6 & Entradas do PSO & 93.6 & 0.113 & 0.0888 & 78.0 & 7.58 \\
-	    \hline
-        Mundo 7 & Entradas Aleatórias & 64 & 0.0729 & 0.0322 & 75.9 & 5.66 \\
-        Mundo 7 & Entradas do CMA-ES & 93.8 & 0.145 & 0.142 & 82.1 & 9.37 \\
-        Mundo 7 & Entradas do PSO & 92.6 & 0.130 & 0.146 & 78.5 & 10.3 \\
-	    \hline
-        Mundo 8 & Entradas Aleatórias & 78.4 & 0.0845 & 0.0600 & 75.5 & 7.00 \\
-        Mundo 8 & Entradas do CMA-ES & 75.2 & 0.0959 & 0.0328 & 76.2 & 6.87 \\
-        Mundo 8 & Entradas do PSO & 81.8 & 0.0889 & 0.0167 & 74.3 & 6.43 \\
-	    \hline
-        Primeira Fase & Entradas Aleatórias & 68.4 & 0.112 & 0.106 & 79.6 & 16.8 \\
-        Primeira Fase & Entradas do CMA-ES & 88.2 & 0.0899 & 0.0611 & 83.8 & 10.4 \\
-        Primeira Fase & Entradas do PSO & 91.4 & 0.0926 & 0.0797 & 83.3 & 10.8 \\
-	    \hline
+    \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{1cm}|p{2cm}|}
+            \hline
+       \textbf{Conjunto} & \textbf{Entradas} & \textbf{\% de Soluções Jogáveis} & \textbf{Média de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (Conclusão Injogáveis)} & \textbf{Média Ações (Jogá- veis)} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
+            \hline
+        & Aleatórias & 75.4 & 0.0829 & 0.0263 & 78.9 & 10.0 \\
+        Mundo 1 & CMA-ES & 63.2 & 0.0640 & 0.0176 & 82.6 & 8.32 \\
+        & PSO & 48.4 & 0.0669 & 0.0354 & 82.4 & 10.4 \\
+            \hline
+        & Aleatórias & 56.2 & 0.113 & 0.117 & 80.7 & 13.0 \\
+        Mundo 2 & CMA-ES & 57 & 0.0755 & 0.0668 & 80.4 & 8.21 \\
+        &  PSO & 60.4 & 0.0714 & 0.0652 & 80.3 & 9.96 \\
+            \hline
+        & Aleatórias & 67.4 & 0.156 & 0.140 & 81.1 & 18.4 \\
+        Mundo 3 & CMA-ES & 65.8 & 0.0659 & 0.0185 & 76.3 & 6.88 \\
+        & PSO & 76 & 0.0695 & 0.0287 & 77.9 & 15.1 \\
+            \hline
+        & Aleatórias & 83.4 & 0.0863 & 0.0798 & 77.6 & 7.72 \\
+        Mundo 4 & CMA-ES & 4 & 0.0795 & 0.00670 & 84.7 & 14.2 \\
+        & PSO & 17.2 & 0.0790 & 0.0192 & 77.4 & 5.70 \\
+            \hline
+        & Aleatórias & 67.2 & 0.0971 & 0.0687 & 74.3 & 6.52 \\
+        Mundo 5 & CMA-ES & 99.8 & 0.102 & 0.102 & 71.4 & 0.931 \\
+        & PSO & 93.6 & 0.164 & 0.122 & 71.3 & 0.585 \\
+            \hline
+        & Aleatórias & 86.6 & 0.245 & 0.170 & 82.9 & 16.8 \\
+        Mundo 6 & CMA-ES & 93.2 & 0.136 & 0.118 & 78.5 & 10.5 \\
+        & PSO & 93.6 & 0.113 & 0.0888 & 78.0 & 7.58 \\
+            \hline
+        & Aleatórias & 64 & 0.0729 & 0.0322 & 75.9 & 5.66 \\
+        Mundo 7 & CMA-ES & 93.8 & 0.145 & 0.142 & 82.1 & 9.37 \\
+        & PSO & 92.6 & 0.130 & 0.146 & 78.5 & 10.3 \\
+            \hline
+        &Aleatórias & 78.4 & 0.0845 & 0.0600 & 75.5 & 7.00 \\
+        Mundo 8 & CMA-ES & 75.2 & 0.0959 & 0.0328 & 76.2 & 6.87 \\
+        & PSO & 81.8 & 0.0889 & 0.0167 & 74.3 & 6.43 \\
+            \hline
+        & Aleatórias & 68.4 & 0.112 & 0.106 & 79.6 & 16.8 \\
+        1ª Fase & CMA-ES & 88.2 & 0.0899 & 0.0611 & 83.8 & 10.4 \\
+         & PSO & 91.4 & 0.0926 & 0.0797 & 83.3 & 10.8 \\
+            \hline
     \end{tabular}
     \caption{Avaliação por agente com as técnicas de LVE otimizando a função (4.1), com $b = 5$, isto é, maximizando inimigos}
     \label{tab:inimigos_}
@@ -460,28 +460,28 @@ De qualquer forma, isto mostra que para gerar níveis interessantes e que ainda 
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{lcccccc}
-	    \hline
-	    \textbf{Conj. De Treino} & \textbf{\% de Soluções Jogáveis} & \textbf{Proporção Média de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (Conclusão Injogáveis)} & \textbf{Média de Ações dos Níveis Jogáveis} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
-	    \hline
+    \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{1cm}|p{2cm}|}
+            \hline
+            \textbf{Conjunto} & \textbf{\% de Soluções Jogáveis} & \textbf{Média de Conclusão de Níveis Injogáveis} & \textbf{Desvio Padrão (Conclusão Injogáveis)} & \textbf{Média Ações (Jogá- veis)} & \textbf{Desvio Padrão (Ações dos Níveis Jogáveis)} \\
+            \hline
         Mundo 1 & 0.608 & 0.0805 & 0.0264 & 84.1 & 11.4 \\
-	    \hline
+            \hline
         Mundo 2 & 0.412 & 0.0807 & 0.0883 & 83.1 & 10.9 \\
-	    \hline
+            \hline
         Mundo 3 & 0.778 & 0.0650 & 0.0361 & 76.7 & 5.68 \\
-	    \hline
+            \hline
         Mundo 4 & 0.18 & 0.0851 & 0.0113 & 83.6 & 4.14 \\
-	    \hline
+            \hline
         Mundo 5 & 0.894 & 0.0917 & 0.00355 & 71.9 & 2.76 \\
-	    \hline
+            \hline
         Mundo 6 & 0.92 & 0.117 & 0.0697 & 78.1 & 7.85 \\
-	    \hline
+            \hline
         Mundo 7 & 0.486 & 0.0813 & 0.0637 & 82.7 & 16.2 \\
-	    \hline
+            \hline
         Mundo 8 & 0.564 & 0.0956 & 0.0590 & 78.1 & 7.32 \\
-	    \hline
+            \hline
         Primeira Fase & 0.92 & 0.104 & 0.103 & 83.3 & 11.4 \\
-	    \hline
+            \hline
     \end{tabular}
     \caption{Avaliação por agente com o NSGA-II otimizando a função (4.1), com $b = 5$ e $b = 6$ simultaneamente}
     \label{tab:nsga_}
