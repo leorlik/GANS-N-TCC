@@ -14,23 +14,29 @@ Este capítulo revisita os tópicos fundamentais deste trabalho, incluindo os pr
 
 \section{Redes Neurais Adversariais Generativas}
 
-O paradigma do Aprendizado Adversarial e as Redes Neurais Adversariais Generativas (GANs) foram introduzidos em \cite{gan} em 2014 como solução para o problema de estimação de máxima verossimilhança, dilema no qual o custo computacional e a complexidade são extremamente altos, podendo chegar a ser computacionalmente inviável a depender do contexto. Enquanto a gama mais popular de modelos profundos na época de publicação do artigo consistiam de apenas uma rede neural de alta profundidade usada em classificação e, em certos casos, regressão, o aprendizado adversarial proposto pelo artigo usufrui de duas MLPs.
+O paradigma do Aprendizado Adversarial e as Redes Neurais Adversariais Generativas (GANs) foram introduzidos em \cite{gan} em 2014 como solução para o problema de estimação de máxima verossimilhança, dilema no qual o custo computacional e a complexidade são altos, podendo chegar a ser computacionalmente inviável atingir uma solução ótima por meios clássicos de busca. Enquanto a gama mais popular de modelos profundos na época de publicação do artigo consistiam de apenas uma rede neural de alta profundidade usada em classificação e, em certos casos, regressão, o aprendizado adversarial proposto pelo artigo usufrui de dois MLPs.
 
-Um desses modelos é apelidado de gerador, abreviado como \textit{G}, enquanto o outro modelo é chamado de discriminador e abreviado como \textit{D}. O modelo gerador representa uma função diferenciável responsável por aproximar a distribuição de seus dados de treinamento. Para gerar novos dados, a rede \textit{G} projeta entradas ruidosas no espaço dos dados conhecidos, na intenção de aproximar o conteúdo gerado da distribuição dos conjuntos conhecidos.
+Um destes modelos é apelidado pelos autores de gerador e abreviado como \textit{G}, enquanto o outro modelo é chamado de discriminador e abreviado como \textit{D}. O modelo gerador representa uma função diferenciável responsável por aproximar a distribuição de seus dados de treinamento. Para gerar novos dados, a rede \textit{G} projeta entradas ruidosas no espaço dos dados conhecidos, na intenção de aproximar o conteúdo gerado da distribuição dos conjuntos conhecidos.
 
-Por sua vez, a MLP \textit{D} tem como objetivo traçar um plano que separe as distribuições do conteúdo original das distribuições das projeções de \textit{G}. A saída da rede discriminadora, no artigo, é descrita como um único escalar que representa a probabilidade de uma entrada não ser gerada. Essencialmente, \textit{G} e \textit{D} tornam-se antagônicas a partir do momento que suas respectivas funções de perda colocam como objetivo penalizar a outra. Para que isso seja possível, \textit{G} é treinada para minimizar $\log (1-D(G(z)))$ enquanto \textit{D} é treinada para maximizar a probabilidade de acertar se uma entrada é sintética ou real. Este treinamento antagônico leva essas duas redes a disputarem um jogo minimax de dois jogadores. Alternando a otimização de \textit{D} e \textit{G}, a rede discriminadora fica mais perto da solução ótima, enquanto a MLP geradora muda aos poucos para sua distribuição aproximar cada vez mais da original e, por consequência, tornar a solução que o discriminador busca mais complexa de se aproximar. 
+Por sua vez, o MLP \textit{D} tem como objetivo traçar um plano que separe as distribuições do conteúdo original das distribuições das projeções de \textit{G}. A saída da rede discriminadora, no artigo, é descrita como um único escalar que representa a probabilidade de uma entrada não ser gerada. Essencialmente, \textit{G} e \textit{D} tornam-se antagônicas a partir do momento que suas respectivas funções de perda colocam como objetivo penalizar a outra. Para que isso seja possível, \textit{G} é treinada para minimizar $\log (1-D(G(z)))$ enquanto \textit{D} é treinada para maximizar a probabilidade de acertar se uma entrada é sintética ou real. Este treinamento antagônico leva essas duas redes a disputarem um jogo minimax de dois jogadores. Alternando a otimização de \textit{D} e \textit{G}, a rede discriminadora fica mais perto da solução ótima, enquanto a MLP geradora muda aos poucos para sua distribuição aproximar cada vez mais da original e, por consequência, tornar a solução que o discriminador busca mais complexa de se aproximar. 
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=12cm]{imagens/goodfellow_gan.png}
+	\caption{Representação do processo de aproximação de uma distribuição (linha pontilhada) pelo gerador (linha verde), enquanto o discriminador (linha azul) tenta separar as duas distribuições. Ao final do processo, o gerador aproxima completamente a distribuição dos dados, fazendo com que o discriminador não seja mais capaz de diferenciar as duas distribuições. Fonte: \cite{gan}}
+\label{fig:2.0}
+\end{figure}
+
 
 %=====================================================
 
 \section{CMA-ES}
 
-%Incluir computação evolutiva
-
 CMA-ES, a \emph{Covariance Matrix Adaptation Evolution Strategy}, foi instanciada primeiro em \cite{cma-es} e é um algoritmo derivado do paradigma da computação evolutiva, um ramo da inteligência computacional inspirado pela evolução biológica, ramo este que resolve problemas de otimização utilizando populações, meta-heurísticas e muitas vezes otimização estocástica. O CMA-ES é uma estratégia evolucionária que se comporta bem com vetores de números reais, que neste casos são as entradas do gerador, e sua principal característica é o uso de uma matriz de covariância estimada iterativamente por diferenças finitas.
 
 Como está no seu nome, o algoritmo faz parte de um grupo de algoritmos evolucionários chamados \emph{evolutionary strategies}, que é um grupo de algoritmos caixa preta caracterizados também pelo uso da ordenação por ranking. O CMA-ES tem se mostrado eficiente para otimizar problemas não-convexos e não-lineares em domínios contínuos.
 
-O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covariância estimada. Esta Gaussiana é traduzida numa elipse que se desloca de forma a contemplar as melhores soluções. Quanto mais distantes as melhores soluções estão do domínio dessa elipse, maior o \emph{step size} dela, ou seja, seu raio. De certa forma, no começo, o \emph{step size} costuma ser mais alto pois as melhores soluções conhecidas estão esparsas e a partir deste ponto de partida há a exploração global. Conforme a elipse fica melhor posicionada no domínio, as melhores soluções ficarão menos esparsas, fazendo com que o \emph{step size} diminua proporcionalmente com a concentração da população. O \textbf{Algoritmo 1} ilustra um pseudo-código do algoritmo CMA-ES.
+O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covariância estimada. Esta Gaussiana é traduzida numa elipse que se desloca de forma a contemplar as melhores soluções. Quanto mais distantes as melhores soluções estão do domínio dessa elipse, maior o \emph{step size} dela, ou seja, seu raio. No começo, o \emph{step size} costuma ser mais alto pois as melhores soluções conhecidas estão esparsas e a partir deste ponto de partida há a exploração global. Conforme a elipse fica melhor posicionada no domínio, as melhores soluções ficarão menos esparsas, fazendo com que o \emph{step size} diminua proporcionalmente com a concentração da população. O \textbf{Algoritmo 1} ilustra um pseudo-código do algoritmo CMA-ES.
 
 \begin{algorithm}
 \caption{CMA-ES}
@@ -55,7 +61,7 @@ O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covari�
 
 \State $m \gets \sum_{i=1}^{\mu} W_i \cdot X_i$
 
-\State $\sigma \gets$ atualiza($\sigma$)
+\State $\sigma \gets$ Atualiza($\sigma$)
 
 \State \textbf{until} número de iterações $>$ $max\_iter$
 
@@ -97,7 +103,7 @@ O algoritmo utilizado por \cite{fingerprints} para busca no espaço latente é o
 
 \section{NSGA-II}
 
-Em 2002 foi proposto a evolução do \textit{nondominated sorting genetic algorithm} (algoritmo genético de ordenção não-dominada), o NSGA-II\cite{Deb:02}, que hoje em dia conta com 37971 citações(Connected Papers, acesso em 05/11/2023). Esse algoritmo foi proposto na intenção de contornar os três principais problemas dos algoritmos evolucionários apontados na época:
+Em 2002 foi proposto a evolução do \textit{nondominated sorting genetic algorithm} (algoritmo genético de ordenção não-dominada), o NSGA-II\cite{Deb:02}, que hoje em dia conta com 37971 citações(Connected Papers, acesso em 05/11/2023). Este algoritmo foi proposto na intenção de contornar os três principais problemas dos algoritmos evolucionários apontados na época:
 
 \begin{itemize}
     \item Alta complexidade computacional(especificamente $O(MN^{3})$, onde M é o numero de objetivos e N o tamanho da população);
@@ -126,14 +132,14 @@ Assumindo a existência de uma solução ideal e a conversão próxima a fonteir
 
 Otimização por enxames de partículas é um algoritmo bioinspirado proposto por \cite{PSO}, em que sua inspiração provém da navegação em bando de pássaros. Segundo os autores, é um método de otimização para funções contínuas e não-lineares que simula um modelo social simplificado. O algoritmo instância uma população candidata e a move pelo domínio de acordo com fórmulas matemáticas que não possuem alto custo computacional associado ao seu cálculo em relação a posição e velocidade da partícula (partícula, neste caso, equivale a uma solução candidata).
 
-Além de cada uma das partículas se deslocar na sua direção atual no espaço de soluções (esta direção é atualizada a cada iteração do algoritmo), há também deslocamentos em direção ao melhor ponto observado pela particúla individualmente e para a melhor solução encontrada entre todas as partículas, que também pode sofrer alteração se alguma solução melhor foi encontrada durante a iteração. A velocidade de deslocamento da população candidata também varia, tanto coletivamente - reduzindo de acordo com o número de iterações, para favorecer primeiro a exploração global e, após isto, a exploração local - quanto individualmente, levando em conta a distância para a melhor solução individual e global.
+Além de cada uma das partículas se deslocar na sua direção atual no espaço de soluções (esta direção é atualizada a cada iteração do algoritmo), há também deslocamentos em direção ao melhor ponto observado pela particúla individualmente e para a melhor solução encontrada entre todas as partículas, que também pode sofrer alteração se alguma solução melhor for encontrada durante a iteração. A velocidade de deslocamento da população candidata também varia, tanto coletivamente - reduzindo de acordo com o número de iterações, para favorecer primeiro a exploração global e, após isto, a exploração local - quanto individualmente, levando em conta a distância para a melhor solução individual e global.
 
-A metaheurística associada ao PSO faz pouca ou nenhuma suposição do problema que será otimizado. Outra vantagem é que o algoritmo não utiliza otimização por gradiente como muitos dos algoritmos de computação evolutiva, o que significa que a função objetivo não precisa ser diferenciável. 
+A meta-heurística associada ao PSO faz pouca ou nenhuma suposição do problema que será otimizado. Outra vantagem é que o algoritmo não utiliza otimização por gradiente como muitos dos algoritmos de computação evolutiva, o que significa que a função objetivo não precisa ser diferenciável. 
 %=====================================================
 
 \section{Algoritmo A*}
 
-O algoritmo A* é uma extensão do Algoritmo de Djikstra que utiliza alguma metaheurística para guiar a busca pelo caminho mais curto ao objetivo. Para que o algoritmo funcione corretamente, a heurística definida para auxiliar a busca deve ser admissível, isto é, o custo estimado para atingir o estado final em relação ao estado atual deve ser menor ou igual ao custo verdadeiro para atingir o estado final do estado atual. 
+O algoritmo A* é uma extensão do Algoritmo de Djikstra que utiliza alguma meta-heurística para guiar a busca pelo caminho mais curto ao objetivo. Para que o algoritmo funcione corretamente, a heurística definida para auxiliar a busca deve ser admissível, isto é, o custo estimado para atingir o estado final em relação ao estado atual deve ser menor ou igual ao custo verdadeiro para atingir o estado final do estado atual. 
 
 A busca A* possui múltiplas aplicações, entre elas a busca por caminhos viáveis em videogames. Até os dias de hoje, o mais popular algoritmo para o teste de jogabilidade de níveis do jogo \textit{Super Mario Bros} é o agente A* proposto por Robin Baumgarten em \cite{marioAI}.
 
@@ -141,9 +147,9 @@ A busca A* possui múltiplas aplicações, entre elas a busca por caminhos viáv
 
 \section{MarioGAN}
 
-Em maio de 2018 publicou-se o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Aqui, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas à disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009 \citet{marioAI} de autoria de Robin Baumgarten.
+Em 2018 foi publicado o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Neste artigo, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas à disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009 \cite{marioAI} de autoria de Robin Baumgarten, porém com poucos exemplos deste segundo caso.
 
-Para representar as fases, os autores utilizaram a representação do jogo \textit{Super Mario Bros} disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplificam a representação do jogo ao ignorar níveis específicos, onde a física do jogo diverge do padrão seguido pela maioria das fases, e também representa todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. Nesta representação, cada tipo de bloco é mapeado para um caracter específico, transformando a imagem em uma sequência de caracteres que indicam um bloco específico. Uma vez que o artigo implementa a arquitetura a partir da biblioteca \textit{Pytorch}, esta representação textual precisou ser remapeada para uma representação numérica, conforme mostrado pela \textbf{Figura 2.1}. 
+Para representar as fases, os autores utilizaram a representação do jogo \textit{Super Mario Bros} disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplifica a representação do jogo ao ignorar níveis específicos, onde a física do jogo diverge do padrão seguido pela maioria das fases, e também representa todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. Nesta representação, cada tipo de bloco é mapeado para um caracter específico, transformando a imagem de um nível em uma sequência de caracteres que indicam um bloco específico. Uma vez que o artigo implementa a arquitetura a partir da biblioteca \textit{Pytorch}, esta representação textual precisou ser remapeada para uma representação numérica, conforme mostrado pela \textbf{Figura 2.2}. 
 
 \begin{figure}[!htb]
 \centering
@@ -152,7 +158,7 @@ Para representar as fases, os autores utilizaram a representação do jogo \text
 \label{fig:2.1}
 \end{figure}
 
-A GAN convolucional profunda (DCGAN) utilizada no artigo é baseada na Wassertein Gan apresentada em \cite{wgan}, em que o discriminador utiliza convoluções com deslocamento (\textit{strided convolutions}), enquanto o gerador utiliza convoluções com deslocamento fracionário (\textit{fractional-strided convolutions}. A arquitetura em \cite{marioGAN} difere da arquitetura de \cite{wgan} nos seguintes pontos:
+A GAN convolucional profunda (DCGAN) utilizada no artigo é baseada na Wassertein Gan apresentada em \cite{wgan}, em que o discriminador utiliza convoluções com deslocamento (\textit{strided convolutions}), enquanto o gerador utiliza convoluções com deslocamento fracionário (\textit{fractional-strided convolutions}). A arquitetura em \cite{marioGAN} difere da arquitetura de \cite{wgan} nos seguintes pontos:
 
 \begin{itemize}
 
@@ -162,7 +168,7 @@ A GAN convolucional profunda (DCGAN) utilizada no artigo é baseada na Wassertei
 
 \end{itemize}
 
-Tanto o discriminador quanto o gerador são treinados com o otimizador RMSprop, com um \textit{batch size} de tamanho 32 e a taxa de aprendizado de 0,00005 por 5000 iterações. A arquitetura é devidamente ilustrada na \textbf{Figura 2.2}.
+Tanto o discriminador quanto o gerador são treinados com o otimizador RMSprop, com um \textit{batch size} de tamanho 32 e a taxa de aprendizado de 0,00005 por 5000 iterações. A arquitetura é devidamente ilustrada na \textbf{Figura 2.3}.
 
 \begin{figure}[!htb]
 \centering
@@ -171,9 +177,9 @@ Tanto o discriminador quanto o gerador são treinados com o otimizador RMSprop, 
 \label{fig:2.2}
 \end{figure}
 
-O gerador utilizado no artigo é treinado apenas com o primeiro nível do jogo, na intenção de mostrar como a LVE e a GAN treinada poderiam, em conjunto, gerar níveis diferentes e jogáveis. Outra escolha interessante do artigo da MarioGAN \cite{marioGAN} é que, para gerar múltiplas amostras com apenas uma fase, a representação numérica foi separada com base em uma janela deslizante com dimensões de 14 de altura e 28 de largura, com passo de tamanho um. 
+O gerador utilizado no artigo foi treinado apenas com o primeiro nível do jogo, na intenção de mostrar como a LVE e a GAN treinada poderiam, em conjunto, gerar níveis diferentes e jogáveis. Outra escolha interessante do artigo da MarioGAN \cite{marioGAN} é que, para gerar múltiplas amostras com apenas uma fase, a representação numérica foi separada com base em uma janela deslizante com dimensões de 14 de altura e 28 de largura, com passo de tamanho um. 
 
-Uma noção geral do processo executado por \cite{marioGAN} está devidamente traduzido na \textbf{Figura 2.3}. Este método é dividido em duas fases básicas distintas: primeiro, a WGAN é treinada de maneira não-supervisionada para gerar níveis do \textit{Super Mario Bros}; após isso, o CMA-ES é utilizado de forma a buscar no espaço latente da GAN, ou seja, alterar a entrada do modelo para satisfazer propriedades específicas. Embora o artigo se baseie apenas em níveis do jogo \textit{Super Mario Bros}, os autores clamam que o modelo é suficientemente bom para generalizar qualquer jogo com representação compatível.
+Uma noção geral do processo executado por \cite{marioGAN} está devidamente traduzido na \textbf{Figura 2.4}. Este método é dividido em duas etapas básicas distintas: primeiro, a WGAN é treinada de maneira não-supervisionada para gerar níveis do \textit{Super Mario Bros}; após isso, o CMA-ES é utilizado para buscar no espaço latente da GAN soluções que minimizem a função-objetivo escolhida, ou seja, alterar a entrada do modelo para satisfazer propriedades específicas. Embora o artigo se baseie apenas em níveis do jogo \textit{Super Mario Bros}, os autores clamam que o modelo é suficientemente bom para generalizar qualquer jogo com representação compatível.
 
 \begin{figure}[!htb]
 \centering
@@ -192,7 +198,7 @@ Quanto as funções minimizadas em relação a topologia do nível minimizadas n
     F_2 = F_1 + 0.5 \cdot (20.0 - n)
 \end{equation}
 
-No artigo, a ideia apresentada é que a dificuldade aumente gradativamente conforme a progressão no eixo x, lembrando que o objetivo do jogo é chegar ao fim da fase, ou seja, no último ponto do eixo x. Para isso, os autores juntam dois níveis otimizados com $F_1$ e $t = 1$, um nível otimizado com $F_1$ e $g = 0.7$, e dois níveis otimizando $F_2$ com $g = 0.7$. O exemplo desta junção está na \textbf{Figura 2.4}.
+No artigo, a ideia apresentada é que a dificuldade aumente gradativamente conforme a progressão no eixo x, lembrando que o objetivo do jogo é chegar ao fim da fase, ou seja, no último ponto do eixo x. Para isso, os autores juntam dois níveis otimizados com $F_1$ e $t = 1$, um nível otimizado com $F_1$ e $g = 0.7$, e dois níveis otimizando $F_2$ com $g = 0.7$. Um exemplo desta junção está na \textbf{Figura 2.5}.
 
 \begin{figure}[!htb]
 \centering
@@ -201,7 +207,7 @@ No artigo, a ideia apresentada é que a dificuldade aumente gradativamente confo
 \label{fig:2.3}
 \end{figure}
 
-Em outros experimentos, os autores usam duas funções relacionadas ao teste pelo agente A* vencedor da competição da mario AI de 2009, conforme as equações (2.3) e (2.4), onde p é a fração da fase em que o agente passou, e #jumps a quantia de pulos:
+Em outros experimentos, os autores usam duas funções relacionadas ao teste pelo agente A* vencedor da competição da mario AI de 2009, conforme as equações (2.3) e (2.4), onde p é a fração da fase em que o agente passou, e \#jumps a quantidade de ações de pulos.
 
 \begin{equation}
     F_3 =
@@ -219,7 +225,7 @@ Em outros experimentos, os autores usam duas funções relacionadas ao teste pel
     \end{cases}
 \end{equation}
 
-Na verdade, $F_3$ maximiza os pulos e recompensa fases passáveis, enquanto $F_4$ também recompensa fases jogáveis, mas minimizando pulos. A \textbf{Figura 2.5} ilustra alguns desses níveis gerados.
+Na verdade, $F_3$ maximiza os pulos e recompensa fases que o agente é capaz de completar, enquanto $F_4$ também recompensa fases jogáveis, mas minimiza pulos. A \textbf{Figura 2.6} ilustra alguns desses níveis gerados.
 
 \begin{figure}[!htb]
 \centering
@@ -234,7 +240,7 @@ Lembrando que não foram feitas abordagem multi-objetivo utilizando $F_1$ ou $F_
 
 \section{Considerações Finais}
 
-Neste capítulo, foram apresentados os conceitos de GAN, PCGML e LVE, além de três algoritmos bioinspirados - CMA-ES, PSO e NSGA-II - que se relacionarão diretamente aos demais conceitos no decorrer do trabalho. Também foi apresentado o algoritmo A*, que será utilizado para teste e otimização das fases, além de uma visão ampla de um dos principais artigos da área de PCGML, artigo em que a rede proposta ficou conhecida como \textit{MarioGAN}. No próximo capítulo, serão visitados alguns outros artigos da área, muitos dos quais utilizam de alguma forma os conceitos aqui apresentados.
+Neste capítulo, foram apresentados os conceitos de GAN, PCGML e LVE, além de três algoritmos bioinspirados - CMA-ES, PSO e NSGA-II - que se relacionarão diretamente aos demais conceitos no decorrer do trabalho. Também foi apresentado o algoritmo A* que será utilizado para teste e otimização das fases, além de uma visão ampla de um dos principais artigos da área de PCGML, artigo em que a rede proposta ficou conhecida como MarioGAN. No próximo capítulo, serão visitados alguns outros artigos da área, muitos dos quais utilizam de alguma forma os conceitos aqui apresentados.
 
 
 %\subsection{Exemplo de figura}
