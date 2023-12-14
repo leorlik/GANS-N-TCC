@@ -36,26 +36,28 @@ CMA-ES, a \emph{Covariance Matrix Adaptation Evolution Strategy}, foi instanciad
 
 Como está no seu nome, o algoritmo faz parte de um grupo de algoritmos evolucionários chamados \emph{evolutionary strategies}, que é um grupo de algoritmos caixa preta caracterizados também pelo uso da ordenação por ranking. O CMA-ES tem se mostrado eficiente para otimizar problemas não-convexos e não-lineares em domínios contínuos.
 
-O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covariância estimada. Esta Gaussiana é traduzida numa elipse que se desloca de forma a contemplar as melhores soluções. Quanto mais distantes as melhores soluções estão do domínio dessa elipse, maior o \emph{step size} dela, ou seja, seu raio. No começo, o \emph{step size} costuma ser mais alto pois as melhores soluções conhecidas estão esparsas e a partir deste ponto de partida há a exploração global. Conforme a elipse fica melhor posicionada no domínio, as melhores soluções ficarão menos esparsas, fazendo com que o \emph{step size} diminua proporcionalmente com a concentração da população. O \textbf{Algoritmo 1} ilustra um pseudo-código do algoritmo CMA-ES.
+O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covariância estimada. Esta Gaussiana é traduzida numa hiper-elipse que se desloca de forma a contemplar as melhores soluções. Quanto mais distantes as melhores soluções estão do domínio dessa hiper-elipse, maior o \emph{step size} dela, ou seja, seu raio. No começo, o \emph{step size} costuma ser mais alto pois as melhores soluções conhecidas estão esparsas e a partir deste ponto de partida há a exploração global. Conforme a hiper-elipse fica melhor posicionada no domínio, as melhores soluções ficarão menos esparsas, fazendo com que o \emph{step size} diminua proporcionalmente com a concentração da população. O \textbf{Algoritmo 1} ilustra um pseudo-código do algoritmo CMA-ES.
 
 \begin{algorithm}
 \caption{CMA-ES}
 \begin{algorithmic}[1]
 
-\State Inicialize a população: $\lambda$
-\State Inicialize o \textit{step size}: $\sigma$
-\State Defina o tamanho da população: $m$
+\State Inicialize a população: $\lambda > 0$ tal que $\lambda \in \mathbb{N}$
+\State Inicialize o \textit{step size}: $\sigma > 0$ tal que $\sigma \in \mathbb{R}$
+\State Defina a média $m \in \mathbb{R}$ inicialmente aleatória
 
-\State Defina o número de melhores candidados $\mu$
+\State Defina o número de melhores candidados $\mu \in mathbb{R}$ tal que $\mu > 0$
 
-\State Defina os pesos: $W_1, W_2, \ldots, W_m$
+\State Defina os pesos: $W_1, W_2, \ldots, W_\mu \in mathbb{R}$ tal que $\sum_{i} W_i = 1$
 
 \State \textbf{repeat}
 \ForAll{$x \in \lambda$}
   \State Calcula a Gaussiana para $x$
 \EndFor
 
-\State Ordena $\lambda$ pelo fitness
+\State Ordena $\lambda$ pelo fitness (função objetivo a ser minimizada $\in \mathbb{R}$
+
+\State Atribui a $X_1, X_2, \ldots, X_\mu$ os \mu melhores candidados da iteração
 
 \State $c \gets$ Calcula\_covariancia $(\lambda)$
 
@@ -115,10 +117,16 @@ E sua implementação nos permite:
 
 \begin{itemize}
     \item Preservar a diversidade;
-    \item e enfatizar soluções não-dominadas.
+    \item e enfatizar soluções não dominadas.
 \end{itemize}
 
-Tendo populaçoes de tamanho N, o NSGA-II recombina tal população numa população de tamanho 2N e a ordena baseado no ranking da fronteira de Pareto, priorizando soluções da fronteira classe 1 e completando com as fronteiras subsequentes. Quando a fronteira $F_{g}$ não cabe mais inteira na próxima população, são selecionadas os indivíduos com maior \textit{crowding distance}, que é a área/volume (dependente do tamanho do espaço objetivo $Z$ do problema) ao seu redor sem nenhuma solução presente (cabe enfatizar que as funções objetivo são normalizadas para que nenhuma domine a outra). Este operador permite escolher as soluções que estão mais distantes das outras, por consequência também sendo um preservador de diversidade por si só.
+Para se entender as soluções não dominadas, é importante ententer o que é dominância entre soluções. A definição de dominância se dá que uma solução $x_{1}$ domina $x_{2}$ se $x_{1}$ não é pior que $x_{2}$ em todos os objetivos e é melhor que $x_{2}$ em pelo menos um objetivo. Quando não se há soluções que dominam x, x é uma solução não dominada. O conjunto de soluções não dominadas são chamados de fronteira não dominada. As projeções pertencentes a fronteira não dominada são boas em um objetivo, mas podem ser pior que outras em determinados objetivos: essa troca entre os pontos não dominados fazem os algoritmos se interessarem em encontrar uma variedade da soluções antes de tomar uma decisão final.
+
+Os pontos não dominados por nenhuma solução no espaço de soluções $Z$ são os pontos ótimos de pareto, enquanto o vetor de variáveis que projetam tais pontos são chamadas de soluções ótimas de Pareto. O objetivo do NSGA-II e outros algoritmos multi-objetivos, são, portanto, encontrar o máximo de pontos ótimos de pareto, para que algum algoritmo de decisão escolha a solução com o melhor balanceamento entre os objetivos.
+
+Outra importante propriedade utilizada pelo NSGA-II são as classes das fronteiras de Pareto. A fronteira de classe 1 são os já explicados pontos não dominados. A seguir, os pontos que não são dominados por nenhum ponto que não os ótimos de Pareto pertencem à fronteira de classe 2. Já os não dominados por nenhum a não ser os pontos das classes anteriores são a fronteira de classe 3, assim sucessivamente
+
+Tendo populaçoes de tamanho N, o NSGA-II recombina tal população numa população de tamanho 2N e a ordena baseado no ranking da fronteira de Pareto, priorizando soluções da fronteira classe 1 e completando com as fronteiras subsequentes. Quando a fronteira $F_{g}$ não cabe mais inteira na próxima população, são selecionadas os indivíduos com maior \textit{crowding distance}, que é a área/volume (dependente do tamanho do espaço objetivo $Z$ do problema) ao seu redor sem nenhuma solução presente (cabe enfatizar que as funções objetivo são normalizadas para que nenhuma seja mais priorizada pelo algoritmo do que outra). Este operador permite escolher as soluções que estão mais distantes das outras, por consequência também sendo um preservador de diversidade por si só.
 
 \subsection{Decisão entre soluções}
 
@@ -141,13 +149,13 @@ A meta-heurística associada ao PSO faz pouca ou nenhuma suposição do problema
 
 O algoritmo A* é uma extensão do Algoritmo de Djikstra que utiliza alguma meta-heurística para guiar a busca pelo caminho mais curto ao objetivo. Para que o algoritmo funcione corretamente, a heurística definida para auxiliar a busca deve ser admissível, isto é, o custo estimado para atingir o estado final em relação ao estado atual deve ser menor ou igual ao custo verdadeiro para atingir o estado final do estado atual. 
 
-A busca A* possui múltiplas aplicações, entre elas a busca por caminhos viáveis em videogames. Até os dias de hoje, o mais popular algoritmo para o teste de jogabilidade de níveis do jogo \textit{Super Mario Bros} é o agente A* proposto por Robin Baumgarten em \cite{marioAI}.
+A busca A* possui múltiplas aplicações, entre elas a busca por caminhos viáveis em videogames. Até os dias de hoje, o mais popular algoritmo para o teste de jogabilidade de níveis do jogo \textit{Super Mario Bros} é o agente A* proposto em \cite{marioAI}.
 
 %=====================================================
 
 \section{MarioGAN}
 
-Em 2018 foi publicado o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Neste artigo, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções-objetivo diferentes, duas delas relacionadas à disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009 \cite{marioAI} de autoria de Robin Baumgarten, porém com poucos exemplos deste segundo caso.
+Em 2018 foi publicado o artigo que deu origem ao que outros entusiastas do estudo da PCGML chamam de MarioGAN \cite{marioGAN}. O artigo aborda o uso de GANs, mas não foca na arquitetura da rede geradora ou discriminadora, mas sim utiliza a ideia de LVE para geração de níveis procedurais no jogo \emph{Super Mario Bros}. Neste artigo, seguindo a ideia de \cite{fingerprints}, o CMA-ES é utilizado para adicionar alguma restrição ao espaço latente do gerador, sendo testadas quatro funções objetivo diferentes, duas delas relacionadas à disposição dos blocos da fase e outras duas em relação ao teste das fases pelo agente A* vencedor da competição Mario AI de 2009 \cite{marioAI} de autoria de Robin Baumgarten, porém com poucos exemplos deste segundo caso.
 
 Para representar as fases, os autores utilizaram a representação do jogo \textit{Super Mario Bros} disponível no repositório do \textit{github} aberto da Video Game Level Corpus(VGLC) \cite{VGLC}, que, entre suas particularidades, simplifica a representação do jogo ao ignorar níveis específicos, onde a física do jogo diverge do padrão seguido pela maioria das fases, e também representa todos os inimigos da mesa maneira, tornando a tarefa possivelmente mais simples. Nesta representação, cada tipo de bloco é mapeado para um caracter específico, transformando a imagem de um nível em uma sequência de caracteres que indicam um bloco específico. Uma vez que o artigo implementa a arquitetura a partir da biblioteca \textit{Pytorch}, esta representação textual precisou ser remapeada para uma representação numérica, conforme mostrado pela \textbf{Figura 2.2}. 
 
@@ -179,7 +187,7 @@ Tanto o discriminador quanto o gerador são treinados com o otimizador RMSprop, 
 
 O gerador utilizado no artigo foi treinado apenas com o primeiro nível do jogo, na intenção de mostrar como a LVE e a GAN treinada poderiam, em conjunto, gerar níveis diferentes e jogáveis. Outra escolha interessante do artigo da MarioGAN \cite{marioGAN} é que, para gerar múltiplas amostras com apenas uma fase, a representação numérica foi separada com base em uma janela deslizante com dimensões de 14 de altura e 28 de largura, com passo de tamanho um. 
 
-Uma noção geral do processo executado por \cite{marioGAN} está devidamente traduzido na \textbf{Figura 2.4}. Este método é dividido em duas etapas básicas distintas: primeiro, a WGAN é treinada de maneira não-supervisionada para gerar níveis do \textit{Super Mario Bros}; após isso, o CMA-ES é utilizado para buscar no espaço latente da GAN soluções que minimizem a função-objetivo escolhida, ou seja, alterar a entrada do modelo para satisfazer propriedades específicas. Embora o artigo se baseie apenas em níveis do jogo \textit{Super Mario Bros}, os autores clamam que o modelo é suficientemente bom para generalizar qualquer jogo com representação compatível.
+Uma noção geral do processo executado por \cite{marioGAN} está devidamente traduzido na \textbf{Figura 2.4}. Este método é dividido em duas etapas básicas distintas: primeiro, a WGAN é treinada de maneira não-supervisionada para gerar níveis do \textit{Super Mario Bros}; após isso, o CMA-ES é utilizado para buscar no espaço latente da GAN soluções que minimizem a função objetivo escolhida, ou seja, alterar a entrada do modelo para satisfazer propriedades específicas. Embora o artigo se baseie apenas em níveis do jogo \textit{Super Mario Bros}, os autores clamam que o modelo é suficientemente bom para generalizar qualquer jogo com representação compatível.
 
 \begin{figure}[!htb]
 \centering
@@ -188,7 +196,7 @@ Uma noção geral do processo executado por \cite{marioGAN} está devidamente tr
 \label{fig:2.3}
 \end{figure}
 
-Quanto as funções minimizadas em relação a topologia do nível minimizadas no artigo, as equações (2.1) e (2.2) as traduzem, em que g e t são respectivamente a fração da quantidade de blocos de chão na ultima linha da matriz que representa a fase e a fração desejada, e n o número de inimigos.
+As equações (2.1) e (2.2) mostram as funções objetivo minimizadas pelo CMA-ES em relação a topologia do nível usadas no artigo, em que g e t são respectivamente a fração da quantidade de blocos de chão na ultima linha da matriz que representa a fase e a fração desejada, e n o número de inimigos.
 
 \begin{equation}
     F_1 = \sqrt{(g - t)^2}
@@ -198,16 +206,16 @@ Quanto as funções minimizadas em relação a topologia do nível minimizadas n
     F_2 = F_1 + 0.5 \cdot (20.0 - n)
 \end{equation}
 
-No artigo, a ideia apresentada é que a dificuldade aumente gradativamente conforme a progressão no eixo x, lembrando que o objetivo do jogo é chegar ao fim da fase, ou seja, no último ponto do eixo x. Para isso, os autores juntam dois níveis otimizados com $F_1$ e $t = 1$, um nível otimizado com $F_1$ e $g = 0.7$, e dois níveis otimizando $F_2$ com $g = 0.7$. Um exemplo desta junção está na \textbf{Figura 2.5}.
+No artigo, a ideia apresentada é que a dificuldade aumente gradativamente conforme a progressão no eixo x, lembrando que o objetivo do jogo é chegar ao fim da fase, ou seja, no último ponto do eixo x. Para isso, os autores concatenam no eixo x dois níveis otimizados com $F_1$ e $t = 1$, um nível otimizado com $F_1$ e $g = 0.7$, e dois níveis otimizando $F_2$ com $g = 0.7$. Um exemplo desta junção está na \textbf{Figura 2.5}.
 
 \begin{figure}[!htb]
 \centering
-	\includegraphics[width=12cm]{imagens/nivel_gerado.png}
+	\includegraphics[width=14cm]{imagens/nivel_gerado.png}
         \caption{Nível gerado pelos autores, com progressão de dificuldade no eixo x. Fonte: \cite{marioGAN}}
 \label{fig:2.3}
 \end{figure}
 
-Em outros experimentos, os autores usam duas funções relacionadas ao teste pelo agente A* vencedor da competição da mario AI de 2009, conforme as equações (2.3) e (2.4), onde p é a fração da fase em que o agente passou, e \#jumps a quantidade de ações de pulos.
+Em outros experimentos, os autores usam outras duas funções objetivo, funções estas relacionadas ao teste pelo agente A* vencedor da competição da mario AI de 2009, conforme as equações (2.3) e (2.4), onde p é a fração da fase em que o agente passou, e \#jumps a quantidade de ações de pulos.
 
 \begin{equation}
     F_3 =

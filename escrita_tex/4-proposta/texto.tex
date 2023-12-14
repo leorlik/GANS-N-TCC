@@ -1,6 +1,6 @@
 \chapter{Proposta}
 
-Este capítulo apresenta os métodos propostos para comparação entre os métodos de LVE, bem como os para avaliação do conteúdo gerado por redes treinadas em diferentes conjuntos. Ele apresenta a arquitetura do modelo neural adversarial utilizado, o conjunto de dados em que o modelo foi treinado e as funções-objetivo utilizadas.
+Este capítulo apresenta os métodos propostos para comparação entre os métodos de LVE, bem como os para avaliação do conteúdo gerado por redes treinadas em diferentes conjuntos. Ele apresenta a arquitetura do modelo neural adversarial utilizado, o conjunto de dados em que o modelo foi treinado e as funções objetivo utilizadas.
 
 \section{Conjunto de treinamento}
 
@@ -56,11 +56,11 @@ Os algoritmos utilizados para a evolução de variável são: o CMA-ES, como em 
 
 Para o CMA-ES, a biblioteca utilizada foi a \textit{CMA}\cite{cma}. Já para o PSO e o NSGA-II, foram usadas as implementaçõs do \textit{framework} pymoo(\cite{pymoo}). 
 
-\section{Funções-objetivo}
+\section{Funções objetivo}
 
-Neste trabalho, muitas funções-objetivo foram otimizadas. Foram minimizadas as funções das equações (2.1) e (2.2) seguindo a proposta de progressão de dificuldade em \cite{marioGAN}, e o desempenho do CMA-ES e do PSO foram comparados. Também foram feitas algumas rodadas de otimização destas funções em conjunto com a presente na equação (2.3) utilizando NSGA-II, para avaliar o desempenho geral, conforme sugerido por \cite{marioGAN}. 
+Neste trabalho, muitas funções objetivo foram otimizadas. Foram minimizadas as funções das equações (2.1) e (2.2) seguindo a proposta de progressão de dificuldade em \cite{marioGAN}, e o desempenho do CMA-ES e do PSO foram comparados. Também foram feitas algumas rodadas de otimização destas funções em conjunto com a presente na equação (2.3) utilizando NSGA-II, para avaliar o desempenho geral, conforme sugerido por \cite{marioGAN}. 
 
-Além das funções das equações (2.1), (2.2) e (2.3), elaboramos outra função para comparar a topologia das fases. A função-objetivo autoral otimizada é relacionada ao número de blocos de um certo tipo do conteúdo gerado, seguindo a equação (4.1).
+Além das funções das equações (2.1), (2.2) e (2.3), também foi utilizada outra função objetivo para comparar a topologia das fases. Esta função está implementada no repositório aberto do \textit{Github} dos autores de \cite{marioGAN}, mas não é mencionada no artigo e é relacionada ao número de blocos de um certo tipo do conteúdo gerado, seguindo a equação (4.1).
 
 \begin{equation}
     \frac{(100 - (\sum_{i=1}^{14} \sum_{j=1}^{28} f(x_{ij}, b)))}{100} \quad \text{tal que} \quad f(x,b) =
@@ -73,21 +73,23 @@ Além das funções das equações (2.1), (2.2) e (2.3), elaboramos outra funç�
 
 Onde i é o valor de linha e j o da coluna da matriz que representa um nível, $x_{ij}$ o valor numérico presente nesta posição e b o valor numérico a ser maximizado, ou seja, a representação numérica do bloco a ser maximizado. Os valores de b utilizados foram 6 (um pedaço do cano) e 5 (número de inimigos).
 
+Esta função é interessante pois sua interpretação tanto em valores numéricos quanto visualmente não é complexa: ela será menor quanto maior a quantidade de um certo elemento. Fases com mais inimigos, por exemplo, terão menores valores da função, algo que pode ser dito de visualizar um nível gerado. Além disso, maximizar um elemento no nível pode gerar fases diferentes de acordo com o elemento: fases com mais canos, por exemplo, serão naturalmente diferentes que fases com mais inimigos. 
+
 \section{Avaliação de conteúdo}
 
 Como devidamente apontado por \cite{pcg2013}, uma das maiores dificuldades da PCGML é avaliar o conteúdo gerado proceduralmente. Neste trabalho, foram propostos três métodos de avaliação:
 
 \begin{itemize}
-	\item Observação dos valores das funções-objetivo utilizadas na técnica de LVE;
+	\item Observação dos valores das funções objetivo utilizadas na técnica de LVE;
 	\item Um classificador para avaliar se os geradores seguem suficientemente um padrão;
 	\item Um agente para testar a jogabilidade dos níveis.
 \end{itemize}
 
-Para que cada teste deste seja em quantidades suficientes, foram avaliadas múltiplas execuções das duas fases propostas em \cite{marioGAN} com várias funções-objetivo e conjunto de treinamento, com exceção do NSGA-II otimizando a função da equação (2.3), pois o uso do agente escolhido dentro de um algoritmo genético se mostrou muito custoso no quesito tempo de execução: devido a isto, foram realizadas poucas execuções neste caso específico.
+Para que cada teste deste seja em quantidades suficientes, foram avaliadas múltiplas execuções das duas fases propostas em \cite{marioGAN} com várias funções objetivo e conjunto de treinamento, com exceção do NSGA-II otimizando a função da equação (2.3), pois o uso do agente escolhido dentro de um algoritmo genético se mostrou muito custoso no quesito tempo de execução: devido a isto, foram realizadas poucas execuções neste caso específico.
 
 \subsection{Classificação de níveis}
 
-A primeira abordagem para a classificação de níveis foi a criação de um SVC de classe única treinado em todas as janelas deslizantes geradas a partir dos níveis existentes. Uma vez que esse método mostrou-se insuficiente por classificar um pouco menos da metade do conjunto de treinamento como anomalia, foi treinado um outro SVC buscando separar os 8 mundos mais uma classe extra de matrizes 14 X 28 com números aleatórios entre 0 e 9, totalizando 9 classes. A performance deste classificador não ultrapassou 55\% de taxa de acerto.
+A primeira abordagem para a classificação de níveis foi o uso de um SVC (sob a idéia de ser um conceituado método de classificação dito de bom desempenho para problemas desbalanceados de várias dimensões) de classe única treinado em todas as janelas deslizantes geradas a partir dos níveis existentes. Uma vez que esse método mostrou-se insuficiente por classificar um pouco menos da metade do conjunto de treinamento como anomalia, foi treinado um outro SVC buscando separar os 8 mundos mais uma classe extra de matrizes 14 X 28 com números aleatórios entre 0 e 9, totalizando 9 classes. A performance deste classificador não ultrapassou 55\% de taxa de acerto.
 
 Por fim, uma rede neural simples, codificada em \textit{PyTorch} foi treinada em cima das mesmas janelas deslizantes e sua performance foi julgada suficiente para avaliar o padrão de uma fase. Este modelo possui apenas duas camada convolucionais com 32 neurônios, uma camada \textit{maxpooling} e uma camada \textit{fully connected}, com 64 neurônios, finalizando com uma camada de ativação softmax de 9 classes.
 
@@ -119,11 +121,13 @@ Para os testes de classificação, este modelo foi empregado em torno das saída
 
 \subsection{Jogabilidade e performance de jogo}
 
-Em 2009, em associação a \textit{IEEE Games Innovation Conference} e a \textit{IEEE Symposium on Computational Intelligence and Games}, ocorreu a \textit{Mario AI Competition}, documentada em \cite{marioAI}. Até hoje, um dos agentes mais utilizados para testar a jogabilidade de níveis gerados do jogo \textit{Super Mario Bros} é o agente A* de autoria de Robin Baumgarten.
+Em 2009, em associação a \textit{IEEE Games Innovation Conference} e a \textit{IEEE Symposium on Computational Intelligence and Games}, ocorreu a \textit{Mario AI Competition}, documentada em \cite{marioAI}. Até hoje, um dos agentes mais utilizados para testar a jogabilidade de níveis gerados do jogo \textit{Super Mario Bros} é o agente A* de autoria de Baumgarten.
 
 Este agente define o jogo como estado atual e leva em conta a velocidade do jogador para os estados próximos. Além do estado próximo, a heurística leva em conta que o agente está sempre na velocidade máxima, o que a torna nem tanto admissível, sendo uma relaxação segundo o autor já que esta heurística em alguns casos apontados em \cite{marioAI} pode levar o agente A* a considerar que um estado leve a perda do jogo sem ser necessariamente verdade. Tanto em \cite{marioGAN} quanto em \cite{marioAI} é dito que o agente performa em níveis sobre-humanos, agente este que é utilizado até os dias de hoje, como em \cite{mariogpt}.
 
 Seguindo os trabalhos já existentes, a jogabilidade das fases foi testada com o agente A* de Baumgarten, assim como este agente foi utilizado para o uso da equação (2.3) nos experimentos multi-objetivo. Alguns experimentos mostraram, porém, que este algoritmo é não determinístico, algo não mencionado por \citep{marioAI} nem por \citep{marioGAN}.
+
+A implementação do \textit{Super Mario Bros} utilizada é a mesma de \citep{marioAI}, adquirida através do repositório dos autores no \textit{Github}. Esta implementação é feita em \textit{Java}. O código original foi levemente modificado, alterando um valor booleano para redirecionar a jogabilidade ao agente (que está também implementado neste repositório) e retirar a demonstração visual e o limite de quadros por segundo. Esta implementação em Java adquire o gerador de um código \textit{Python}. Este código \textit{Python} também foi modificado de acordo com o gerador utilizado (que varia entre experimentos).
 
 \section{Considerações Finais}
 
