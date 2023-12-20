@@ -149,7 +149,7 @@ A meta-heurística associada ao PSO faz pouca ou nenhuma suposição do problema
 
 O algoritmo A* é uma extensão do Algoritmo de Djikstra que utiliza alguma meta-heurística para guiar a busca pelo caminho mais curto ao objetivo. Para que o algoritmo funcione corretamente, a heurística definida para auxiliar a busca deve ser admissível, isto é, o custo estimado para atingir o estado final em relação ao estado atual deve ser menor ou igual ao custo verdadeiro para atingir o estado final do estado atual. 
 
-A busca A* possui múltiplas aplicações, entre elas a busca por caminhos viáveis em videogames. Até os dias de hoje, o mais popular algoritmo para o teste de jogabilidade de níveis do jogo \textit{Super Mario Bros} é o agente A* proposto em \cite{marioAI}.
+A busca A* possui múltiplas aplicações, entre elas a busca por caminhos viáveis em videogames. Até os dias de hoje, o mais popular algoritmo para o teste de jogabilidade de níveis do jogo \textit{Super Mario Bros} é o agente A* proposto em \cite{marioAI}. Neste agente específico, o custo é calculado pela distância resultante da ação em relação ao fim do nível do jogo, porém a heurística sempre leva em consideração o agente em velocidade máxima, o que pode não ser verdade. 
 
 %=====================================================
 
