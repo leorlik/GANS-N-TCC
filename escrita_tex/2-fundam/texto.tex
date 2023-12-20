@@ -46,18 +46,18 @@ O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covari�
 \State Inicialize o \textit{step size}: $\sigma > 0$ tal que $\sigma \in \mathbb{R}$
 \State Defina a média $m \in \mathbb{R}$ inicialmente aleatória
 
-\State Defina o número de melhores candidados $\mu \in mathbb{R}$ tal que $\mu > 0$
+\State Defina o número de melhores candidados $\mu \in \mathbb{R}$ tal que $\mu > 0$
 
-\State Defina os pesos: $W_1, W_2, \ldots, W_\mu \in mathbb{R}$ tal que $\sum_{i} W_i = 1$
+\State Defina os pesos: $W_1, W_2, \ldots, W_\mu \in \mathbb{R}$ tal que $\sum_{i} W_i = 1$
 
 \State \textbf{repeat}
 \ForAll{$x \in \lambda$}
   \State Calcula a Gaussiana para $x$
 \EndFor
 
-\State Ordena $\lambda$ pelo fitness (função objetivo a ser minimizada $\in \mathbb{R}$
+	\State Ordena $\lambda$ pelo fitness (função objetivo a ser minimizada) $\in \mathbb{R}$
 
-\State Atribui a $X_1, X_2, \ldots, X_\mu$ os \mu melhores candidados da iteração
+\State Atribui a $X_1, X_2, \ldots, X_\mu$ os $\mu$ melhores candidados da iteração
 
 \State $c \gets$ Calcula\_covariancia $(\lambda)$
 
