@@ -8,13 +8,13 @@
 
 %\section{}
 
-Este capítulo revisita os tópicos fundamentais deste trabalho, incluindo os princípios de redes neurais adversariais, evolução de variável latente e algoritmos genéticos para exploração do espaço latente com o exemplo do CMA-ES; explora a literatura no tópico de geração de conteúdo procedural utilizando aprendizado de máquina; e apresenta o principal artigo que guiou este trabalho, que utiliza uma DCGAN para gerar níveis do jogo \textit{Super Mario Bros}(1985). 
+Este capítulo revisita os tópicos fundamentais deste trabalho, incluindo os princípios de redes neurais adversariais, evolução de variável latente e algoritmos genéticos para exploração do espaço latente com o exemplo do CMA-ES; explora a literatura no tópico de geração de conteúdo procedural utilizando aprendizado de máquina; e apresenta o principal artigo que guiou este trabalho, que utiliza uma DCGAN para gerar níveis do jogo \textit{Super Mario Bros} (1985). 
 
 %=====================================================
 
-\section{Redes Neurais Adversariais Generativas}
+\section{Redes Neurais Generativas Adversariais }
 
-O paradigma do Aprendizado Adversarial e as Redes Neurais Adversariais Generativas (GANs) foram introduzidos em \cite{gan} em 2014 como solução para o problema de estimação de máxima verossimilhança, dilema no qual o custo computacional e a complexidade são altos, podendo chegar a ser computacionalmente inviável atingir uma solução ótima por meios clássicos de busca. Enquanto a gama mais popular de modelos profundos na época de publicação do artigo consistiam de apenas uma rede neural de alta profundidade usada em classificação e, em certos casos, regressão, o aprendizado adversarial proposto pelo artigo usufrui de dois MLPs.
+O paradigma do Aprendizado Adversarial e as Redes Neurais Generativas Adversariais (GANs) foram introduzidos em \cite{gan} em 2014 como solução para o problema de estimação de máxima verossimilhança, dilema no qual o custo computacional e a complexidade são altos, podendo chegar a ser computacionalmente inviável atingir uma solução ótima por meios clássicos de busca. Enquanto a gama mais popular de modelos profundos na época de publicação do artigo consistiam de apenas uma rede neural de alta profundidade usada em classificação e, em certos casos, regressão, o aprendizado adversarial proposto pelo artigo usufrui de dois MLPs.
 
 Um destes modelos é apelidado pelos autores de gerador e abreviado como \textit{G}, enquanto o outro modelo é chamado de discriminador e abreviado como \textit{D}. O modelo gerador representa uma função diferenciável responsável por aproximar a distribuição de seus dados de treinamento. Para gerar novos dados, a rede \textit{G} projeta entradas ruidosas no espaço dos dados conhecidos, na intenção de aproximar o conteúdo gerado da distribuição dos conjuntos conhecidos.
 
@@ -74,7 +74,7 @@ O que este algoritmo faz é calcular uma Gaussiana com base na matriz de covari�
 
 %=====================================================
 
-\section{Evolução de Variavel Latente (LVE)}
+\section{Evolução de Variável Latente (LVE)}
 
 LVE - \emph{Latent Variable Evolution} - surgiu primeiro para buscar digitais específicas num certo espaço mapeado por uma GAN em \cite{fingerprints}. Como dito anteriormente, a rede neural geradora de uma GAN mapeia entradas ruidosas para um espaço. Estas entradas ruidosas também são chamadas de variáveis latentes, ou seja, variáveis que são difíceis ou impossível de controlar e interpretar antes de um resultado concreto.
 
@@ -105,10 +105,10 @@ O algoritmo utilizado por \cite{fingerprints} para busca no espaço latente é o
 
 \section{NSGA-II}
 
-Em 2002 foi proposto a evolução do \textit{nondominated sorting genetic algorithm} (algoritmo genético de ordenção não-dominada), o NSGA-II\cite{Deb:02}, que hoje em dia conta com 37971 citações(Connected Papers, acesso em 05/11/2023). Este algoritmo foi proposto na intenção de contornar os três principais problemas dos algoritmos evolucionários apontados na época:
+Em 2002 foi proposto a evolução do \textit{nondominated sorting genetic algorithm} (algoritmo genético de ordenção não-dominada), o NSGA-II \cite{Deb:02}, que hoje em dia conta com 37971 citações (Connected Papers, acesso em 05/11/2023). Este algoritmo foi proposto na intenção de contornar os três principais problemas dos algoritmos evolucionários apontados na época:
 
 \begin{itemize}
-    \item Alta complexidade computacional(especificamente $O(MN^{3})$, onde M é o numero de objetivos e N o tamanho da população);
+    \item Alta complexidade computacional (especificamente $O(MN^{3})$, onde M é o numero de objetivos e N o tamanho da população);
     \item A falta de elitismo;
     \item A necessidade de especificar parâmetros, como o caso do NSGA proposto em \cite{Deb:94};
 \end{itemize}
@@ -120,9 +120,9 @@ E sua implementação nos permite:
     \item e enfatizar soluções não dominadas.
 \end{itemize}
 
-Para se entender as soluções não dominadas, é importante ententer o que é dominância entre soluções. A definição de dominância se dá que uma solução $x_{1}$ domina $x_{2}$ se $x_{1}$ não é pior que $x_{2}$ em todos os objetivos e é melhor que $x_{2}$ em pelo menos um objetivo. Quando não se há soluções que dominam x, x é uma solução não dominada. O conjunto de soluções não dominadas são chamados de fronteira não dominada. As projeções pertencentes a fronteira não dominada são boas em um objetivo, mas podem ser pior que outras em determinados objetivos: essa troca entre os pontos não dominados fazem os algoritmos se interessarem em encontrar uma variedade da soluções antes de tomar uma decisão final.
+Para se entender as soluções não dominadas, é importante ententer o que é dominância entre soluções. A definição de dominância se dá que uma solução $x_{1}$ domina $x_{2}$ se $x_{1}$ não é pior que $x_{2}$ em todos os objetivos e é melhor que $x_{2}$ em pelo menos um objetivo. Quando não se há soluções que dominam x, x é uma solução não dominada. O conjunto de soluções não dominadas são chamados de fronteira não dominada. As projeções pertencentes a fronteira não dominada se aproximam mais do ótimo em pelo menos um objetivo, mas podem ser piores do que outras da mesma fronteira em outros objetivos: essa troca entre os pontos não dominados fazem os algoritmos se interessarem em encontrar uma variedade da soluções antes de tomar uma decisão final.
 
-Os pontos não dominados por nenhuma solução no espaço de soluções $Z$ são os pontos ótimos de pareto, enquanto o vetor de variáveis que projetam tais pontos são chamadas de soluções ótimas de Pareto. O objetivo do NSGA-II e outros algoritmos multi-objetivos, são, portanto, encontrar o máximo de pontos ótimos de pareto, para que algum algoritmo de decisão escolha a solução com o melhor balanceamento entre os objetivos.
+Os pontos não dominados por nenhuma solução no espaço de soluções $Z$ são os pontos ótimos de Pareto, enquanto o vetor de variáveis que projetam tais pontos são chamadas de soluções ótimas de Pareto. O objetivo do NSGA-II e outros algoritmos multi-objetivos, são, portanto, encontrar o máximo de pontos ótimos de Pareto, para que algum algoritmo de decisão escolha a solução com o melhor balanceamento entre os objetivos.
 
 Outra importante propriedade utilizada pelo NSGA-II são as classes das fronteiras de Pareto. A fronteira de classe 1 são os já explicados pontos não dominados. A seguir, os pontos que não são dominados por nenhum ponto que não os ótimos de Pareto pertencem à fronteira de classe 2. Já os não dominados por nenhum a não ser os pontos das classes anteriores são a fronteira de classe 3, assim sucessivamente
 
@@ -130,9 +130,9 @@ Tendo populaçoes de tamanho N, o NSGA-II recombina tal população numa popula�
 
 \subsection{Decisão entre soluções}
 
-Um dos dilemas de algoritmos multi-objetivo é projetado numa área chamada de MCDM (\textit{multiple criteria decision making}), em que deve-se decidir entre as soluções qual é a melhor. Os experimentos deste trabalho seguem a ideia de \cite{datamining} de compromise programming (CP) para este propósito conforme discutido em \cite{cp}. 
+Um dos dilemas de algoritmos multi-objetivo é projetado numa área chamada de MCDM (\textit{multiple criteria decision making}), em que deve-se decidir entre as soluções qual é a melhor. Os experimentos deste trabalho seguem a ideia de \cite{datamining} de \textit{compromise programming} (CP) para este propósito conforme discutido em \cite{cp}. 
 
-Assumindo a existência de uma solução ideal e a conversão próxima a fonteira de Pareto, o suposto ponto ideal é projetado levando em conta as soluções não dominadas existentes (ou seja, os menores valores dos objetivos se a função é minimizada, ou os maiores caso a função seja maximizada). Uma vez feita essa projeção, o ponto escolhido é o de menor distância deste ponto.
+Assumindo a existência de uma solução ideal e a conversão próxima à fonteira de Pareto, o suposto ponto ideal é projetado levando em conta as soluções não dominadas existentes (ou seja, os menores valores dos objetivos se a função é minimizada, ou os maiores caso a função seja maximizada). Uma vez feita essa projeção, o ponto escolhido é o de menor distância deste ponto.
 
 %=====================================================
 
